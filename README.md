@@ -1,1 +1,1 @@
-# python-ishell
+# IShell

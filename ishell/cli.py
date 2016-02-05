@@ -5,8 +5,6 @@ from ishell.profile import *  # noqa
 import os
 import sys
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
 
 class IShell(object):
 
@@ -19,7 +17,7 @@ class IShell(object):
         if not command:
             raise AttributeError(
                 "The command '{}' does not exist.".format(command_name))
-        command(argv=argv, path=BASE_DIR)
+        command(argv=argv, path=os.getcwd())
 
 
 def main():

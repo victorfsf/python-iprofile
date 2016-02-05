@@ -8,7 +8,7 @@ setup(
     name='python-ishell',
     packages=find_packages(exclude=['tests']),
     package_data={
-        'ishell': [],
+        'python-ishell': [],
     },
     install_requires=[
         'glob2==0.4.1',
