@@ -29,7 +29,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'ishell = ishell',
+            'ishell = ishell.cli:main',
         ],
     }
 )
