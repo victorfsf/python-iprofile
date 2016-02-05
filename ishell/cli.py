@@ -19,6 +19,9 @@ class IShell(object):
                 "The command '{}' does not exist.".format(command_name))
         command(argv=argv, path=os.getcwd())
 
+    def __dir__(self):
+        return registry.get_all().keys()
+
 
 def main():
-    IShell(sys.argv)
+    return IShell(sys.argv)
