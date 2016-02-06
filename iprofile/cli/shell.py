@@ -9,6 +9,7 @@ from iprofile.core.utils import get_ipython_name
 from iprofile.core.utils import get_ipython_path
 from iprofile.core.utils import get_profile_path
 from IPython import start_ipython
+from slugify import slugify
 import click
 import os
 
@@ -18,7 +19,9 @@ import os
 class Shell(ICommand):
 
     def run(self, **options):
-        name = options.get('name') or self.get_active_profile()
+        if not options.get('name'):
+            options['name'] = self.get_active_profile()
+        name = options.get('name')
 
         if not name:
             start_ipython(argv=[])
@@ -40,6 +43,6 @@ class Shell(ICommand):
     def get_active_profile(self):
         try:
             with open('{}/.active'.format(self.project_path), 'r') as active:
-                return active.read()
+                return slugify(active.read().strip().replace('\n', ''))
         except IOError:
             return

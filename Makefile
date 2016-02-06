@@ -7,11 +7,11 @@ requirements:
 	@pip install -r requirements.txt
 
 test:
-	@py.test --cov=pythinkdb tests/
+	@py.test --cov=iprofile tests/
 	@coverage html
 
 test.warn:
-	@py.test --cov=pythinkdb tests/ -rw
+	@py.test --cov=iprofile tests/ -rw
 	@coverage html
 
 setup: clean requirements test

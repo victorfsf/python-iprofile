@@ -17,7 +17,6 @@ class Clear(ICommand):
         name = options.get('name')
         ipython_path, _ = get_ipython_path(name)
         ipython_name = get_ipython_name(name)
-
         if not ipython_path:
             self.red(
                 texts.ERROR_IPYTHON_PROFILE_DOESNT_EXIST.format(ipython_name))
