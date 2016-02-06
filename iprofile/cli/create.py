@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from iprofile.core.decorators import iregister
+from iprofile.core.decorators import icommand
 from iprofile.cli.init import Init
 from iprofile.cli.save import Save
 from iprofile.core.mixins import Command
 import click
 
 
-@iregister
-@click.command()
-@click.argument('name')
+@icommand()
+@click.argument('name', metavar='<profile name>')
 @click.option('--no-symlink', is_flag=True)
 class Create(Command):
 

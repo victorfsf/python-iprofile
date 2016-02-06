@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from iprofile.core.decorators import iregister
+from iprofile.core.decorators import icommand
 from iprofile.core.mixins import Command
 from iprofile.core.utils import PROJECT_PATH
 from iprofile.core.utils import get_profile_path
@@ -11,9 +11,8 @@ import click
 import os
 
 
-@iregister
-@click.command()
-@click.argument('name')
+@icommand()
+@click.argument('name', metavar='<profile name>')
 class Init(Command):
 
     def run(self, **options):

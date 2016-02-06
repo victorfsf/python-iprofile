@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from iprofile.core.decorators import iregister
+from iprofile.core.decorators import icommand
 from iprofile.core.mixins import Command
 from iprofile.core.utils import create_ipython_profile
 from iprofile.core.utils import get_ipython_path
@@ -14,9 +14,8 @@ import os
 import shutil
 
 
-@iregister
-@click.command()
-@click.argument('name')
+@icommand()
+@click.argument('name', metavar='<profile name>')
 @click.option('--no-symlink', is_flag=True)
 class Save(Command):
 

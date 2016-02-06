@@ -1,3 +1,3 @@
-# Python IProfile
+# Python IProfile CLI
 
-*A IPython 4+ Profiles CLI tool.*
+*A CLI for handling IPython 4+ profiles startup scripts.*

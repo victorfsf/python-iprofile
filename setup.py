@@ -16,7 +16,7 @@ setup(
     ],
     zip_safe=False,
     version='0.0.1',
-    description='A IPython 4+ Profiles CLI tool',
+    description='A CLI for handling IPython 4+ profiles startup scripts.',
     author='Victor Ferraz',
     author_email='vfsf@cin.ufpe.br',
     url='https://github.com/victorfsf/python-iprofile',
