@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 
+from glob2 import glob
+from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.mixins import Command
 from iprofile.core.utils import create_ipython_profile
-from iprofile.core.utils import get_ipython_path
-from iprofile.core.utils import get_profile_path
 from iprofile.core.utils import echo_green
 from iprofile.core.utils import echo_red
-from iprofile.cli import texts
-from glob2 import glob
+from iprofile.core.utils import get_ipython_path
+from iprofile.core.utils import get_profile_path
 import click
 import os
 import shutil
 
 
-@icommand()
+@icommand(help=texts.HELP_SAVE)
 @click.argument('name', metavar='<profile name>')
-@click.option('--no-symlink', is_flag=True)
+@click.option('--no-symlink', is_flag=True, help=texts.HELP_NO_SYMLINKS)
 class Save(Command):
 
     def run(self, **options):

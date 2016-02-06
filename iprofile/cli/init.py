@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
+from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.mixins import Command
-from iprofile.core.utils import PROJECT_PATH
-from iprofile.core.utils import get_profile_path
-from iprofile.core.utils import echo_red
 from iprofile.core.utils import echo_green
-from iprofile.cli import texts
+from iprofile.core.utils import echo_red
+from iprofile.core.utils import get_profile_path
+from iprofile.core.utils import PROJECT_PATH
 import click
 import os
 
 
-@icommand()
+@icommand(help=texts.HELP_INIT)
 @click.argument('name', metavar='<profile name>')
 class Init(Command):
 
@@ -27,11 +27,12 @@ class Init(Command):
             return
 
         os.makedirs(profile)
-        profile_items = ['00.ipy', '01.py']
+        profile_items = ['00_config.ipy', '01_imports.py']
         for item in profile_items:
             open('{}/{}'.format(profile, item), 'w').close()
+
         with open('{}/README'.format(profile), 'w') as read_me:
-            read_me.write(texts.IPYTHON_READ_ME)
+            read_me.write(texts.IPYTHON_READ_ME.format(name))
 
         click.echo(texts.LOG_PROFILE_PATH.format(profile))
         echo_green(texts.LOG_NEW_PROFILE.format(name))

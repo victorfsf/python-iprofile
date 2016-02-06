@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from logs import *  # noqa
-from read_me import *  # noqa
+from docs import *  # noqa
+from helpers import *  # noqa
 from errors import *  # noqa
