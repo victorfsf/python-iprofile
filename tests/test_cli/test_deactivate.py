@@ -9,10 +9,11 @@ mock_options = {
     'name': 'test'
 }
 
-Delete.run(mock_options)
-Create.run(mock_options)
-
 
 def test_run():
     Activate.run(mock_options)
+    Delete.run(mock_options)
+    Create.run(mock_options)
+    Activate.run(mock_options)
+    Deactivate.run({})
     Deactivate.run({})

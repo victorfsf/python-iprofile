@@ -22,7 +22,3 @@ class IProfile(click.MultiCommand):
 @click.version_option(version='0.0.1', prog_name="IProfile")
 def main():
     pass
-
-
-if __name__ == '__main__':
-    main()

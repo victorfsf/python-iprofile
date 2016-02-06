@@ -33,12 +33,9 @@ def get_ipython_path(profile_name):
 def create_ipython_profile(profile_name):
     args = 'ipython profile create {}'.format(
         get_ipython_name(profile_name)).split(' ')
-    try:
-        return subprocess.check_output(
-            args, stderr=subprocess.STDOUT,
-            universal_newlines=True).replace('\n', '')
-    except subprocess.CalledProcessError:
-        return None
+    return subprocess.check_output(
+        args, stderr=subprocess.STDOUT,
+        universal_newlines=True).replace('\n', '')
 
 
 def echo_red(message):

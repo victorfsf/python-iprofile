@@ -12,6 +12,9 @@ class Deactivate(ICommand):
     def run(self, **options):
         active_path = '{}/.active'.format(self.project_path)
         try:
+            with open(active_path, 'r') as active:
+                name = active.read()
             os.remove(active_path)
+            self.green(texts.LOG_PROFILE_DEACTIVATED.format(name))
         except (IOError, OSError):
             self.red(texts.ERROR_NO_ACTIVE_PROFILE)

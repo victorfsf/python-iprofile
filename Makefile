@@ -15,3 +15,7 @@ test.warn:
 	@coverage html
 
 setup: clean requirements test
+
+cov.badge:
+	@rm -rf coverage.svg
+	@coverage-badge -o coverage.svg
