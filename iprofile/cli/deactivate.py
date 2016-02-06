@@ -22,12 +22,9 @@ class Deactivate(ActivateDeactivateMixin):
             with open(active_path, 'r') as active:
                 active_profile = active.read()
             if active_profile != profile_name:
-                self.profile_not_active(profile_name)
+                self.red(texts.ERROR_PROFILE_NOT_ACTIVE.format(profile_name))
                 return
             os.remove(active_path)
             self.green(texts.LOG_PROFILE_DEACTIVATED.format(profile_name))
         except IOError:
-            self.profile_not_active(profile_name)
-
-    def profile_not_active(self, profile_name):
-        self.red(texts.ERROR_PROFILE_NOT_ACTIVE.format(profile_name))
+            self.red(texts.ERROR_NO_ACTIVE_PROFILE)
