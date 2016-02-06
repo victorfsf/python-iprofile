@@ -1,3 +1,7 @@
+click==6.2
+coverage==4.0.3
+glob2==0.4.1
 ipdb==0.8.1
 ipython==4.1.1
-glob2==0.4.1
+pytest-cov==2.2.1
+python-slugify==1.2.0
