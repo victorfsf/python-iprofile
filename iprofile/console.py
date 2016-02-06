@@ -8,7 +8,7 @@ import click
 class IProfile(click.MultiCommand):
 
     def list_commands(self, ctx):
-        return sorted(registry.get_all().keys())
+        return sorted(registry.get_all())
 
     def get_command(self, ctx, name):
         command = registry.get_command(name)

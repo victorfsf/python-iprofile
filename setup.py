@@ -13,9 +13,10 @@ setup(
         'iprofile': [],
     },
     install_requires=[
-        'ipython>=4',
+        'click==6.2',
         'glob2==0.4.1',
-        'click==6.2'
+        'ipython>=4',
+        'python-slugify==1.2.0'
     ],
     zip_safe=False,
     version=version,

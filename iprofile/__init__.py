@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-from cli import *  # noqa
+from .cli import *  # noqa

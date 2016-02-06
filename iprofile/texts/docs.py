@@ -13,7 +13,7 @@ with a prefix, e.g.::
     50-middle.py
     99-last.ipy
 
-To add new files (or if you set the '--no-symlink' option, or created this with the 'init' command), run:
+To update/add new files (or if you set the '--no-symlink' option, or created this with the 'init' command), run:
     iprofile save {} [--no-symlink]
 """
 
