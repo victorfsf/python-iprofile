@@ -1,5 +1,6 @@
 # Python IProfile CLI
 
+[![PyPI version](https://badge.fury.io/py/python-iprofile.svg)](https://badge.fury.io/py/python-iprofile)
 [![Coverage Status](https://rawgit.com/victorfsf/python-iprofile/develop/src/coverage.svg)](https://pypi.python.org/pypi/coverage-badge/)
 
 
