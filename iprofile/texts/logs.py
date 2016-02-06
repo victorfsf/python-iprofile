@@ -8,3 +8,15 @@ LOG_SAVING_PROFILE = (
 )
 LOG_SAVING_SYMLINKS = "Saving files as symlinks...\nIPython path: '{}/'"
 LOG_PROFILE_SAVED = "Profile saved!"
+LOG_REMOVE_IPYTHON_PROFILE_ATTEMPT = (
+    "Attempting to remove IPython profile at '{}/'..."
+)
+LOG_REMOVE_IPYTHON_PROFILE = (
+    "IPython profile '{}' successfully removed!"
+)
+LOG_REMOVE_PROFILE_ATTEMPT = (
+    "Attempting to remove profile at '{}/'..."
+)
+LOG_REMOVE_PROFILE = (
+    "Profile '{}' successfully removed!"
+)

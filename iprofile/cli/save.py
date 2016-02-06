@@ -24,7 +24,7 @@ class Save(ICommand):
         profile = get_profile_path(name)
 
         if not os.path.isdir(profile):
-            echo_red(texts.ERROR_PROFILE_DOESNT_EXIST.format(name))
+            echo_red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(name))
             return
 
         create_ipython_profile(name)
