@@ -21,19 +21,5 @@ To add new files (or if you set the '--no-symlink' option, or created this with 
 IPROFILE_READ_ME = """
     IProfile CLI
 
-    A CLI for handling IPython 4+ profiles startup scripts.
-
-    usage: iprofile <command> [<options>] <args>
-
-    \b
-    Commands:
-        init         {init}
-        create       {create}
-        save         {save}
-        *clear       Remove the profile from IPython's path
-        *delete      Completely delete the profile
-        *activate    Sets the default profile for IPython
-        *deactivate  Remove the default profile for IPython
-
-    [*] Planned features
+    A CLI for handling IPython 4+ profiles startup scripts
 """

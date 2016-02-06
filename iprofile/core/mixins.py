@@ -1,14 +1,25 @@
 # -*- coding: utf-8 -*-
 
+import click
 
-class Command(object):
 
-    def __init__(self, _auto_run=True, *args, **kwargs):
+class ICommand(object):
+
+    def __init__(self, _autorun=True, *args, **kwargs):
         self.kwargs = kwargs.copy()
-        if _auto_run:
+        if _autorun:
             self.run(**self.kwargs)
         kwargs = {}
-        super(Command, self).__init__(*args, **kwargs)
+        super(ICommand, self).__init__(*args, **kwargs)
 
     def run(self, **options):
         raise NotImplementedError
+
+
+class Command(click.Command):
+
+    def run(self, options):
+        return (
+            self.callback(_autorun=False).run(**options)
+            if self.callback else None
+        )

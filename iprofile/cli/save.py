@@ -3,7 +3,7 @@
 from glob2 import glob
 from iprofile import texts
 from iprofile.core.decorators import icommand
-from iprofile.core.mixins import Command
+from iprofile.core.mixins import ICommand
 from iprofile.core.utils import create_ipython_profile
 from iprofile.core.utils import echo_green
 from iprofile.core.utils import echo_red
@@ -14,10 +14,10 @@ import os
 import shutil
 
 
-@icommand(help=texts.HELP_SAVE)
-@click.argument('name', metavar='<profile name>')
+@icommand(help=texts.HELP_SAVE, short_help=texts.HELP_SAVE)
+@click.argument('name')
 @click.option('--no-symlink', is_flag=True, help=texts.HELP_NO_SYMLINKS)
-class Save(Command):
+class Save(ICommand):
 
     def run(self, **options):
         name = options.get('name')

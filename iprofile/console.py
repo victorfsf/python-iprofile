@@ -2,31 +2,26 @@
 
 from iprofile import texts
 from iprofile.core.config import registry
-from iprofile.core.utils import echo_red
 import click
-import sys
 
 
-class IProfile(object):
-    read_me = texts.IPROFILE_READ_ME.format(
-        **{x: y.help for x, y in registry.get_all().iteritems()}
-    )
+class IProfile(click.MultiCommand):
 
-    def __init__(self, argv, *args, **kwargs):
-        if len(argv) == 1:
-            click.echo(self.read_me)
-            return
-        name = argv.pop(1)
+    def list_commands(self, ctx):
+        return registry.get_all().keys()
+
+    def get_command(self, ctx, name):
         command = registry.get_command(name)
-        if not command:
-            echo_red(texts.ERROR_COMMAND_NOT_FOUND.format(name))
-            click.echo(self.read_me)
-            return
-        command()
+        return command
 
 
+@click.command(
+    cls=IProfile,
+    help=texts.IPROFILE_READ_ME
+)
+@click.version_option(version='0.0.1', prog_name="IProfile")
 def main():
-    IProfile(argv=sys.argv)
+    pass
 
 
 if __name__ == '__main__':

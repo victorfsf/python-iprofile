@@ -2,7 +2,7 @@
 
 from iprofile import texts
 from iprofile.core.decorators import icommand
-from iprofile.core.mixins import Command
+from iprofile.core.mixins import ICommand
 from iprofile.core.utils import echo_green
 from iprofile.core.utils import echo_red
 from iprofile.core.utils import get_profile_path
@@ -11,9 +11,9 @@ import click
 import os
 
 
-@icommand(help=texts.HELP_INIT)
-@click.argument('name', metavar='<profile name>')
-class Init(Command):
+@icommand(help=texts.HELP_INIT, short_help=texts.HELP_INIT)
+@click.argument('name')
+class Init(ICommand):
 
     def run(self, **options):
         name = options.get('name')
