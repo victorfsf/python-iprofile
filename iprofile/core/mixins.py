@@ -3,9 +3,10 @@
 
 class Command(object):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, _auto_run=True, *args, **kwargs):
         self.kwargs = kwargs.copy()
-        self.run(**self.kwargs)
+        if _auto_run:
+            self.run(**self.kwargs)
         kwargs = {}
         super(Command, self).__init__(*args, **kwargs)
 

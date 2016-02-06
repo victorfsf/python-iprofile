@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from commands import getstatusoutput
+import click
 import os
 
 PROJECT_PATH = '{}/.iprofiles'.format(os.getcwd())
 PROJECT_NAME = os.path.basename(os.getcwd())
-IPROFILE_PATH = os.path.dirname(os.path.dirname(__file__))
 
 
 def get_profile_path(profile_name):
@@ -25,3 +25,11 @@ def create_ipython_profile(profile_name):
     result = getstatusoutput(
         'ipython profile create {}_{}'.format(PROJECT_NAME, profile_name))
     return result[1] if result[0] == 0 and result[1] else None
+
+
+def echo_red(message):
+    return click.echo(click.style(message, fg='red', bold=True))
+
+
+def echo_green(message):
+    return click.echo(click.style(message, fg='green', bold=True))

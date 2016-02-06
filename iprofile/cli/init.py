@@ -3,11 +3,12 @@
 from iprofile.core.decorators import iregister
 from iprofile.core.mixins import Command
 from iprofile.core.utils import PROJECT_PATH
-from iprofile.core.utils import IPROFILE_PATH
 from iprofile.core.utils import get_profile_path
+from iprofile.core.utils import echo_red
+from iprofile.core.utils import echo_green
+from iprofile.cli import texts
 import click
 import os
-import shutil
 
 
 @iregister
@@ -23,27 +24,16 @@ class Init(Command):
             os.makedirs(PROJECT_PATH)
 
         if os.path.isdir(profile):
-            click.echo(
-                click.style(
-                    "Profile '{}' already exists in this project!".format(
-                        name), fg="red", bold=True
-                )
-            )
+            echo_red(texts.ERROR_PROFILE_EXISTS.format(name))
             return
 
         os.makedirs(profile)
         profile_items = ['00.ipy', '01.py']
         for item in profile_items:
-            open('{}/{}'.format(profile, item), 'a').close()
-        startup_readme = '{}/ipython/README'.format(IPROFILE_PATH)
-        shutil.copy(startup_readme, profile)
-        click.echo(
-            "Profile path: '{}'".format(profile)
-        )
-        click.echo(
-            click.style(
-                "Created new Profile '{}'!".format(name),
-                fg="green", bold=True
-            )
-        )
+            open('{}/{}'.format(profile, item), 'w').close()
+        with open('{}/README'.format(profile), 'w') as read_me:
+            read_me.write(texts.IPYTHON_READ_ME)
+
+        click.echo(texts.LOG_PROFILE_PATH.format(profile))
+        echo_green(texts.LOG_NEW_PROFILE.format(name))
         return profile
