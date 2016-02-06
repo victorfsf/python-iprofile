@@ -3,10 +3,8 @@
 from glob2 import glob
 from iprofile import texts
 from iprofile.core.decorators import icommand
-from iprofile.core.mixins import ICommand
+from iprofile.core.models import ICommand
 from iprofile.core.utils import create_ipython_profile
-from iprofile.core.utils import echo_green
-from iprofile.core.utils import echo_red
 from iprofile.core.utils import get_ipython_path
 from iprofile.core.utils import get_profile_path
 import click
@@ -24,7 +22,7 @@ class Save(ICommand):
         profile = get_profile_path(name)
 
         if not os.path.isdir(profile):
-            echo_red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(name))
+            self.red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(name))
             return
 
         create_ipython_profile(name)
@@ -42,4 +40,4 @@ class Save(ICommand):
             for file_path in files:
                 os.symlink(file_path, '{}/{}'.format(
                     startup_path, os.path.basename(file_path)))
-        echo_green(texts.LOG_PROFILE_SAVED)
+        self.green(texts.LOG_PROFILE_SAVED)

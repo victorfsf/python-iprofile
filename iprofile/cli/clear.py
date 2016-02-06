@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from iprofile.core.decorators import icommand
-from iprofile.core.mixins import ICommand
+from iprofile.core.models import ICommand
 from iprofile.core.utils import get_ipython_path
 from iprofile.core.utils import get_ipython_name
-from iprofile.core.utils import echo_red
-from iprofile.core.utils import echo_green
 from iprofile import texts
 import click
 import shutil
@@ -21,12 +19,12 @@ class Clear(ICommand):
         ipython_name = get_ipython_name(name)
 
         if not ipython_path:
-            echo_red(
+            self.red(
                 texts.ERROR_IPYTHON_PROFILE_DOESNT_EXIST.format(ipython_name))
             return name
         click.echo(
             texts.LOG_REMOVE_IPYTHON_PROFILE_ATTEMPT.format(ipython_path)
         )
         shutil.rmtree(ipython_path)
-        echo_green(texts.LOG_REMOVE_IPYTHON_PROFILE.format(ipython_name))
+        self.green(texts.LOG_REMOVE_IPYTHON_PROFILE.format(ipython_name))
         return name

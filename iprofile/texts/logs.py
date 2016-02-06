@@ -20,3 +20,12 @@ LOG_REMOVE_PROFILE_ATTEMPT = (
 LOG_REMOVE_PROFILE = (
     "Profile '{}' successfully removed!"
 )
+LOG_PROFILE_ACTIVATED = (
+    "Profile '{}' successfully activated!"
+)
+LOG_PROFILE_DEACTIVATED = (
+    "Profile '{}' successfully deactivated!"
+)
+LOG_ACTIVE_PROFILE = (
+    "Active profile: '{}'."
+)

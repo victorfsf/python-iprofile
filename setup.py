@@ -24,7 +24,6 @@ setup(
     author='Victor Ferraz',
     author_email='victorfsf.dev@gmail.com',
     url='https://github.com/victorfsf/python-iprofile',
-    license='GNU',
     keywords=[
         'ipython',
         'python',
@@ -36,7 +35,6 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.6',

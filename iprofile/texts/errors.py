@@ -15,3 +15,9 @@ ERROR_IPYTHON_PROFILE_DOESNT_EXIST = (
 ERROR_PROFILE_DOESNT_EXIST = (
     "The Profile '{}' does not exist!"
 )
+ERROR_PROFILE_NOT_ACTIVE = (
+    "The Profile '{}' can't be deactivated: it's not even active!"
+)
+ERROR_NO_ACTIVE_PROFILE = (
+    "There are no active profiles to this project."
+)

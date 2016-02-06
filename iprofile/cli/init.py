@@ -2,9 +2,7 @@
 
 from iprofile import texts
 from iprofile.core.decorators import icommand
-from iprofile.core.mixins import ICommand
-from iprofile.core.utils import echo_green
-from iprofile.core.utils import echo_red
+from iprofile.core.models import ICommand
 from iprofile.core.utils import get_profile_path
 from iprofile.core.utils import get_ipython_path
 from iprofile.core.utils import PROJECT_PATH
@@ -25,7 +23,7 @@ class Init(ICommand):
             os.makedirs(PROJECT_PATH)
 
         if os.path.isdir(profile):
-            echo_red(texts.ERROR_PROFILE_EXISTS.format(name))
+            self.red(texts.ERROR_PROFILE_EXISTS.format(name))
             return
 
         if not self.check_ipython(name, profile):
@@ -37,7 +35,7 @@ class Init(ICommand):
         with open('{}/README'.format(profile), 'w') as read_me:
             read_me.write(texts.IPYTHON_READ_ME.format(name))
 
-        echo_green(texts.LOG_NEW_PROFILE.format(name))
+        self.green(texts.LOG_NEW_PROFILE.format(name))
         click.echo(texts.LOG_PROFILE_PATH.format(profile))
         return profile
 
