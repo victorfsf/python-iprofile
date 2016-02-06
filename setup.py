@@ -31,7 +31,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'iprofile = iprofile.shell:main',
+            'iprofile = iprofile.console:main',
         ],
     }
 )
