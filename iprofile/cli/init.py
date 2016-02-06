@@ -34,6 +34,6 @@ class Init(ICommand):
         with open('{}/README'.format(profile), 'w') as read_me:
             read_me.write(texts.IPYTHON_READ_ME.format(name))
 
-        click.echo(texts.LOG_PROFILE_PATH.format(profile))
         echo_green(texts.LOG_NEW_PROFILE.format(name))
+        click.echo(texts.LOG_PROFILE_PATH.format(profile))
         return profile

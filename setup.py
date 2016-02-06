@@ -10,9 +10,10 @@ setup(
     name='python-iprofile',
     packages=find_packages(exclude=['tests']),
     package_data={
-        'python-iprofile': [],
+        'iprofile': [],
     },
     install_requires=[
+        'ipython>=4',
         'glob2==0.4.1',
         'click==6.2'
     ],

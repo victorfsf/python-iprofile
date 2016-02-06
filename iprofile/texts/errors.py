@@ -5,3 +5,7 @@ ERROR_PROFILE_DOESNT_EXIST = (
     "The Profile '{0}' does not exist!\nRun 'iprofile create {0}'"
     " to create and save it."
 )
+ERROR_PROFILE_DOESNT_EXIST_SHELL = (
+    "The Profile '{0}' does not exist!\n"
+    "Attempting to create it...\n"
+)
