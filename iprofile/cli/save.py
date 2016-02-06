@@ -25,9 +25,7 @@ class Save(Command):
         profile = get_profile_path(name)
 
         if not os.path.isdir(profile):
-            echo_red(
-                texts.ERROR_PROFILE_DOESNT_EXIST.format(name)
-            )
+            echo_red(texts.ERROR_PROFILE_DOESNT_EXIST.format(name))
             return
 
         create_ipython_profile(name)
@@ -36,16 +34,10 @@ class Save(Command):
         shutil.rmtree(startup_path, ignore_errors=True)
 
         if options.get('no_symlink', False):
-            click.echo(
-                texts.LOG_SAVING_PROFILE.format(
-                    ipython_path)
-            )
+            click.echo(texts.LOG_SAVING_PROFILE.format(ipython_path))
             shutil.copytree(abs_profile_path, startup_path)
         else:
-            click.echo(
-                texts.LOG_SAVING_SYMLINKS.format(
-                    ipython_path)
-            )
+            click.echo(texts.LOG_SAVING_SYMLINKS.format(ipython_path))
             os.makedirs(startup_path)
             files = glob('{}/**'.format(abs_profile_path))
             for file_path in files:
