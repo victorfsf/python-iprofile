@@ -12,11 +12,10 @@ pytest:
 	@py.test tests/
 
 coverage:
-	@py.test --cov=iprofile tests/
+	@py.test --cov-config .coveragerc --cov-report html --cov=iprofile tests/
 
 test.warn:
-	@py.test --cov=iprofile tests/ -rw
-	@coverage html
+	@py.test --cov-config .coveragerc --cov-report html --cov=iprofile tests/ -rw
 
 setup: clean requirements test
 
