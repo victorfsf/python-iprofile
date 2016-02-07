@@ -26,27 +26,36 @@ class Init(ICommand):
             self.red(texts.ERROR_PROFILE_EXISTS.format(name))
             return
 
-        if not self.check_ipython(name, profile):
-            os.makedirs(profile)
-            profile_items = ['00_config.ipy', '01_imports.py']
-            for item in profile_items:
-                open('{}/{}'.format(profile, item), 'w').close()
+        startup = '{}/startup'.format(profile)
+        if not self.check_ipython(name, profile, startup):
+            os.makedirs(startup)
+            startup_items = ['00_config.ipy', '01_imports.py']
 
-        with open('{}/README'.format(profile), 'w') as read_me:
+            for item in startup_items:
+                open('{}/{}'.format(startup, item), 'w').close()
+
+            open('{}/ipython_config.py'.format(profile), 'w').close()
+
+        with open('{}/README'.format(startup), 'w') as read_me:
             read_me.write(texts.IPYTHON_READ_ME.format(name))
 
         self.green(texts.LOG_NEW_PROFILE.format(name))
         click.echo(texts.LOG_PROFILE_PATH.format(profile))
         return profile
 
-    def check_ipython(self, name, profile):
-        _, startup_path = get_ipython_path(name)
-        ipython_files = os.listdir(startup_path) if startup_path else []
-        if 'README' in ipython_files:
-            ipython_files.remove('README')
+    def check_ipython(self, name, profile, startup):
+        ipython_path, startup_path, config_file = get_ipython_path(name)
 
-        if startup_path and os.path.isdir(startup_path) and ipython_files:
-            shutil.copytree(startup_path, profile)
-            shutil.rmtree(startup_path, ignore_errors=True)
+        if not ipython_path:
+            return False
+
+        if os.path.isdir(ipython_path) and os.path.isfile(config_file):
+            os.makedirs(profile)
+            shutil.copy(config_file, profile)
+            os.remove(config_file)
+
+            if os.path.isdir(startup_path):
+                shutil.copytree(startup_path, startup)
+                shutil.rmtree(startup_path, ignore_errors=True)
             return True
         return False

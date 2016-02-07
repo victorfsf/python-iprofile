@@ -9,13 +9,13 @@ requirements:
 	@pip install -r requirements.txt
 
 test:
-	@py.test --cov-config .coveragerc --cov-report html --cov=iprofile tests/
+	@py.test --cov-config .coveragerc --cov=iprofile tests/
 
 coverage:
 	@coverage run --source=iprofile -m tests.__init__
 
 test.warn:
-	@py.test --cov-config .coveragerc --cov-report html --cov=iprofile tests/ -rw
+	@py.test --cov-config .coveragerc --cov=iprofile tests/ -rw
 
 setup: clean requirements test
 

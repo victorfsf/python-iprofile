@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from glob2 import glob
 from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
@@ -26,18 +25,39 @@ class Save(ICommand):
             return
 
         create_ipython_profile(name)
-        ipython_path, startup_path = get_ipython_path(name)
+        ipython_path, startup_path, config_file = get_ipython_path(name)
         abs_profile_path = os.path.abspath(profile)
-        shutil.rmtree(startup_path, ignore_errors=True)
 
-        if options.get('no_symlink', False):
+        files = [
+            '{}/ipython_config.py'.format(abs_profile_path),
+            '{}/startup'.format(abs_profile_path)
+        ]
+        self.save(ipython_path, files, options.get('no_symlink', False))
+
+    def save(self, ipython_path, files, no_symlinks):
+        if no_symlinks:
             click.echo(texts.LOG_SAVING_PROFILE.format(ipython_path))
-            shutil.copytree(abs_profile_path, startup_path)
         else:
             click.echo(texts.LOG_SAVING_SYMLINKS.format(ipython_path))
-            os.makedirs(startup_path)
-            files = glob('{}/**'.format(abs_profile_path))
-            for file_path in files:
-                os.symlink(file_path, '{}/{}'.format(
-                    startup_path, os.path.basename(file_path)))
+
+        for file_path in files:
+            path_to_save = '{}/{}'.format(
+                ipython_path, os.path.basename(file_path))
+            self.remove(path_to_save)
+            if no_symlinks:
+                if os.path.isdir(file_path):
+                    shutil.copytree(file_path, path_to_save)
+                else:
+                    shutil.copy(file_path, path_to_save)
+            else:
+                os.symlink(file_path, path_to_save)
+
         self.green(texts.LOG_PROFILE_SAVED)
+
+    def remove(self, path):
+        if os.path.isdir(path):
+            shutil.rmtree(path, ignore_errors=True)
+        if os.path.islink(path):
+            os.unlink(path)
+        if os.path.isfile(path):
+            os.remove(path)

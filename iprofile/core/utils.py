@@ -25,17 +25,23 @@ def get_ipython_path(profile_name):
         result = subprocess.check_output(
             args, stderr=subprocess.STDOUT,
             universal_newlines=True).replace('\n', '')
-        return result, '{}/startup'.format(result)
+        return (
+            result, '{}/startup'.format(result),
+            '{}/ipython_config.py'.format(result)
+        )
     except subprocess.CalledProcessError:
-        return None, None
+        return None, None, None
 
 
 def create_ipython_profile(profile_name):
     args = 'ipython profile create {}'.format(
         get_ipython_name(profile_name)).split(' ')
-    return subprocess.check_output(
-        args, stderr=subprocess.STDOUT,
-        universal_newlines=True).replace('\n', '')
+    try:
+        return subprocess.check_output(
+            args, stderr=subprocess.STDOUT,
+            universal_newlines=True).replace('\n', '')
+    except subprocess.CalledProcessError:
+        return None
 
 
 def echo_red(message):

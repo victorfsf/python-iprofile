@@ -15,7 +15,7 @@ class Clear(ICommand):
 
     def run(self, **options):
         name = options.get('name')
-        ipython_path, _ = get_ipython_path(name)
+        ipython_path, _, _ = get_ipython_path(name)
         ipython_name = get_ipython_name(name)
         if not ipython_path:
             self.red(

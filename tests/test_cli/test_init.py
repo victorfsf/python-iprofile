@@ -25,4 +25,6 @@ def test_run():
 def test_check_ipython():
     Save.run(mock_options)
     shutil.rmtree(get_profile_path('test'))
-    assert init.check_ipython('test', get_profile_path('test')) is True
+    assert init.check_ipython(
+        'test', get_profile_path('test'),
+        get_profile_path('test') + '/startup') is True

@@ -28,7 +28,7 @@ class Shell(ICommand):
             return
 
         ipython_name = get_ipython_name(name)
-        ipython_path, _ = get_ipython_path(name)
+        ipython_path, _, _ = get_ipython_path(name)
         profile_path = get_profile_path(name)
 
         if profile_path and not os.path.isdir(profile_path):
