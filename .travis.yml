@@ -15,7 +15,7 @@ install:
 
 script:
   - make pytest
-  - make test
+  - make coverage
 
 after_sucess:
   - coveralls

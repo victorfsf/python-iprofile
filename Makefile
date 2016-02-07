@@ -2,6 +2,8 @@ clean:
 	@find . -name '*.pyc' -exec rm -f {} \;
 	@find . -name 'Thumbs.db' -exec rm -f {} \;
 	@find . -name '*~' -exec rm -f {} \;
+	@find . -name '*.pyc' -exec rm -f {} \;
+	@find . -name '__pycache__' -exec rm -fr {} \;
 
 requirements:
 	@pip install -r requirements.txt
@@ -9,7 +11,7 @@ requirements:
 pytest:
 	@py.test tests/
 
-test:
+coverage:
 	@py.test --cov=iprofile tests/
 
 test.warn:
