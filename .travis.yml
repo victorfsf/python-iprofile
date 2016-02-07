@@ -12,6 +12,8 @@ install:
   - pip install python-coveralls
 
 script:
-  - py.test --cov-config .coveragerc --cov=iprofile tests/
+  - make test
+  - make coverage
 
-after_sucess: coveralls
+after_script:
+  - coveralls
