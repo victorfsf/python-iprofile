@@ -3,6 +3,7 @@
 from iprofile.cli import Init
 from iprofile.cli import Save
 from iprofile.core.utils import get_profile_path
+from iprofile.core.utils import get_ipython_path
 from iprofile.core.utils import PROJECT_PATH
 import os
 import shutil
@@ -28,3 +29,8 @@ def test_check_ipython():
     assert init.check_ipython(
         'test', get_profile_path('test'),
         get_profile_path('test') + '/startup') is True
+    ipython_path, startup_path, config_file = get_ipython_path('test')
+    os.remove(config_file)
+    assert init.check_ipython(
+        'test', get_profile_path('test'),
+        get_profile_path('test') + '/startup') is False

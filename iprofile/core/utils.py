@@ -36,12 +36,17 @@ def get_ipython_path(profile_name):
 def create_ipython_profile(profile_name):
     args = 'ipython profile create {}'.format(
         get_ipython_name(profile_name)).split(' ')
+    return subprocess.check_output(
+        args, stderr=subprocess.STDOUT,
+        universal_newlines=True).replace('\n', '')
+
+
+def get_active_profile():
     try:
-        return subprocess.check_output(
-            args, stderr=subprocess.STDOUT,
-            universal_newlines=True).replace('\n', '')
-    except subprocess.CalledProcessError:
-        return None
+        with open('{}/.active'.format(PROJECT_PATH), 'r') as active:
+            return slugify(active.read().strip().replace('\n', ''))
+    except IOError:
+        return
 
 
 def echo_red(message):

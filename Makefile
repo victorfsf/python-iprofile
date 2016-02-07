@@ -8,11 +8,14 @@ clean:
 requirements:
 	@pip install -r requirements.txt
 
+coverage:
+	@coverage run --source=iprofile -m tests.__init__
+
 test:
 	@py.test --cov-config .coveragerc --cov=iprofile tests/
 
-coverage:
-	@coverage run --source=iprofile -m tests.__init__
+test.html: test
+	@coverage html
 
 test.warn:
 	@py.test --cov-config .coveragerc --cov=iprofile tests/ -rw

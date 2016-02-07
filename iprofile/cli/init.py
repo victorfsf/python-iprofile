@@ -52,10 +52,8 @@ class Init(ICommand):
         if os.path.isdir(ipython_path) and os.path.isfile(config_file):
             os.makedirs(profile)
             shutil.copy(config_file, profile)
-            os.remove(config_file)
 
             if os.path.isdir(startup_path):
                 shutil.copytree(startup_path, startup)
-                shutil.rmtree(startup_path, ignore_errors=True)
             return True
         return False
