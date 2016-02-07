@@ -6,9 +6,11 @@ clean:
 requirements:
 	@pip install -r requirements.txt
 
+pytest:
+	@py.test tests/
+
 test:
 	@py.test --cov=iprofile tests/
-	@coverage html
 
 test.warn:
 	@py.test --cov=iprofile tests/ -rw
