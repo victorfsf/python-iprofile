@@ -13,7 +13,7 @@ def iregister(command):
 
 
 def icommand(**kwargs):
-    def command_wrapper(*cargs, **ckwargs):
+    def command_wrapper(*cargs):
         func = cargs[0]
         command = click.decorators._make_command(
             func, kwargs.pop('name', func.__name__.lower()),
