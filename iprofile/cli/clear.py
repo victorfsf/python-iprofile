@@ -24,7 +24,7 @@ class Clear(ICommand):
 
             try:
                 confirmation = raw_input(texts.INPUT_CONFIRM_DELETE)
-            except AttributeError:
+            except NameError:
                 confirmation = input(texts.INPUT_CONFIRM_DELETE)
 
             if confirmation.lower().startswith('y'):
