@@ -14,7 +14,7 @@ import shutil
 
 @icommand(help=texts.HELP_INIT, short_help=texts.HELP_INIT)
 @click.argument('name')
-@click.option('--profile-dir', required=False, help=texts.HELP_NO_SYMLINKS)
+@click.option('--profile-dir', required=False, help=texts.HELP_PROFILE_DIR)
 class Init(ICommand):
 
     def run(self, **options):
