@@ -17,20 +17,14 @@ class Clear(ICommand):
 
     def run(self, **options):
         name = options.pop('name')
-
         if not name:
             if options.get('no_input', False):
                 return self.clear_all()
-
-            try:
-                confirmation = raw_input(texts.INPUT_CONFIRM_DELETE)
-            except NameError:
-                confirmation = input(texts.INPUT_CONFIRM_DELETE)
-
-            if confirmation.lower().startswith('y'):
+            if click.confirm(texts.INPUT_CONFIRM_DELETE):
                 return self.clear_all()
             return
-        return self.run_for_profile(name)
+        else:
+            return self.run_for_profile(name)
 
     def run_for_profile(self, name):
         ipython_path, _, _ = get_ipython_path(name)

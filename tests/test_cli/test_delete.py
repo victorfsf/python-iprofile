@@ -2,11 +2,7 @@
 
 from iprofile.cli import Create
 from iprofile.cli import Delete
-
-try:
-    import __builtin__ as builtins
-except ImportError:
-    import builtins
+import click
 
 
 mock_options_1 = {
@@ -40,46 +36,22 @@ def test_delete_all_no_input():
 
 def test_delete_all_confirm_yes(monkeypatch):
 
-    def mock_raw_input(*args, **kwargs):
-        return 'y'
+    def mock_confirm(*args, **kwargs):
+        return True
 
-    try:
-        monkeypatch.setattr(builtins, 'raw_input', mock_raw_input)
-    except AttributeError:
-        monkeypatch.setattr(builtins, 'input', mock_raw_input)
-
+    monkeypatch.setattr(click, 'confirm', mock_confirm)
     Create.run(mock_options_1)
     Create.run(mock_options_create)
     Delete.run(mock_options_3)
 
-    try:
-        monkeypatch.setattr(builtins, 'input', mock_raw_input)
-        monkeypatch.delattr(builtins, 'raw_input')
-        Create.run(mock_options_1)
-        Create.run(mock_options_create)
-        Delete.run(mock_options_3)
-    except AttributeError:
-        pass
-
 
 def test_delete_all_confirm_no(monkeypatch):
 
-    def mock_raw_input(*args, **kwargs):
-        return 'n'
+    def mock_confirm(*args, **kwargs):
+        return False
 
-    try:
-        monkeypatch.setattr(builtins, 'raw_input', mock_raw_input)
-    except AttributeError:
-        monkeypatch.setattr(builtins, 'input', mock_raw_input)
-
+    monkeypatch.setattr(click, 'confirm', mock_confirm)
     Delete.run(mock_options_3)
-
-    try:
-        monkeypatch.setattr(builtins, 'input', mock_raw_input)
-        monkeypatch.delattr(builtins, 'raw_input')
-        Delete.run(mock_options_3)
-    except AttributeError:
-        pass
 
 
 def test_delete_none():
