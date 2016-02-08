@@ -21,7 +21,12 @@ class Clear(ICommand):
         if not name:
             if options.get('no_input', False):
                 return self.clear_all()
-            confirmation = raw_input(texts.INPUT_CONFIRM_DELETE)
+
+            try:
+                confirmation = raw_input(texts.INPUT_CONFIRM_DELETE)
+            except AttributeError:
+                confirmation = input(texts.INPUT_CONFIRM_DELETE)
+
             if confirmation.lower().startswith('y'):
                 return self.clear_all()
             return
