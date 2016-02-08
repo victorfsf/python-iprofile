@@ -6,16 +6,16 @@ import os
 import subprocess
 
 
-PROJECT_PATH = '{}/iprofiles'.format(os.getcwd())
+PROJECT_PATH = '{0}/iprofiles'.format(os.getcwd())
 PROJECT_NAME = os.path.basename(os.getcwd())
 
 
 def get_ipython_name(profile_name):
-    return '{}_{}'.format(slugify(PROJECT_NAME), profile_name)
+    return '{0}_{1}'.format(slugify(PROJECT_NAME), profile_name)
 
 
 def get_profile_path(profile_name):
-    return '{}/{}'.format(PROJECT_PATH, profile_name)
+    return '{0}/{1}'.format(PROJECT_PATH, profile_name)
 
 
 def get_ipython_path(profile_name, profile_dir=None):
@@ -26,31 +26,31 @@ def get_ipython_path(profile_name, profile_dir=None):
     if profile_dir:
         profile_dir = get_user_home(profile_dir)
         return (
-            profile_dir, '{}/startup'.format(profile_dir),
-            '{}/ipython_config.py'.format(profile_dir)
+            profile_dir, '{0}/startup'.format(profile_dir),
+            '{0}/ipython_config.py'.format(profile_dir)
         )
 
-    args = 'ipython locate profile {}'.format(
+    args = 'ipython locate profile {0}'.format(
         get_ipython_name(profile_name)).split(' ')
     try:
         result = subprocess.check_output(
             args, stderr=subprocess.STDOUT,
             universal_newlines=True).replace('\n', '')
         return (
-            result, '{}/startup'.format(result),
-            '{}/ipython_config.py'.format(result)
+            result, '{0}/startup'.format(result),
+            '{0}/ipython_config.py'.format(result)
         )
     except subprocess.CalledProcessError:
         return None, None, None
 
 
 def create_ipython_profile(profile_name, directory=None):
-    args = 'ipython profile create {}'.format(
+    args = 'ipython profile create {0}'.format(
         get_ipython_name(profile_name)).split(' ')
     if directory:
         if not os.path.isdir(directory):
             os.makedirs(directory)
-        args += ['--profile-dir', '"{}"'.format(directory)]
+        args += ['--profile-dir', '"{0}"'.format(directory)]
     return subprocess.check_output(
         args, stderr=get_null_output(),
         universal_newlines=True).replace('\n', '')
@@ -58,7 +58,7 @@ def create_ipython_profile(profile_name, directory=None):
 
 def get_active_profile():
     try:
-        with open('{}/.active'.format(PROJECT_PATH), 'r') as active:
+        with open('{0}/.active'.format(PROJECT_PATH), 'r') as active:
             return slugify(active.read().strip().replace('\n', ''))
     except IOError:
         return
@@ -92,7 +92,7 @@ def read_config(config_file):
 
 def get_profile_directory(profile_name):
     profile_path = get_profile_path(profile_name)
-    config_file = '{}/.config'.format(profile_path)
+    config_file = '{0}/.config'.format(profile_path)
     return get_user_home(read_config(config_file).get('PROFILE_DIR', None))
 
 

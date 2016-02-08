@@ -38,8 +38,8 @@ class Save(ICommand):
         ipython_path, startup_path, config_file = get_ipython_path(
             name, profile_dir)
         files = [
-            '{}/ipython_config.py'.format(abs_profile_path),
-            '{}/startup'.format(abs_profile_path)
+            '{0}/ipython_config.py'.format(abs_profile_path),
+            '{0}/startup'.format(abs_profile_path)
         ]
         self.save(ipython_path, files, options.get('no_symlink', False))
 
@@ -50,7 +50,7 @@ class Save(ICommand):
             click.echo(texts.LOG_SAVING_SYMLINKS.format(ipython_path))
 
         for file_path in files:
-            path_to_save = '{}/{}'.format(
+            path_to_save = '{0}/{1}'.format(
                 ipython_path, os.path.basename(file_path))
             self.remove(path_to_save)
             if no_symlinks:

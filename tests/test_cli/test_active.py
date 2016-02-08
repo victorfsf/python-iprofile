@@ -19,7 +19,7 @@ Activate.run(mock_options)
 
 def test_get_active_profile():
     assert active.get_active_profile() == 'test'
-    os.remove('{}/.active'.format(active.project_path))
+    os.remove('{0}/.active'.format(active.project_path))
     assert active.get_active_profile() is None
 
 

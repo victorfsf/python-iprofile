@@ -16,7 +16,7 @@ class Active(ICommand):
 
     def get_active_profile(self):
         try:
-            with open('{}/.active'.format(self.project_path), 'r') as active:
+            with open('{0}/.active'.format(self.project_path), 'r') as active:
                 return active.read()
         except IOError:
             return

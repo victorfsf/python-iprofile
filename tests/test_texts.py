@@ -17,5 +17,5 @@ with a prefix, e.g.::
     99-last.ipy
 
 To update/add new files (or if you set the '--no-symlink' option, or created this with the 'init' command), run:
-    iprofile save {} [--no-symlink]
+    iprofile save {0} [--no-symlink]
 """

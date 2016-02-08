@@ -25,11 +25,11 @@ class Init(ICommand):
         if not self.check_directories(profile, name):
             return
 
-        startup = '{}/startup'.format(profile)
+        startup = '{0}/startup'.format(profile)
         if not self.check_ipython(name, profile, startup, profile_dir):
             self.create_profile(profile, startup, profile_dir)
 
-        with open('{}/README'.format(startup), 'w') as read_me:
+        with open('{0}/README'.format(startup), 'w') as read_me:
             read_me.write(texts.IPYTHON_READ_ME.format(name))
 
         self.green(texts.LOG_NEW_PROFILE.format(name))
@@ -66,19 +66,19 @@ class Init(ICommand):
         os.makedirs(startup)
 
         for item in ['00_config.ipy', '01_imports.py']:
-            open('{}/{}'.format(startup, item), 'w').close()
+            open('{0}/{1}'.format(startup, item), 'w').close()
 
-        open('{}/ipython_config.py'.format(profile), 'w').close()
+        open('{0}/ipython_config.py'.format(profile), 'w').close()
         self.create_config(profile, directory)
 
     def create_config(self, profile, directory):
-        profile_config = '{}/.config'.format(profile)
+        profile_config = '{0}/.config'.format(profile)
         if os.path.isfile(profile_config):
             with open(profile_config, 'r') as f:
                 config_data = f.readlines()
         elif directory and profile not in os.path.abspath(
                 get_user_home(directory)):
-            config_data = ['PROFILE_DIR={}'.format(directory)]
+            config_data = ['PROFILE_DIR={0}'.format(directory)]
         else:
             config_data = []
 

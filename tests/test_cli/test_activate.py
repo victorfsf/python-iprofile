@@ -26,7 +26,7 @@ def test_run():
 
 
 def test_activate_profile():
-    active_path = '{}/.active'.format(activate.project_path)
+    active_path = '{0}/.active'.format(activate.project_path)
     activate.activate_profile('test')
     with open(active_path, 'r') as active:
         assert active.read() == 'test'
