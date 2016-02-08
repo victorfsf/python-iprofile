@@ -69,16 +69,15 @@ class Init(ICommand):
             open('{}/{}'.format(startup, item), 'w').close()
 
         open('{}/ipython_config.py'.format(profile), 'w').close()
+        self.create_config(profile, directory)
 
-        if directory and profile in os.path.abspath(get_user_home(directory)):
-            directory = None
-
+    def create_config(self, profile, directory):
         profile_config = '{}/.config'.format(profile)
-
         if os.path.isfile(profile_config):
             with open(profile_config, 'r') as f:
                 config_data = f.readlines()
-        elif directory:
+        elif directory and profile not in os.path.abspath(
+                get_user_home(directory)):
             config_data = ['PROFILE_DIR={}'.format(directory)]
         else:
             config_data = []

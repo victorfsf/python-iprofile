@@ -13,12 +13,19 @@ import shutil
 
 
 @icommand(help=texts.HELP_SAVE, short_help=texts.HELP_SAVE)
-@click.argument('name')
+@click.argument('name', required=False)
 @click.option('--no-symlink', is_flag=True, help=texts.HELP_NO_SYMLINKS)
 class Save(ICommand):
 
     def run(self, **options):
-        name = options.get('name')
+        name = options.pop('name')
+        if not name:
+            for profile in os.listdir(self.project_path):
+                self.run_for_profile(profile, **options)
+        else:
+            self.run_for_profile(name, **options)
+
+    def run_for_profile(self, name, **options):
         profile = get_profile_path(name)
 
         if not os.path.isdir(profile):

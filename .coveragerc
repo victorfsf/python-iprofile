@@ -1,5 +1,6 @@
 [run]
 source = iprofile
+omit = __init__.py
 
 [report]
 exclude_lines = Shell

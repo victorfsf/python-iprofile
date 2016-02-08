@@ -15,5 +15,14 @@ ERROR_PROFILE_NOT_ACTIVE = (
     "The Profile '{}' can't be deactivated: it's not even active!"
 )
 ERROR_NO_ACTIVE_PROFILE = (
-    "There are no active profiles to this project."
+    "There are no active profiles on this project."
+)
+ERROR_NO_PROFILES_TO_SAVE = (
+    "There are no profiles to save."
+)
+ERROR_NO_PROFILES_TO_CLEAR = (
+    "There are no profiles to clear."
+)
+ERROR_NO_PROFILES_TO_DELETE = (
+    "There are no profiles to delete."
 )

@@ -29,3 +29,9 @@ LOG_PROFILE_DEACTIVATED = (
 LOG_ACTIVE_PROFILE = (
     "Active profile: '{}'."
 )
+LOG_QTD_DELETED = (
+    "Successfully deleted {} profiles."
+)
+LOG_QTD_CLEARED = (
+    "Successfully cleared {} profiles."
+)
