@@ -2,7 +2,11 @@
 
 from iprofile.cli import Create
 from iprofile.cli import Delete
-import __builtin__
+
+try:
+    import __builtin__ as builtins
+except ImportError:
+    import builtins
 
 
 mock_options_1 = {
@@ -38,7 +42,7 @@ def test_delete_all_confirm_yes(monkeypatch):
 
     def mock_raw_input(*args, **kwargs):
         return 'y'
-    monkeypatch.setattr(__builtin__, 'raw_input', mock_raw_input)
+    monkeypatch.setattr(builtins, 'raw_input', mock_raw_input)
 
     Create.run(mock_options_1)
     Create.run(mock_options_create)
@@ -49,7 +53,7 @@ def test_delete_all_confirm_no(monkeypatch):
 
     def mock_raw_input(*args, **kwargs):
         return 'n'
-    monkeypatch.setattr(__builtin__, 'raw_input', mock_raw_input)
+    monkeypatch.setattr(builtins, 'raw_input', mock_raw_input)
     Delete.run(mock_options_3)
 
 
