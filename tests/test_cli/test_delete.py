@@ -43,16 +43,23 @@ def test_delete_all_confirm_yes(monkeypatch):
     def mock_raw_input(*args, **kwargs):
         return 'y'
 
-    monkeypatch.setattr(builtins, 'raw_input', mock_raw_input)
+    try:
+        monkeypatch.setattr(builtins, 'raw_input', mock_raw_input)
+    except AttributeError:
+        monkeypatch.setattr(builtins, 'input', mock_raw_input)
+
     Create.run(mock_options_1)
     Create.run(mock_options_create)
     Delete.run(mock_options_3)
 
-    monkeypatch.setattr(builtins, 'input', mock_raw_input)
-    monkeypatch.delattr(builtins, 'raw_input')
-    Create.run(mock_options_1)
-    Create.run(mock_options_create)
-    Delete.run(mock_options_3)
+    try:
+        monkeypatch.setattr(builtins, 'input', mock_raw_input)
+        monkeypatch.delattr(builtins, 'raw_input')
+        Create.run(mock_options_1)
+        Create.run(mock_options_create)
+        Delete.run(mock_options_3)
+    except AttributeError:
+        pass
 
 
 def test_delete_all_confirm_no(monkeypatch):
@@ -60,12 +67,19 @@ def test_delete_all_confirm_no(monkeypatch):
     def mock_raw_input(*args, **kwargs):
         return 'n'
 
-    monkeypatch.setattr(builtins, 'raw_input', mock_raw_input)
+    try:
+        monkeypatch.setattr(builtins, 'raw_input', mock_raw_input)
+    except AttributeError:
+        monkeypatch.setattr(builtins, 'input', mock_raw_input)
+
     Delete.run(mock_options_3)
 
-    monkeypatch.setattr(builtins, 'input', mock_raw_input)
-    monkeypatch.delattr(builtins, 'raw_input')
-    Delete.run(mock_options_3)
+    try:
+        monkeypatch.setattr(builtins, 'input', mock_raw_input)
+        monkeypatch.delattr(builtins, 'raw_input')
+        Delete.run(mock_options_3)
+    except AttributeError:
+        pass
 
 
 def test_delete_none():
