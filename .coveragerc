@@ -6,4 +6,3 @@ source = iprofile
 [report]
 exclude_lines =
     Shell
-    NameError
