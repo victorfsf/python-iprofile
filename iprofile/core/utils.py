@@ -6,7 +6,7 @@ import os
 import subprocess
 
 
-PROJECT_PATH = '{}/.iprofiles'.format(os.getcwd())
+PROJECT_PATH = '{}/iprofiles'.format(os.getcwd())
 PROJECT_NAME = os.path.basename(os.getcwd())
 
 
@@ -18,7 +18,18 @@ def get_profile_path(profile_name):
     return '{}/{}'.format(PROJECT_PATH, profile_name)
 
 
-def get_ipython_path(profile_name):
+def get_ipython_path(profile_name, profile_dir=None):
+
+    if not profile_dir:
+        profile_dir = get_profile_directory(profile_name)
+
+    if profile_dir:
+        profile_dir = get_user_home(profile_dir)
+        return (
+            profile_dir, '{}/startup'.format(profile_dir),
+            '{}/ipython_config.py'.format(profile_dir)
+        )
+
     args = 'ipython locate profile {}'.format(
         get_ipython_name(profile_name)).split(' ')
     try:
@@ -33,11 +44,15 @@ def get_ipython_path(profile_name):
         return None, None, None
 
 
-def create_ipython_profile(profile_name):
+def create_ipython_profile(profile_name, directory=None):
     args = 'ipython profile create {}'.format(
         get_ipython_name(profile_name)).split(' ')
+    if directory:
+        if not os.path.isdir(directory):
+            os.makedirs(directory)
+        args += ['--profile-dir', '"{}"'.format(directory)]
     return subprocess.check_output(
-        args, stderr=subprocess.STDOUT,
+        args, stderr=get_null_output(),
         universal_newlines=True).replace('\n', '')
 
 
@@ -55,3 +70,33 @@ def echo_red(message):
 
 def echo_green(message):
     return click.echo(click.style(message, fg='green', bold=True))
+
+
+def get_null_output():
+    try:
+        return subprocess.DEVNULL
+    except AttributeError:
+        return open(os.devnull, 'wb')
+
+
+def read_config(config_file):
+    data = {}
+    if os.path.isfile(config_file):
+        with open(config_file, 'r') as f:
+            data_list = f.readlines()
+            for line in data_list:
+                config, value = line.split('=', 1)
+                data[config] = value
+    return data
+
+
+def get_profile_directory(profile_name):
+    profile_path = get_profile_path(profile_name)
+    config_file = '{}/.config'.format(profile_path)
+    return get_user_home(read_config(config_file).get('PROFILE_DIR', None))
+
+
+def get_user_home(directory):
+    if directory and directory.startswith('~'):
+        directory = directory.replace('~', os.path.expanduser('~'), 1)
+    return directory

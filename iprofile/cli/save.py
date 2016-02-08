@@ -6,6 +6,7 @@ from iprofile.core.models import ICommand
 from iprofile.core.utils import create_ipython_profile
 from iprofile.core.utils import get_ipython_path
 from iprofile.core.utils import get_profile_path
+from iprofile.core.utils import get_profile_directory
 import click
 import os
 import shutil
@@ -24,10 +25,11 @@ class Save(ICommand):
             self.red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(name))
             return
 
-        create_ipython_profile(name)
-        ipython_path, startup_path, config_file = get_ipython_path(name)
         abs_profile_path = os.path.abspath(profile)
-
+        profile_dir = get_profile_directory(name)
+        create_ipython_profile(name, profile_dir)
+        ipython_path, startup_path, config_file = get_ipython_path(
+            name, profile_dir)
         files = [
             '{}/ipython_config.py'.format(abs_profile_path),
             '{}/startup'.format(abs_profile_path)

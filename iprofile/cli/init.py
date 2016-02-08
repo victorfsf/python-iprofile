@@ -5,6 +5,7 @@ from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
 from iprofile.core.utils import get_profile_path
 from iprofile.core.utils import get_ipython_path
+from iprofile.core.utils import get_user_home
 from iprofile.core.utils import PROJECT_PATH
 import click
 import os
@@ -13,28 +14,20 @@ import shutil
 
 @icommand(help=texts.HELP_INIT, short_help=texts.HELP_INIT)
 @click.argument('name')
+@click.option('--profile-dir', required=False, help=texts.HELP_NO_SYMLINKS)
 class Init(ICommand):
 
     def run(self, **options):
         name = options.get('name')
+        profile_dir = options.get('profile_dir')
         profile = get_profile_path(name)
 
-        if not os.path.isdir(PROJECT_PATH):
-            os.makedirs(PROJECT_PATH)
-
-        if os.path.isdir(profile):
-            self.red(texts.ERROR_PROFILE_EXISTS.format(name))
+        if not self.check_directories(profile, name):
             return
 
         startup = '{}/startup'.format(profile)
-        if not self.check_ipython(name, profile, startup):
-            os.makedirs(startup)
-            startup_items = ['00_config.ipy', '01_imports.py']
-
-            for item in startup_items:
-                open('{}/{}'.format(startup, item), 'w').close()
-
-            open('{}/ipython_config.py'.format(profile), 'w').close()
+        if not self.check_ipython(name, profile, startup, profile_dir):
+            self.create_profile(profile, startup, profile_dir)
 
         with open('{}/README'.format(startup), 'w') as read_me:
             read_me.write(texts.IPYTHON_READ_ME.format(name))
@@ -43,8 +36,9 @@ class Init(ICommand):
         click.echo(texts.LOG_PROFILE_PATH.format(profile))
         return profile
 
-    def check_ipython(self, name, profile, startup):
-        ipython_path, startup_path, config_file = get_ipython_path(name)
+    def check_ipython(self, name, profile, startup, directory):
+        ipython_path, startup_path, config_file = get_ipython_path(
+            name, directory)
 
         if not ipython_path:
             return False
@@ -57,3 +51,38 @@ class Init(ICommand):
                 shutil.copytree(startup_path, startup)
             return True
         return False
+
+    def check_directories(self, profile, name):
+        if not os.path.isdir(PROJECT_PATH):
+            os.makedirs(PROJECT_PATH)
+
+        if os.path.isdir(profile):
+            self.red(texts.ERROR_PROFILE_EXISTS.format(name))
+            return False
+
+        return True
+
+    def create_profile(self, profile, startup, directory):
+        os.makedirs(startup)
+
+        for item in ['00_config.ipy', '01_imports.py']:
+            open('{}/{}'.format(startup, item), 'w').close()
+
+        open('{}/ipython_config.py'.format(profile), 'w').close()
+
+        if directory and profile in os.path.abspath(get_user_home(directory)):
+            directory = None
+
+        profile_config = '{}/.config'.format(profile)
+
+        if os.path.isfile(profile_config):
+            with open(profile_config, 'r') as f:
+                config_data = f.readlines()
+        elif directory:
+            config_data = ['PROFILE_DIR={}'.format(directory)]
+        else:
+            config_data = []
+
+        with open(profile_config, 'w') as f:
+            for data in config_data:
+                f.write(data)

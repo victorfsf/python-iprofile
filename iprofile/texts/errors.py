@@ -5,10 +5,6 @@ ERROR_PROFILE_DOESNT_EXIST_RUN = (
     "The profile '{0}' does not exist!\nRun 'iprofile create {0}'"
     " to create and save it."
 )
-ERROR_PROFILE_DOESNT_EXIST_SHELL = (
-    "The profile '{0}' does not exist!\n"
-    "Attempting to create it...\n"
-)
 ERROR_IPYTHON_PROFILE_DOESNT_EXIST = (
     "The IPython profile '{}' does not exist!"
 )

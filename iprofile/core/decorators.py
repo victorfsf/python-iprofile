@@ -6,10 +6,10 @@ import click
 
 
 def iregister(command):
-    def add_to_registry(command):
+    def registry_wrapper(command):
         registry.add(command)
         return command
-    return add_to_registry(command)
+    return registry_wrapper(command)
 
 
 def icommand(**kwargs):
