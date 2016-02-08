@@ -1,3 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .cli import *  # noqa
+try:
+    from .cli import *  # noqa
+except ImportError:
+    from cli import *  # noqa
