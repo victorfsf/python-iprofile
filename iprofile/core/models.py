@@ -10,9 +10,9 @@ class ICommand(object):
     project_path = PROJECT_PATH
 
     def __init__(self, _autorun=True, *args, **kwargs):
-        self.kwargs = kwargs.copy()
+        self.options = kwargs.copy()
         if _autorun:
-            self.run(**self.kwargs)
+            self.run(**self.options)
         kwargs = {}
         super(ICommand, self).__init__(*args, **kwargs)
 

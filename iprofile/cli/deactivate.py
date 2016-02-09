@@ -10,7 +10,7 @@ import os
 class Deactivate(ICommand):
 
     def run(self, **options):
-        active_path = '{}/.active'.format(self.project_path)
+        active_path = '{0}/.active'.format(self.project_path)
         try:
             with open(active_path, 'r') as active:
                 name = active.read()

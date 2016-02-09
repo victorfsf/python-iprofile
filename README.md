@@ -8,4 +8,15 @@
 
 *A CLI for handling IPython 4+ profiles startup scripts.*
 
+## Installation
+
+Install via pip:
+```
+$ pip install python-iprofile
+```
+
+Or download from the [PyPI repository](https://pypi.python.org/pypi/python-iprofile/).
+
+## Documentation
+
 [See the wiki for the documentation.](https://github.com/victorfsf/python-iprofile/wiki)
