@@ -35,7 +35,7 @@ class Save(ICommand):
         abs_profile_path = os.path.abspath(profile)
         profile_dir = get_profile_directory(name)
         create_ipython_profile(name, profile_dir)
-        ipython_path, _, config_file = get_ipython_path(
+        ipython_path, _, _ = get_ipython_path(
             name, profile_dir)
         files = [
             '{0}/ipython_config.py'.format(abs_profile_path),
