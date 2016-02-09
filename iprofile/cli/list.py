@@ -15,10 +15,11 @@ class List(ICommand):
 
     def run(self, **options):
         try:
-            profiles = filter(
-                lambda x: os.path.isdir('{0}/{1}'.format(self.project_path, x))
-                and 'ipython_config.py' in os.listdir('{0}/{1}'.format(
-                    self.project_path, x)), os.listdir('iprofiles'))
+            profiles = [
+                x for x in os.listdir('iprofiles')
+                if os.path.isdir(self.format(x)) and
+                'ipython_config.py' in os.listdir(self.format(x))
+            ]
 
             if len(profiles) == 0:
                 self.no_profiles()
@@ -43,3 +44,6 @@ class List(ICommand):
 
     def no_profiles(self):
         self.red(texts.ERROR_NO_PROFILES_TO_LIST)
+
+    def format(self, x):
+        return '{0}/{1}'.format(self.project_path, x)
