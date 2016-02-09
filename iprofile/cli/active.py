@@ -20,5 +20,5 @@ class Active(ICommand):
         try:
             with open('{0}/.active'.format(self.project_path), 'r') as active:
                 return active.read()
-        except IOError:
+        except (OSError, IOError):
             return

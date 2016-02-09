@@ -15,10 +15,10 @@ def iregister(command):
 def icommand(**kwargs):
     def command_wrapper(*cargs):
         func = cargs[0]
-        command = click.decorators._make_command(
-            func, kwargs.pop('name', func.__name__.lower()),
-            kwargs, kwargs.pop('cls', Command)
-        )
+        command = click.command(
+            kwargs.pop('name', func.__name__.lower()),
+            kwargs.pop('cls', Command), **kwargs
+        )(func)
         command.__doc__ = func.__doc__
         iregister(command)
         return command

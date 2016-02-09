@@ -17,6 +17,10 @@ class Clear(ICommand):
 
     def run(self, **options):
         name = options.pop('name')
+
+        if not os.path.isdir(self.project_path):
+            return
+
         if not name:
             if options.get('no_input', False):
                 return self.clear_all()
