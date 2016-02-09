@@ -27,6 +27,7 @@ setup(
         'ipython',
         'python',
         'python2',
+        'python3',
         'shell',
         'profile',
         'iprofile'
