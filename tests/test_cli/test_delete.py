@@ -3,6 +3,7 @@
 from iprofile.cli import Create
 from iprofile.cli import Delete
 import click
+import shutil
 
 
 mock_options_1 = {
@@ -26,6 +27,12 @@ mock_options_3 = {
 def test_delete():
     Create.run(mock_options_1)
     Delete.run(mock_options_1)
+
+
+def test_delete_no_iprofiles_folder():
+    shutil.move('iprofiles', 'iprofiles2')
+    Delete.run(mock_options_1)
+    shutil.move('iprofiles2', 'iprofiles')
 
 
 def test_delete_all_no_input():
