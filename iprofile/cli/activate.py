@@ -24,5 +24,5 @@ class Activate(ICommand):
         self.green(texts.LOG_PROFILE_ACTIVATED.format(name))
 
     def activate_profile(self, profile_name):
-        with open('{}/.active'.format(self.project_path), 'w') as active:
+        with open('{0}/.active'.format(self.project_path), 'w') as active:
             active.write(profile_name)

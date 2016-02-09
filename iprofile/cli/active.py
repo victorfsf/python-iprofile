@@ -11,12 +11,14 @@ class Active(ICommand):
 
     def run(self, **options):
         name = self.get_active_profile()
-        (self.red(texts.ERROR_NO_ACTIVE_PROFILE) if not name else
-         click.echo(texts.LOG_ACTIVE_PROFILE.format(name)))
+        if not name:
+            self.red(texts.ERROR_NO_ACTIVE_PROFILE)
+        else:
+            click.echo(texts.LOG_ACTIVE_PROFILE.format(name))
 
     def get_active_profile(self):
         try:
-            with open('{}/.active'.format(self.project_path), 'r') as active:
+            with open('{0}/.active'.format(self.project_path), 'r') as active:
                 return active.read()
-        except IOError:
+        except (OSError, IOError):
             return

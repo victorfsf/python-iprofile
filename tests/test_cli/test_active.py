@@ -2,6 +2,7 @@
 
 from iprofile.cli import Active
 from iprofile.cli import Activate
+from iprofile.cli import Deactivate
 from iprofile.cli import Create
 from iprofile.cli import Delete
 import os
@@ -19,9 +20,20 @@ Activate.run(mock_options)
 
 def test_get_active_profile():
     assert active.get_active_profile() == 'test'
-    os.remove('{}/.active'.format(active.project_path))
+    os.remove('{0}/.active'.format(active.project_path))
     assert active.get_active_profile() is None
 
 
 def test_end():
     Delete.run(mock_options)
+
+
+def test_name_is_none():
+    Deactivate.run(mock_options)
+    Active.run({})
+
+
+def test_name_is_not_none():
+    Activate.run(mock_options)
+    Active.run({})
+    Deactivate.run(mock_options)
