@@ -1,8 +1,2 @@
-# Removed NameError due to Python versions compatibility on iprofile/cli/clear.py:27
-
 [run]
 source = iprofile
-
-[report]
-exclude_lines =
-    Shell

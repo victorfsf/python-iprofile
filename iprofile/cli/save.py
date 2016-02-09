@@ -66,7 +66,7 @@ class Save(ICommand):
     def remove(self, path):
         if os.path.isdir(path):
             shutil.rmtree(path, ignore_errors=True)
-        if os.path.islink(path):
+        elif os.path.islink(path):
             os.unlink(path)
-        if os.path.isfile(path):
+        elif os.path.isfile(path):
             os.remove(path)

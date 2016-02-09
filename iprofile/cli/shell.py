@@ -7,8 +7,8 @@ from iprofile.core.models import ICommand
 from iprofile.core.utils import get_active_profile
 from iprofile.core.utils import get_ipython_path
 from iprofile.core.utils import get_profile_path
-from IPython import start_ipython
 import click
+import IPython
 import os
 
 
@@ -20,7 +20,7 @@ class Shell(ICommand):
         name = options.get('name')
 
         if not name:
-            start_ipython(argv=[])
+            IPython.start_ipython(argv=[])
             return
 
         ipython_path, _, _ = get_ipython_path(name)
@@ -32,4 +32,4 @@ class Shell(ICommand):
         elif not ipython_path:
             Save.run(options)
             click.echo()
-        start_ipython(argv=['--profile-dir', ipython_path])
+        IPython.start_ipython(argv=['--profile-dir', ipython_path])

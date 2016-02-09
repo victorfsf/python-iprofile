@@ -11,8 +11,10 @@ class Active(ICommand):
 
     def run(self, **options):
         name = self.get_active_profile()
-        (self.red(texts.ERROR_NO_ACTIVE_PROFILE) if not name else
-         click.echo(texts.LOG_ACTIVE_PROFILE.format(name)))
+        if not name:
+            self.red(texts.ERROR_NO_ACTIVE_PROFILE)
+        else:
+            click.echo(texts.LOG_ACTIVE_PROFILE.format(name))
 
     def get_active_profile(self):
         try:

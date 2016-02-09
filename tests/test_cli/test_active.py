@@ -2,6 +2,7 @@
 
 from iprofile.cli import Active
 from iprofile.cli import Activate
+from iprofile.cli import Deactivate
 from iprofile.cli import Create
 from iprofile.cli import Delete
 import os
@@ -25,3 +26,8 @@ def test_get_active_profile():
 
 def test_end():
     Delete.run(mock_options)
+
+
+def test_name_is_none():
+    Deactivate.run(mock_options)
+    Active.run({})
