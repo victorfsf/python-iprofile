@@ -23,6 +23,9 @@ ERROR_NO_PROFILES_TO_SAVE = (
 ERROR_NO_PROFILES_TO_CLEAR = (
     "There are no profiles to clear."
 )
+ERROR_NO_PROFILES_TO_LIST = (
+    "There are no profiles to list."
+)
 ERROR_NO_PROFILES_TO_DELETE = (
     "There are no profiles to delete."
 )

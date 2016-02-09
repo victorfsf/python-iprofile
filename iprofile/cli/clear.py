@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
-from iprofile.core.utils import get_ipython_path
 from iprofile.core.utils import get_ipython_name
-from iprofile import texts
+from iprofile.core.utils import get_ipython_path
 import click
 import os
 import shutil
@@ -16,7 +16,7 @@ import shutil
 class Clear(ICommand):
 
     def run(self, **options):
-        name = options.pop('name')
+        name = self.slugify_name(options)
 
         if not os.path.isdir(self.project_path):
             return

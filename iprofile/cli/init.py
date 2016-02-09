@@ -3,8 +3,8 @@
 from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
-from iprofile.core.utils import get_profile_path
 from iprofile.core.utils import get_ipython_path
+from iprofile.core.utils import get_profile_path
 from iprofile.core.utils import get_user_home
 from iprofile.core.utils import PROJECT_PATH
 import click
@@ -18,7 +18,7 @@ import shutil
 class Init(ICommand):
 
     def run(self, **options):
-        name = options.get('name')
+        name = self.slugify_name(options)
         profile_dir = options.get('profile_dir')
         profile = get_profile_path(name)
 

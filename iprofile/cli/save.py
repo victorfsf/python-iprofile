@@ -5,8 +5,8 @@ from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
 from iprofile.core.utils import create_ipython_profile
 from iprofile.core.utils import get_ipython_path
-from iprofile.core.utils import get_profile_path
 from iprofile.core.utils import get_profile_directory
+from iprofile.core.utils import get_profile_path
 import click
 import os
 import shutil
@@ -18,7 +18,7 @@ import shutil
 class Save(ICommand):
 
     def run(self, **options):
-        name = options.pop('name')
+        name = self.slugify_name(options, pop=True)
         if not name:
             for profile in os.listdir(self.project_path):
                 self.run_for_profile(profile, **options)

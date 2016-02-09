@@ -35,3 +35,6 @@ LOG_QTD_DELETED = (
 LOG_QTD_CLEARED = (
     "Successfully cleared {0} profiles."
 )
+LOG_QTD_PROFILES = (
+    "{0} profiles were found:"
+)

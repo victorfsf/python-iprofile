@@ -17,7 +17,7 @@ import os
 class Shell(ICommand):
 
     def run(self, **options):
-        name = options.get('name')
+        name = self.slugify_name(options)
 
         if not name:
             IPython.start_ipython(argv=[])
