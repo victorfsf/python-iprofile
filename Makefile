@@ -25,3 +25,16 @@ setup: clean requirements test
 cov.badge:
 	@rm -rf coverage.svg
 	@coverage-badge -o coverage.svg
+
+dist:
+	@python setup.py sdist
+	@python setup.py bdist_wheel --universal
+
+register:
+	@twine register dist/*.tar.gz
+	@twine register dist/*.whl
+
+upload:
+	@twine upload dist/*
+
+pypi: dist register upload
