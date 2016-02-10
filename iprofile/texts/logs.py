@@ -36,5 +36,5 @@ LOG_QTD_CLEARED = (
     "Successfully cleared {0} profile{1}."
 )
 LOG_QTD_PROFILES = (
-    "{0} profile{1} were found:"
+    "{0} profile{1} {2} found:"
 )
