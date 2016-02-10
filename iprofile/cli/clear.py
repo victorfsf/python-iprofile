@@ -5,6 +5,7 @@ from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
 from iprofile.core.utils import get_ipython_name
 from iprofile.core.utils import get_ipython_path
+from iprofile.core.utils import list_profiles
 import click
 import os
 import shutil
@@ -48,7 +49,7 @@ class Clear(ICommand):
     def clear_all(self):
         names = []
         cleared = 0
-        for profile in os.listdir(self.project_path):
+        for profile in list_profiles(self.project_path):
             name, result = self.run_for_profile(profile)
             names.append(name)
             if result:
