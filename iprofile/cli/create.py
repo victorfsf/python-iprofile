@@ -11,7 +11,12 @@ import click
 @icommand(help=texts.HELP_CREATE, short_help=texts.HELP_CREATE)
 @click.argument('name')
 @click.option('--no-symlink', is_flag=True, help=texts.HELP_NO_SYMLINKS)
-@click.option('--profile-dir', required=False, help=texts.HELP_PROFILE_DIR)
+@click.option(
+    '--profile-dir',
+    required=False,
+    help=texts.HELP_PROFILE_DIR,
+    type=click.Path()
+)
 class Create(ICommand):
 
     def run(self, **options):

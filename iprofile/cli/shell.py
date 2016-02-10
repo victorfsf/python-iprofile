@@ -14,13 +14,15 @@ import os
 
 @icommand(help=texts.HELP_SHELL, short_help=texts.HELP_SHELL)
 @click.argument('name', required=False, default=get_active_profile())
+@click.argument('ipython_options', nargs=-1, required=False)
 class Shell(ICommand):
 
     def run(self, **options):
         name = self.slugify_name(options)
+        ipython_options = list(options.get('ipython_options'))
 
         if not name:
-            IPython.start_ipython(argv=[])
+            IPython.start_ipython(argv=ipython_options)
             return
 
         ipython_path, _, _ = get_ipython_path(name)
@@ -33,4 +35,6 @@ class Shell(ICommand):
         if not ipython_path:
             Save.run(options)
             click.echo()
-        IPython.start_ipython(argv=['--profile-dir', ipython_path])
+        IPython.start_ipython(
+            argv=ipython_options + ['--profile-dir', ipython_path]
+        )

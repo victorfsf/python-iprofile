@@ -19,14 +19,15 @@ class Clear(ICommand):
         name = self.slugify_name(options)
 
         if not os.path.isdir(self.project_path):
-            return
+            self.red(texts.ERROR_NO_PROFILES_TO_CLEAR)
+            return []
 
         if not name:
             if options.get('no_input', False):
                 return self.clear_all()
             if click.confirm(texts.INPUT_CONFIRM_DELETE):
                 return self.clear_all()
-            return
+            return []
         else:
             return self.run_for_profile(name)
 
