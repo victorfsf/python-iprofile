@@ -19,7 +19,7 @@ class Shell(ICommand):
 
     def run(self, **options):
         name = self.slugify_name(options)
-        ipython_options = list(options.get('ipython_options'))
+        ipython_options = list(options.get('ipython_options', []))
 
         if not name:
             IPython.start_ipython(argv=ipython_options)
