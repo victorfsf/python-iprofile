@@ -3,10 +3,11 @@
 from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
-from iprofile.core.utils import get_profile_path
 from iprofile.core.utils import get_ipython_path
+from iprofile.core.utils import get_profile_path
 from iprofile.core.utils import get_user_home
 from iprofile.core.utils import PROJECT_PATH
+from iprofile.core.utils import read_config
 import click
 import os
 import shutil
@@ -18,9 +19,14 @@ import shutil
 class Init(ICommand):
 
     def run(self, **options):
-        name = options.get('name')
-        profile_dir = options.get('profile_dir')
+        name = self.slugify_name(options)
         profile = get_profile_path(name)
+
+        profile_dir = os.path.abspath(
+            get_user_home(
+                options.get('profile_dir')
+            )
+        ) if options.get('profile_dir') else None
 
         if not self.check_directories(profile, name):
             return
@@ -73,15 +79,10 @@ class Init(ICommand):
 
     def create_config(self, profile, directory):
         profile_config = '{0}/.config'.format(profile)
-        if os.path.isfile(profile_config):
-            with open(profile_config, 'r') as f:
-                config_data = f.readlines()
-        elif directory and profile not in os.path.abspath(
-                get_user_home(directory)):
-            config_data = ['PROFILE_DIR={0}'.format(directory)]
-        else:
-            config_data = []
+        config_data = read_config(profile_config)
+        if directory and profile not in directory:
+            config_data['PROFILE_DIR'] = directory
 
         with open(profile_config, 'w') as f:
-            for data in config_data:
-                f.write(data)
+            for data, value in config_data.items():
+                f.write('{0}={1}'.format(data, value))

@@ -18,6 +18,18 @@ def get_profile_path(profile_name):
     return '{0}/{1}'.format(PROJECT_PATH, profile_name)
 
 
+def ipython_locate(profile_name):
+    args = 'ipython locate profile {0}'.format(
+        get_ipython_name(profile_name)).split(' ')
+    try:
+        result = subprocess.check_output(
+            args, stderr=subprocess.STDOUT,
+            universal_newlines=True).replace('\n', '')
+        return result
+    except subprocess.CalledProcessError:
+        return
+
+
 def get_ipython_path(profile_name, profile_dir=None):
 
     if not profile_dir:
@@ -30,18 +42,11 @@ def get_ipython_path(profile_name, profile_dir=None):
             '{0}/ipython_config.py'.format(profile_dir)
         )
 
-    args = 'ipython locate profile {0}'.format(
-        get_ipython_name(profile_name)).split(' ')
-    try:
-        result = subprocess.check_output(
-            args, stderr=subprocess.STDOUT,
-            universal_newlines=True).replace('\n', '')
-        return (
-            result, '{0}/startup'.format(result),
-            '{0}/ipython_config.py'.format(result)
-        )
-    except subprocess.CalledProcessError:
-        return None, None, None
+    ipython_path = ipython_locate(profile_name)
+    return (
+        ipython_path, '{0}/startup'.format(ipython_path),
+        '{0}/ipython_config.py'.format(ipython_path)
+    ) if ipython_path else (None, None, None)
 
 
 def create_ipython_profile(profile_name, directory=None):

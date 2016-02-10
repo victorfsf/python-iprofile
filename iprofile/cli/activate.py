@@ -13,7 +13,7 @@ import os
 class Activate(ICommand):
 
     def run(self, **options):
-        name = options.get('name')
+        name = self.slugify_name(options)
         profile = get_profile_path(name)
 
         if not os.path.isdir(profile):
