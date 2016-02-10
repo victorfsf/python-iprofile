@@ -23,7 +23,7 @@ test.warn:
 setup: clean requirements test.html
 
 debug:
-	@python -c 'from iprofile.console import main; main()'
+	@python -c 'from iprofile.console import main; main()' $(args)
 
 dist:
 	@python setup.py sdist

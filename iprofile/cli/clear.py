@@ -29,7 +29,7 @@ class Clear(ICommand):
                 return self.clear_all()
             return []
         else:
-            return self.run_for_profile(name)
+            return self.run_for_profile(name)[0]
 
     def run_for_profile(self, name):
         ipython_path, _, _ = get_ipython_path(name)
