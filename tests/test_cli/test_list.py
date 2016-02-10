@@ -14,7 +14,11 @@ mock_options_1 = {
 }
 
 mock_options_2 = {
-    'name_only': True
+    'show_only': 'names'
+}
+
+mock_options_3 = {
+    'show_only': 'paths'
 }
 
 
@@ -23,6 +27,7 @@ def test_run():
     Create.run(mock_options)
     List.run({})
     List.run(mock_options_2)
+    List.run(mock_options_3)
     Delete.run(mock_options_1)
     List.run({})
 
