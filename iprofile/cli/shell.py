@@ -29,7 +29,8 @@ class Shell(ICommand):
         if profile_path and not os.path.isdir(profile_path):
             self.red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(name))
             return
-        elif not ipython_path:
+
+        if not ipython_path:
             Save.run(options)
             click.echo()
         IPython.start_ipython(argv=['--profile-dir', ipython_path])

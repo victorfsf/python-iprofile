@@ -20,14 +20,15 @@ class List(ICommand):
                 if os.path.isdir(self.format(x)) and
                 'ipython_config.py' in os.listdir(self.format(x))
             ]
-
-            if len(profiles) == 0:
+            qtd_profiles = len(profiles)
+            if qtd_profiles == 0:
                 self.no_profiles()
                 return
 
             name_only = options.get('name_only', False)
             if not name_only:
-                self.green(texts.LOG_QTD_PROFILES.format(len(profiles)))
+                self.green(texts.LOG_QTD_PROFILES.format(
+                    qtd_profiles, 's' if qtd_profiles != 1 else ''))
 
             for profile in profiles:
                 if name_only:
