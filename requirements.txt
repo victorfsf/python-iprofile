@@ -4,3 +4,4 @@ ipdb==0.8.1
 ipython==4.1.1
 pytest-cov==2.2.1
 python-slugify==1.2.0
+twine==1.6.5

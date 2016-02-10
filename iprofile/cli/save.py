@@ -5,8 +5,10 @@ from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
 from iprofile.core.utils import create_ipython_profile
 from iprofile.core.utils import get_ipython_path
-from iprofile.core.utils import get_profile_path
 from iprofile.core.utils import get_profile_directory
+from iprofile.core.utils import get_profile_path
+from iprofile.core.utils import ipython_locate
+from iprofile.core.utils import read_config
 import click
 import os
 import shutil
@@ -18,7 +20,7 @@ import shutil
 class Save(ICommand):
 
     def run(self, **options):
-        name = options.pop('name')
+        name = self.slugify_name(options, pop=True)
         if not name:
             for profile in os.listdir(self.project_path):
                 self.run_for_profile(profile, **options)
@@ -35,6 +37,9 @@ class Save(ICommand):
         abs_profile_path = os.path.abspath(profile)
         profile_dir = get_profile_directory(name)
         create_ipython_profile(name, profile_dir)
+
+        if not profile_dir:
+            self.check_or_create_config(name, profile)
         ipython_path, _, _ = get_ipython_path(
             name, profile_dir)
         files = [
@@ -64,9 +69,18 @@ class Save(ICommand):
         self.green(texts.LOG_PROFILE_SAVED)
 
     def remove(self, path):
-        if os.path.isdir(path):
-            shutil.rmtree(path, ignore_errors=True)
-        elif os.path.islink(path):
+        if os.path.islink(path):
             os.unlink(path)
         elif os.path.isfile(path):
             os.remove(path)
+        elif os.path.isdir(path):
+            shutil.rmtree(path, ignore_errors=True)
+
+    def check_or_create_config(self, name, profile):
+        profile_config = '{0}/.config'.format(profile)
+        config_data = read_config(profile_config)
+        if 'PROFILE_DIR' not in config_data:
+            config_data['PROFILE_DIR'] = ipython_locate(name)
+            with open(profile_config, 'w') as f:
+                for data, value in config_data.items():
+                    f.write('{0}={1}'.format(data, value))

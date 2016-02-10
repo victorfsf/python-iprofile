@@ -12,7 +12,7 @@ import shutil
 
 @icommand(help=texts.HELP_DELETE, short_help=texts.HELP_DELETE)
 @click.argument('name', required=False)
-@click.option('--no-input', is_flag=True)
+@click.option('--no-input', is_flag=True, help=texts.HELP_NO_INPUT)
 class Delete(ICommand):
 
     def run(self, **options):
@@ -26,7 +26,8 @@ class Delete(ICommand):
             if deleted == 0:
                 self.red(texts.ERROR_NO_PROFILES_TO_DELETE)
             else:
-                click.echo(texts.LOG_QTD_DELETED.format(deleted))
+                click.echo(texts.LOG_QTD_DELETED.format(
+                    deleted, 's' if deleted != 1 else ''))
         elif name:
             self.run_for_profile(name)
 

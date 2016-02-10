@@ -30,8 +30,11 @@ LOG_ACTIVE_PROFILE = (
     "Active profile: '{0}'."
 )
 LOG_QTD_DELETED = (
-    "Successfully deleted {0} profiles."
+    "Successfully deleted {0} profile{1}."
 )
 LOG_QTD_CLEARED = (
-    "Successfully cleared {0} profiles."
+    "Successfully cleared {0} profile{1}."
+)
+LOG_QTD_PROFILES = (
+    "{0} profile{1} {2} found:"
 )

@@ -22,10 +22,6 @@ test.warn:
 
 setup: clean requirements test
 
-cov.badge:
-	@rm -rf coverage.svg
-	@coverage-badge -o coverage.svg
-
 dist:
 	@python setup.py sdist
 	@python setup.py bdist_wheel --universal
