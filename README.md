@@ -8,6 +8,8 @@
 
 *A CLI for handling IPython 4+ profiles startup scripts.*
 
+[IProfile for Django 1.8+](https://github.com/victorfsf/django-iprofile/).
+
 ## Installation
 
 Install via pip:
