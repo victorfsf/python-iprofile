@@ -15,4 +15,4 @@ HELP_NO_SYMLINKS = "Doesn't save the files as symlinks."
 HELP_PROFILE_DIR = "Set the IPython profile path."
 HELP_SAVE_ALL = "Save all existing profiles."
 HELP_NO_INPUT = "Take no input from the command."
-HELP_SHOW_ONLY = "Show only the specified atribute (options: 'names' or 'paths')."  # noqa
+HELP_SHOW_ONLY = "Show only the specified atribute."

@@ -15,7 +15,12 @@ import shutil
 
 @icommand(help=texts.HELP_INIT, short_help=texts.HELP_INIT)
 @click.argument('name')
-@click.option('--profile-dir', required=False, help=texts.HELP_PROFILE_DIR)
+@click.option(
+    '--profile-dir',
+    required=False,
+    help=texts.HELP_PROFILE_DIR,
+    type=click.Path()
+)
 class Init(ICommand):
 
     def run(self, **options):

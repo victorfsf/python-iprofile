@@ -12,23 +12,24 @@ import shutil
 
 @icommand(help=texts.HELP_CLEAR, short_help=texts.HELP_CLEAR)
 @click.argument('name', required=False)
-@click.option('--no-input', is_flag=True)
+@click.option('--no-input', is_flag=True, help=texts.HELP_NO_INPUT)
 class Clear(ICommand):
 
     def run(self, **options):
         name = self.slugify_name(options)
 
         if not os.path.isdir(self.project_path):
-            return
+            self.red(texts.ERROR_NO_PROFILES_TO_CLEAR)
+            return []
 
         if not name:
             if options.get('no_input', False):
                 return self.clear_all()
             if click.confirm(texts.INPUT_CONFIRM_DELETE):
                 return self.clear_all()
-            return
+            return []
         else:
-            return self.run_for_profile(name)
+            return self.run_for_profile(name)[0]
 
     def run_for_profile(self, name):
         ipython_path, _, _ = get_ipython_path(name)
