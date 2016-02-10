@@ -12,7 +12,7 @@ import shutil
 
 @icommand(help=texts.HELP_CLEAR, short_help=texts.HELP_CLEAR)
 @click.argument('name', required=False)
-@click.option('--no-input', is_flag=True)
+@click.option('--no-input', is_flag=True, help=texts.HELP_NO_INPUT)
 class Clear(ICommand):
 
     def run(self, **options):

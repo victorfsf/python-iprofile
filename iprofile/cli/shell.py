@@ -13,12 +13,12 @@ import os
 
 
 @icommand(help=texts.HELP_SHELL, short_help=texts.HELP_SHELL)
-@click.argument('name', required=False, default=get_active_profile())
+@click.argument('name', required=False)
 @click.argument('ipython_options', nargs=-1, required=False)
 class Shell(ICommand):
 
     def run(self, **options):
-        name = self.slugify_name(options)
+        name = self.slugify_name(options) or get_active_profile()
         ipython_options = list(options.get('ipython_options', []))
 
         if not name:
