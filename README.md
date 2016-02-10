@@ -19,4 +19,5 @@ Or download from the [PyPI repository](https://pypi.python.org/pypi/python-iprof
 
 ## Documentation
 
-[See the wiki for the documentation.](https://github.com/victorfsf/python-iprofile/wiki)
+See the wiki for the [guide](https://github.com/victorfsf/python-iprofile/wiki) and [command reference](https://github.com/victorfsf/python-iprofile/wiki/Command-Reference).
+

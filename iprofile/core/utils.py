@@ -20,7 +20,7 @@ def get_profile_path(profile_name):
 
 def ipython_locate(profile_name):
     args = 'ipython locate profile {0}'.format(
-        get_ipython_name(profile_name)).split(' ')
+        get_ipython_name(profile_name)).split()
     try:
         result = subprocess.check_output(
             args, stderr=subprocess.STDOUT,
@@ -51,7 +51,7 @@ def get_ipython_path(profile_name, profile_dir=None):
 
 def create_ipython_profile(profile_name, directory=None):
     args = 'ipython profile create {0}'.format(
-        get_ipython_name(profile_name)).split(' ')
+        get_ipython_name(profile_name)).split()
     if directory:
         if not os.path.isdir(directory):
             os.makedirs(directory)

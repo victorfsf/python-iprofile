@@ -20,7 +20,10 @@ test.html: test
 test.warn:
 	@py.test --cov-config .coveragerc --cov=iprofile tests/ -rw
 
-setup: clean requirements test
+setup: clean requirements test.html
+
+debug:
+	@python -c 'from iprofile.console import main; main()' $(args)
 
 dist:
 	@python setup.py sdist

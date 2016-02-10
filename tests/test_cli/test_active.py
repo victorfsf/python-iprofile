@@ -29,11 +29,13 @@ def test_end():
 
 
 def test_name_is_none():
-    Deactivate.run(mock_options)
+    Deactivate.run({})
     Active.run({})
 
 
 def test_name_is_not_none():
+    Create.run(mock_options)
     Activate.run(mock_options)
     Active.run({})
     Deactivate.run(mock_options)
+    Delete.run(mock_options)
