@@ -105,3 +105,11 @@ def get_user_home(directory):
     if directory and directory.startswith('~'):
         directory = directory.replace('~', os.path.expanduser('~'), 1)
     return directory
+
+
+def list_profiles(project_path):
+    return [
+        x for x in os.listdir(project_path)
+        if os.path.isdir('{0}/{1}'.format(project_path, x)) and
+        'ipython_config.py' in os.listdir('{0}/{1}'.format(project_path, x))
+    ]
