@@ -10,16 +10,28 @@ from iprofile.core.utils import get_profile_path
 import click
 import IPython
 import os
+import sys
 
 
 @icommand(help=texts.HELP_SHELL, short_help=texts.HELP_SHELL)
 @click.argument('name', required=False)
 @click.argument('ipython_options', nargs=-1, required=False)
+@click.option('--django', required=False, help=texts.HELP_DJANGO)
 class Shell(ICommand):
 
     def run(self, **options):
         name = self.slugify_name(options) or get_active_profile()
         ipython_options = list(options.get('ipython_options', []))
+        django_settings = options.get('django')
+
+        if django_settings:
+            import django
+            os.environ.setdefault(
+                'DJANGO_SETTINGS_MODULE',
+                '{0}.settings'.format(django_settings)
+            )
+            sys.path.append('../{0}'.format(django_settings))
+            django.setup()
 
         if not name:
             IPython.start_ipython(argv=ipython_options)
