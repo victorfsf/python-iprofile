@@ -4,6 +4,8 @@ from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
 from iprofile.core.utils import get_profile_path
+from iprofile.core.utils import read_config
+from iprofile.core.utils import save_config
 import click
 import os
 
@@ -24,5 +26,7 @@ class Activate(ICommand):
         self.green(texts.LOG_PROFILE_ACTIVATED.format(name))
 
     def activate_profile(self, profile_name):
-        with open('{0}/.active'.format(self.project_path), 'w') as active:
-            active.write(profile_name)
+        config_file = '{0}/.config'.format(self.project_path)
+        config = read_config(config_file)
+        config['ACTIVE'] = profile_name
+        save_config(config_file, config)

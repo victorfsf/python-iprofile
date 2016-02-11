@@ -2,6 +2,7 @@
 
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
+from iprofile.core.utils import read_config
 from iprofile import texts
 import click
 
@@ -17,8 +18,5 @@ class Active(ICommand):
             click.echo(texts.LOG_ACTIVE_PROFILE.format(name))
 
     def get_active_profile(self):
-        try:
-            with open('{0}/.active'.format(self.project_path), 'r') as active:
-                return active.read()
-        except (OSError, IOError):
-            return
+        config = read_config('{0}/.config'.format(self.project_path))
+        return config.get('ACTIVE', None)

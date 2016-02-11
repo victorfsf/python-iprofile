@@ -61,12 +61,16 @@ def create_ipython_profile(profile_name, directory=None):
         universal_newlines=True).replace('\n', '')
 
 
-def get_active_profile():
-    try:
-        with open('{0}/.active'.format(PROJECT_PATH), 'r') as active:
-            return slugify(active.read().strip().replace('\n', ''))
-    except IOError:
-        return
+def get_active_profile(config=None):
+    if not config:
+        config = read_config('{0}/.config'.format(PROJECT_PATH))
+    return config.get('ACTIVE', None)
+
+
+def get_django_settings_module(config=None):
+    if not config:
+        config = read_config('{0}/.config'.format(PROJECT_PATH))
+    return config.get('DJANGO_SETTINGS_MODULE', None)
 
 
 def echo_red(message):
@@ -91,8 +95,14 @@ def read_config(config_file):
             data_list = f.readlines()
             for line in data_list:
                 config, value = line.split('=', 1)
-                data[config] = value
+                data[config] = value.strip()
     return data
+
+
+def save_config(config_file, data_list):
+    with open(config_file, 'w') as f:
+        for field, value in data_list.items():
+            f.write('{0}={1}'.format(field, value))
 
 
 def get_profile_directory(profile_name):

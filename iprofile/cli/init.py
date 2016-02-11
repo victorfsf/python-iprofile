@@ -21,6 +21,7 @@ import shutil
     help=texts.HELP_PROFILE_DIR,
     type=click.Path()
 )
+@click.option('--autoreload', is_flag=True,)
 class Init(ICommand):
 
     def run(self, **options):
@@ -38,7 +39,8 @@ class Init(ICommand):
 
         startup = '{0}/startup'.format(profile)
         if not self.check_ipython(name, profile, startup, profile_dir):
-            self.create_profile(profile, startup, profile_dir)
+            self.create_profile(
+                profile, startup, profile_dir, options.get('autoreload'))
 
         with open('{0}/README'.format(startup), 'w') as read_me:
             read_me.write(texts.IPYTHON_READ_ME.format(name))
@@ -73,11 +75,16 @@ class Init(ICommand):
 
         return True
 
-    def create_profile(self, profile, startup, directory):
+    def create_profile(self, profile, startup, directory, autoreload):
         os.makedirs(startup)
 
-        for item in ['00_config.ipy', '01_imports.py']:
-            open('{0}/{1}'.format(startup, item), 'w').close()
+        if autoreload:
+            with open('{0}/00_autoreload.ipy'.format(startup), 'w') as f:
+                f.write('%load_ext autoreload\n%autoreload 2\n')
+            open('{0}/01_imports.py'.format(startup), 'w').close()
+        else:
+            for item in ['00_config.ipy', '01_imports.py']:
+                open('{0}/{1}'.format(startup, item), 'w').close()
 
         open('{0}/ipython_config.py'.format(profile), 'w').close()
         self.create_config(profile, directory)

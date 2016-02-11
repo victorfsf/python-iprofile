@@ -29,3 +29,6 @@ ERROR_NO_PROFILES_TO_LIST = (
 ERROR_NO_PROFILES_TO_DELETE = (
     "There are no profiles to delete."
 )
+ERROR_SETTINGS_WITHOUT_DJANGO = (
+    "Can't set '--settings' without '--django'."
+)

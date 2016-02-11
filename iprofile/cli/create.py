@@ -11,6 +11,7 @@ import click
 @icommand(help=texts.HELP_CREATE, short_help=texts.HELP_CREATE)
 @click.argument('name')
 @click.option('--no-symlink', is_flag=True, help=texts.HELP_NO_SYMLINKS)
+@click.option('--autoreload', is_flag=True,)
 @click.option(
     '--profile-dir',
     required=False,

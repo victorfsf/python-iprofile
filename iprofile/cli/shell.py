@@ -7,9 +7,11 @@ from iprofile.core.models import ICommand
 from iprofile.core.utils import get_active_profile
 from iprofile.core.utils import get_ipython_path
 from iprofile.core.utils import get_profile_path
+from iprofile.core.utils import get_django_settings_module
 import click
 import IPython
 import os
+import re
 import sys
 
 
@@ -17,21 +19,29 @@ import sys
 @click.argument('name', required=False)
 @click.argument('ipython_options', nargs=-1, required=False)
 @click.option('--django', required=False, help=texts.HELP_DJANGO)
+@click.option('--settings', required=False, help=texts.HELP_DJANGO_SETTINGS)
 class Shell(ICommand):
 
     def run(self, **options):
         name = self.slugify_name(options) or get_active_profile()
         ipython_options = list(options.get('ipython_options', []))
         django_settings = options.get('django')
+        settings = options.get('settings')
 
         if django_settings:
             import django
+            if django_settings == '.':
+                django_settings = get_django_settings_module()
             os.environ.setdefault(
                 'DJANGO_SETTINGS_MODULE',
-                '{0}.settings'.format(django_settings)
+                '{0}.{1}'.format(django_settings, settings)
+                if settings else django_settings
             )
-            sys.path.append('../{0}'.format(django_settings))
+            sys.path.append(os.path.abspath('.'))
             django.setup()
+        elif settings:
+            self.red(texts.ERROR_SETTINGS_WITHOUT_DJANGO)
+            return
 
         if not name:
             IPython.start_ipython(argv=ipython_options)
