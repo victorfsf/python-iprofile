@@ -41,7 +41,7 @@ class GlobalConfig(object):
 
 class ProfileConfig(GlobalConfig):
 
-    def __init__(self, path, profile, *args, **kwargs):
+    def __init__(self, path, profile):
         self.filepath = os.path.join(path, profile, 'settings.yml')
         self._config = {}
 
