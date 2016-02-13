@@ -3,7 +3,7 @@
 from setuptools import setup
 from setuptools import find_packages
 
-version = '0.1.1'
+version = '0.1.2'
 
 
 setup(
@@ -15,7 +15,8 @@ setup(
     install_requires=[
         'click==6.2',
         'ipython>=4',
-        'python-slugify==1.2.0'
+        'python-slugify==1.2.0',
+        'PyYAML==3.11',
     ],
     zip_safe=False,
     version=version,
@@ -30,7 +31,7 @@ setup(
         'python3',
         'shell',
         'profile',
-        'iprofile'
+        'iprofile',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

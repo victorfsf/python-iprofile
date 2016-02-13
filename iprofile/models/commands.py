@@ -2,15 +2,17 @@
 
 from iprofile.core.utils import echo_red
 from iprofile.core.utils import echo_green
-from iprofile.core.utils import PROJECT_PATH
-from slugify import slugify
+from iprofile.models.config import GlobalConfig
 import click
 
 
 class ICommand(object):
-    project_path = PROJECT_PATH
 
     def __init__(self, _autorun=True, *args, **kwargs):
+        self.global_config = GlobalConfig()
+        self.global_config.read()
+        self.project_path = self.global_config.get('project_path')
+
         if _autorun:
             self.run(**kwargs.copy())
         kwargs = {}
@@ -24,12 +26,6 @@ class ICommand(object):
 
     def green(self, text):
         return echo_green(text)
-
-    def slugify_name(self, options, pop=False):
-        name = options.get('name', None) if not pop else options.pop('name')
-        if not name:
-            return None
-        return slugify(name)
 
 
 class Command(click.Command):

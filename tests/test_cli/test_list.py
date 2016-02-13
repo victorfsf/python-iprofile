@@ -3,6 +3,7 @@
 from iprofile.cli import Create
 from iprofile.cli import Delete
 from iprofile.cli import List
+import os
 import shutil
 
 mock_options = {
@@ -33,6 +34,8 @@ def test_run():
 
 
 def test_no_iprofiles_folder():
-    shutil.move('iprofiles', 'iprofiles2')
+    if os.path.isdir('iprofiles'):
+        shutil.move('iprofiles', 'iprofiles2')
     List.run({})
-    shutil.move('iprofiles2', 'iprofiles')
+    if os.path.isdir('iprofiles2'):
+        shutil.move('iprofiles2', 'iprofiles')

@@ -2,12 +2,10 @@
 
 from iprofile import texts
 from iprofile.core.decorators import icommand
-from iprofile.core.models import ICommand
-from iprofile.core.utils import get_ipython_name
-from iprofile.core.utils import get_ipython_path
+from iprofile.models import ICommand
+from iprofile.models import Profile
 from iprofile.core.utils import list_profiles
 import click
-import os
 import shutil
 
 
@@ -17,40 +15,40 @@ import shutil
 class Clear(ICommand):
 
     def run(self, **options):
-        name = self.slugify_name(options)
+        profile = Profile(options.get('name'), self.global_config)
 
-        if not os.path.isdir(self.project_path):
-            self.red(texts.ERROR_NO_PROFILES_TO_CLEAR)
-            return []
-
-        if not name:
+        if not profile.name:
             if options.get('no_input', False):
                 return self.clear_all()
             if click.confirm(texts.INPUT_CONFIRM_DELETE):
                 return self.clear_all()
             return []
         else:
-            return self.run_for_profile(name)[0]
+            return self.run_for_profile(profile)[0]
 
-    def run_for_profile(self, name):
-        ipython_path, _, _ = get_ipython_path(name)
-        ipython_name = get_ipython_name(name)
-        if not ipython_path:
+    def run_for_profile(self, profile):
+        ipython = profile.path('ipython')
+
+        if not profile.ipython_exists():
             self.red(
-                texts.ERROR_IPYTHON_PROFILE_DOESNT_EXIST.format(ipython_name))
-            return name, False
+                texts.ERROR_IPYTHON_PROFILE_DOESNT_EXIST.format(
+                    profile.ipython_name))
+            return profile.name, False
         click.echo(
-            texts.LOG_REMOVE_IPYTHON_PROFILE_ATTEMPT.format(ipython_path)
+            texts.LOG_REMOVE_IPYTHON_PROFILE_ATTEMPT.format(ipython)
         )
-        shutil.rmtree(ipython_path, ignore_errors=True)
-        self.green(texts.LOG_REMOVE_IPYTHON_PROFILE.format(ipython_name))
-        return name, True
+        shutil.rmtree(ipython, ignore_errors=True)
+        self.green(
+            texts.LOG_REMOVE_IPYTHON_PROFILE.format(profile.ipython_name))
+        return profile.name, True
 
     def clear_all(self):
         names = []
         cleared = 0
         for profile in list_profiles(self.project_path):
-            name, result = self.run_for_profile(profile)
+            name, result = self.run_for_profile(
+                Profile(profile, self.global_config)
+            )
             names.append(name)
             if result:
                 cleared += 1

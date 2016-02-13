@@ -27,7 +27,7 @@ LOG_PROFILE_DEACTIVATED = (
     "Profile '{0}' successfully deactivated!"
 )
 LOG_ACTIVE_PROFILE = (
-    "Active profile: '{0}'."
+    "Active profile: "
 )
 LOG_QTD_DELETED = (
     "Successfully deleted {0} profile{1}."
@@ -38,3 +38,7 @@ LOG_QTD_CLEARED = (
 LOG_QTD_PROFILES = (
     "{0} profile{1} {2} found:"
 )
+LOG_IPROFILE_INITIALIZED = (
+    "Successfully initialized IProfile at '{0}'."
+)
+LOG_IPROFILE_YML = "{1} config file at '{0}/iprofile.yml'."

@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from iprofile.core.decorators import icommand
-from iprofile.core.models import ICommand
-from iprofile.core.utils import get_profile_path
+from iprofile.models import ICommand
+from iprofile.models import Profile
 from iprofile.cli import Clear
 from iprofile import texts
 import click
-import os
 import shutil
 
 
@@ -16,10 +15,11 @@ import shutil
 class Delete(ICommand):
 
     def run(self, **options):
-        name = Clear.run(options)
-        if issubclass(name.__class__, list):
+        names = Clear.run(options)
+        if issubclass(names.__class__, list):
             deleted = 0
-            for profile in name:
+            for profile_name in names:
+                profile = Profile(profile_name, self.global_config)
                 result = self.run_for_profile(profile)
                 if result:
                     deleted += 1
@@ -28,16 +28,18 @@ class Delete(ICommand):
             else:
                 click.echo(texts.LOG_QTD_DELETED.format(
                     deleted, 's' if deleted != 1 else ''))
-        elif name:
-            self.run_for_profile(name)
+        elif names:
+            self.run_for_profile(Profile(names, self.global_config))
 
-    def run_for_profile(self, name):
-        profile = get_profile_path(name)
-        if not os.path.exists(profile):
+    def run_for_profile(self, profile):
+        name = profile.name
+        profile_path = profile.path('profile')
+
+        if not profile.exists():
             self.red(texts.ERROR_PROFILE_DOESNT_EXIST.format(name))
             return
 
-        click.echo(texts.LOG_REMOVE_PROFILE_ATTEMPT.format(profile))
-        shutil.rmtree(profile, ignore_errors=True)
+        click.echo(texts.LOG_REMOVE_PROFILE_ATTEMPT.format(profile_path))
+        shutil.rmtree(profile_path, ignore_errors=True)
         self.green(texts.LOG_REMOVE_PROFILE.format(name))
         return True
