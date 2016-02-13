@@ -12,6 +12,7 @@ def test_run():
     Init.run({'path': 'test_init'})
     shutil.rmtree('test_init', ignore_errors=True)
     Init.run({'path': 'test_init'})
+    shutil.rmtree('test_init', ignore_errors=True)
 
 
 def test_no_profile_yml():
