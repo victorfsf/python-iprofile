@@ -38,3 +38,6 @@ LOG_QTD_CLEARED = (
 LOG_QTD_PROFILES = (
     "{0} profile{1} {2} found:"
 )
+LOG_IPROFILE_INITIALIZED = (
+    "Successfully initialized IProfile at '{0}'."
+)

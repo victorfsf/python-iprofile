@@ -11,8 +11,7 @@ class GlobalConfig(object):
         self._config = {}
 
         if not os.path.isfile(self.filepath):
-            project_path = os.path.join(os.getcwd(), 'iprofiles')
-            self._config = {'project_path': project_path}
+            self._config = {'project_path': 'iprofiles'}
             self.save()
 
     def read(self):

@@ -9,7 +9,7 @@ import click
 import os
 
 
-@icommand(help=texts.HELP_INIT, short_help=texts.HELP_INIT)
+@icommand(help=texts.HELP_ADD, short_help=texts.HELP_ADD)
 @click.argument('name')
 @click.option(
     '--profile-dir',

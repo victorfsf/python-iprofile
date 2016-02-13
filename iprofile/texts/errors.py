@@ -32,3 +32,6 @@ ERROR_NO_PROFILES_TO_DELETE = (
 ERROR_SETTINGS_WITHOUT_DJANGO = (
     "Can't set '--settings' without '--django'."
 )
+ERROR_INIT_PATH_EXISTS = (
+    "The folder '{0}' already exists in this project!"
+)
