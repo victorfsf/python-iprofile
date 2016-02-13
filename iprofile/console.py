@@ -19,6 +19,6 @@ class IProfile(click.MultiCommand):
     cls=IProfile,
     help=texts.IPROFILE_READ_ME
 )
-@click.version_option(version='0.1.1b', prog_name="IProfile")
+@click.version_option(version='0.1.2', prog_name="IProfile")
 def main():
     pass

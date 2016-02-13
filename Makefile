@@ -1,9 +1,10 @@
 clean:
-	@find . -name '*.pyc' -exec rm -f {} \;
-	@find . -name 'Thumbs.db' -exec rm -f {} \;
-	@find . -name '*~' -exec rm -f {} \;
-	@find . -name '*.pyc' -exec rm -f {} \;
-	@find . -name '__pycache__' -exec rm -fr {} \;
+	@find . -name '*.pyc' -exec rm -f {} \; ||:
+	@find . -name '*.cache' -exec rm -fr {} \; ||:
+	@find . -name 'Thumbs.db' -exec rm -f {} \; ||:
+	@find . -name '*~' -exec rm -f {} \; ||:
+	@find . -name '*.pyc' -exec rm -f {} \; ||:
+	@find . -name '__pycache__' -exec rm -fr {} \; ||:
 
 requirements:
 	@pip install -r requirements.txt
@@ -13,6 +14,9 @@ coverage:
 
 test:
 	@py.test --cov-config .coveragerc --cov=iprofile tests/
+
+test.pdb:
+	@py.test --cov-config .coveragerc --cov=iprofile tests/ --pdb
 
 test.html: test
 	@coverage html
@@ -25,7 +29,12 @@ setup: clean requirements test.html
 debug:
 	@python -c 'from iprofile.console import main; main()' $(args)
 
-dist:
+dist.clean:
+	@rm -rd build/ ||:
+	@rm -rd dist/ ||:
+	@rm -rd *.egg-info ||:
+
+dist: dist.clean
 	@python setup.py sdist
 	@python setup.py bdist_wheel --universal
 

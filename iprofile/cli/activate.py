@@ -2,8 +2,8 @@
 
 from iprofile import texts
 from iprofile.core.decorators import icommand
-from iprofile.core.models import ICommand
-from iprofile.core.utils import get_profile_path
+from iprofile.models import ICommand
+from iprofile.models import Profile
 import click
 import os
 
@@ -13,10 +13,10 @@ import os
 class Activate(ICommand):
 
     def run(self, **options):
-        name = self.slugify_name(options)
-        profile = get_profile_path(name)
+        profile = Profile(options.get('name'), self.global_config)
+        name = profile.name
 
-        if not os.path.isdir(profile):
+        if not os.path.isdir(profile.path('profile')):
             self.red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(name))
             return
 
@@ -24,5 +24,6 @@ class Activate(ICommand):
         self.green(texts.LOG_PROFILE_ACTIVATED.format(name))
 
     def activate_profile(self, profile_name):
-        with open('{0}/.active'.format(self.project_path), 'w') as active:
-            active.write(profile_name)
+        self.global_config.update({
+            'active_profile': profile_name
+        }).save()

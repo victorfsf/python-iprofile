@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from iprofile.cli import Add
+from iprofile.cli import Create
 from iprofile.cli import Delete
-from iprofile.cli import Init
 from iprofile.cli import Save
 import os
 
@@ -11,11 +12,12 @@ mock_options = {
 }
 
 mock_options_1 = {
-    'name': 'test1'
+    'name': 'test1',
 }
 
 mock_options_2 = {
-    'name': 'test2'
+    'name': 'test2',
+    'profile_dir': '~/test_profile/'
 }
 
 mock_options_3 = {
@@ -25,6 +27,11 @@ mock_options_3 = {
 mock_options_4 = {
     'name': None,
     'no_input': True
+}
+
+mock_options_5 = {
+    'name': 'test5',
+    'no_symlink': True
 }
 
 
@@ -49,7 +56,8 @@ def test_remove():
 
 
 def test_save_all():
-    Init.run(mock_options_1)
-    Init.run(mock_options_2)
+    Add.run(mock_options_1)
+    Add.run(mock_options_2)
     Save.run(mock_options_3)
+    Create.run(mock_options_5)
     Delete.run(mock_options_4)
