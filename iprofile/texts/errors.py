@@ -29,8 +29,12 @@ ERROR_NO_PROFILES_TO_LIST = (
 ERROR_NO_PROFILES_TO_DELETE = (
     "There are no profiles to delete."
 )
-ERROR_SETTINGS_WITHOUT_DJANGO = (
-    "Can't set '--settings' without '--django'."
+ERROR_DJANGO_WITHOUT_SETTINGS = (
+    "Could not find variable 'django_settings_module'.\n"
+    "Run 'iprofile config django [SETTINGS MODULE]' to set it."
+)
+ERROR_DJANGO_INVALID_SETTINGS = (
+    "Could not find settings module '{0}'."
 )
 ERROR_INIT_PATH_EXISTS = (
     "The folder '{0}' already exists in this project!"

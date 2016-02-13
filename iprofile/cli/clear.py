@@ -45,7 +45,7 @@ class Clear(ICommand):
     def clear_all(self):
         names = []
         cleared = 0
-        for profile in list_profiles(self.global_config.get('project_path')):
+        for profile in list_profiles(self.project_path):
             name, result = self.run_for_profile(
                 Profile(profile, self.global_config)
             )

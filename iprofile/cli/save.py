@@ -18,8 +18,7 @@ class Save(ICommand):
     def run(self, **options):
         name = options.get('name')
         if not name:
-            for profile_name in list_profiles(
-                    self.global_config.get('project_path')):
+            for profile_name in list_profiles(self.project_path):
                 profile = Profile(profile_name, self.global_config)
                 self.run_for_profile(profile, **options)
         else:

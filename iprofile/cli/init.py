@@ -18,7 +18,7 @@ class Init(ICommand):
             abspath = os.path.abspath(os.path.join(os.getcwd(), path))
             os.makedirs(abspath)
 
-            if self.global_config.get('project_path') != path:
+            if self.project_path != path:
                 action = 'Changed'
             else:
                 action = 'Created'

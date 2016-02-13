@@ -18,8 +18,7 @@ import os
 class List(ICommand):
 
     def run(self, **options):
-        project_path = self.global_config.get('project_path')
-        profiles = list_profiles(project_path)
+        profiles = list_profiles(self.project_path)
         qtd_profiles = len(profiles)
         if qtd_profiles == 0:
             self.red(texts.ERROR_NO_PROFILES_TO_LIST)
@@ -45,5 +44,5 @@ class List(ICommand):
                     ipython_path
                 ))
                 click.echo('Project profile path:\t{}'.format(
-                    os.path.join(project_path, profile_name)
+                    os.path.join(self.project_path, profile_name)
                 ))
