@@ -12,10 +12,7 @@ import sys
 @icommand(help=texts.HELP_DJANGO, short_help=texts.HELP_DJANGO)
 @click.argument('name', required=False)
 @click.argument('ipython_options', nargs=-1, required=False)
-@click.option(
-    '--settings', required=False,
-    help=texts.HELP_SETTINGS, short_help=texts.HELP_SETTINGS
-)
+@click.option('--settings', required=False, help=texts.HELP_SETTINGS)
 class Django(ICommand):
 
     def run(self, **options):
