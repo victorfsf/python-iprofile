@@ -1,10 +1,10 @@
 clean:
-	@find . -name '*.pyc' -exec rm -f {} \;
-	@find . -name '*.cache' -exec rm -fr {} \;
-	@find . -name 'Thumbs.db' -exec rm -f {} \;
-	@find . -name '*~' -exec rm -f {} \;
-	@find . -name '*.pyc' -exec rm -f {} \;
-	@find . -name '__pycache__' -exec rm -fr {} \;
+	@find . -name '*.pyc' -exec rm -f {} \; ||:
+	@find . -name '*.cache' -exec rm -fr {} \; ||:
+	@find . -name 'Thumbs.db' -exec rm -f {} \; ||:
+	@find . -name '*~' -exec rm -f {} \; ||:
+	@find . -name '*.pyc' -exec rm -f {} \; ||:
+	@find . -name '__pycache__' -exec rm -fr {} \; ||:
 
 requirements:
 	@pip install -r requirements.txt
@@ -29,12 +29,12 @@ setup: clean requirements test.html
 debug:
 	@python -c 'from iprofile.console import main; main()' $(args)
 
-clean.dist:
-	@rm -rd build/
-	@rm -rd dist/
-	@rm -rd *.egg-info
+dist.clean:
+	@rm -rd build/ ||:
+	@rm -rd dist/ ||:
+	@rm -rd *.egg-info ||:
 
-dist: clean.dist
+dist: dist.clean
 	@python setup.py sdist
 	@python setup.py bdist_wheel --universal
 
