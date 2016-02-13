@@ -2,7 +2,7 @@
 
 from iprofile.cli import Create
 from iprofile.cli import Delete
-from iprofile.cli import Init
+from iprofile.cli import Add
 import click
 import shutil
 
@@ -32,7 +32,7 @@ def test_delete():
     Create.run(mock_options_1)
     Delete.run(mock_options_1)
 
-    Init.run(mock_options_init)
+    Add.run(mock_options_init)
     Delete.run(mock_options_init)
 
 

@@ -3,16 +3,11 @@
 from iprofile import texts
 from iprofile.cli import Save
 from iprofile.core.decorators import icommand
-from iprofile.core.models import ICommand
-from iprofile.core.utils import get_active_profile
-from iprofile.core.utils import get_ipython_path
-from iprofile.core.utils import get_profile_path
-from iprofile.core.utils import get_django_settings_module
+from iprofile.models import ICommand
+from iprofile.models import Profile
 import click
 import IPython
 import os
-import re
-import sys
 
 
 @icommand(help=texts.HELP_SHELL, short_help=texts.HELP_SHELL)
@@ -23,35 +18,38 @@ import sys
 class Shell(ICommand):
 
     def run(self, **options):
-        name = self.slugify_name(options) or get_active_profile()
+        profile = Profile(
+            options.get('name') or self.get_active_profile() or '',
+            self.global_config
+        )
         ipython_options = list(options.get('ipython_options', []))
-        django_settings = options.get('django')
-        settings = options.get('settings')
+        # django_settings = options.get('django')
+        # settings = options.get('settings')
 
-        if django_settings:
-            import django
-            if django_settings == '.':
-                django_settings = get_django_settings_module()
-            os.environ.setdefault(
-                'DJANGO_SETTINGS_MODULE',
-                '{0}.{1}'.format(django_settings, settings)
-                if settings else django_settings
-            )
-            sys.path.append(os.path.abspath('.'))
-            django.setup()
-        elif settings:
-            self.red(texts.ERROR_SETTINGS_WITHOUT_DJANGO)
-            return
+        # if django_settings:
+        #     import django
+        #     if django_settings == '.':
+        #         django_settings = get_django_settings_module()
+        #     os.environ.setdefault(
+        #         'DJANGO_SETTINGS_MODULE',
+        #         '{0}.{1}'.format(django_settings, settings)
+        #         if settings else django_settings
+        #     )
+        #     sys.path.append(os.path.abspath('.'))
+        #     django.setup()
+        # elif settings:
+        #     self.red(texts.ERROR_SETTINGS_WITHOUT_DJANGO)
+        #     return
 
-        if not name:
+        if not profile.name:
             IPython.start_ipython(argv=ipython_options)
             return
 
-        ipython_path, _, _ = get_ipython_path(name)
-        profile_path = get_profile_path(name)
+        ipython_path = profile.path('ipython')
+        profile_path = profile.path('profile')
 
         if profile_path and not os.path.isdir(profile_path):
-            self.red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(name))
+            self.red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(profile.name))
             return
 
         if not ipython_path:
@@ -60,3 +58,6 @@ class Shell(ICommand):
         IPython.start_ipython(
             argv=ipython_options + ['--profile-dir', ipython_path]
         )
+
+    def get_active_profile(self):
+        return self.global_config.get('active_profile')

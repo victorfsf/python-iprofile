@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from iprofile.core.decorators import icommand
-from iprofile.cli.init import Init
+from iprofile.cli.add import Add
 from iprofile.cli.save import Save
-from iprofile.core.models import ICommand
+from iprofile.models import ICommand
 from iprofile import texts
 import click
 
@@ -21,6 +21,5 @@ import click
 class Create(ICommand):
 
     def run(self, **options):
-        profile = Init.run(options)
-        if profile:
+        if Add.run(options):
             Save.run(options)

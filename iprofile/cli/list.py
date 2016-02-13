@@ -2,11 +2,11 @@
 
 from iprofile import texts
 from iprofile.core.decorators import icommand
-from iprofile.core.models import ICommand
+from iprofile.models import ICommand
 from iprofile.core.utils import get_ipython_path
-from iprofile.core.utils import get_profile_path
 from iprofile.core.utils import list_profiles
 import click
+import os
 
 
 @icommand(help=texts.HELP_LIST, short_help=texts.HELP_LIST)
@@ -19,7 +19,8 @@ class List(ICommand):
 
     def run(self, **options):
         try:
-            profiles = list_profiles(self.project_path)
+            project_path = self.global_config.get('project_path')
+            profiles = list_profiles(project_path)
             qtd_profiles = len(profiles)
             if qtd_profiles == 0:
                 self.no_profiles()
@@ -33,18 +34,20 @@ class List(ICommand):
                     'were' if qtd_profiles != 1 else 'was'
                 ))
 
-            for profile in profiles:
+            for profile_name in profiles:
                 if show_only == 'names':
-                    click.echo(profile)
+                    click.echo(profile_name)
                 elif show_only == 'paths':
-                    click.echo(get_ipython_path(profile)[0])
+                    click.echo(get_ipython_path(profile_name))
                 else:
-                    ipython_path, _, _ = get_ipython_path(profile)
-                    click.echo('\nName: {}'.format(profile))
+                    ipython_path = get_ipython_path(profile_name)
+                    click.echo('\nName: {}'.format(profile_name))
                     click.echo('IPython profile path:\t{}'.format(
-                        ipython_path))
+                        ipython_path
+                    ))
                     click.echo('Project profile path:\t{}'.format(
-                        get_profile_path(profile)))
+                        os.path.join(project_path, profile_name)
+                    ))
         except OSError:
             self.no_profiles()
 

@@ -2,7 +2,7 @@
 
 from iprofile.cli import Create
 from iprofile.cli import Delete
-from iprofile.cli import Init
+from iprofile.cli import Add
 from iprofile.cli import Shell
 import IPython
 
@@ -31,7 +31,7 @@ def test_run(monkeypatch):
     Delete.run(mock_options)
     Shell.run(mock_options)
 
-    Init.run(mock_options_1)
+    Add.run(mock_options_1)
     Shell.run(mock_options_1)
 
     Delete.run(mock_options_2)

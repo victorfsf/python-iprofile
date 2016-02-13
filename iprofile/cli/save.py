@@ -2,13 +2,9 @@
 
 from iprofile import texts
 from iprofile.core.decorators import icommand
-from iprofile.core.models import ICommand
-from iprofile.core.utils import create_ipython_profile
-from iprofile.core.utils import get_ipython_path
-from iprofile.core.utils import get_profile_directory
-from iprofile.core.utils import get_profile_path
-from iprofile.core.utils import ipython_locate
-from iprofile.core.utils import read_config
+from iprofile.models import ICommand
+from iprofile.models import Profile
+from iprofile.core.utils import list_profiles
 import click
 import os
 import shutil
@@ -20,45 +16,47 @@ import shutil
 class Save(ICommand):
 
     def run(self, **options):
-        name = self.slugify_name(options, pop=True)
+        name = options.get('name')
         if not name:
-            for profile in os.listdir(self.project_path):
+            for profile_name in list_profiles(
+                    self.global_config.get('project_path')):
+                profile = Profile(profile_name, self.global_config)
                 self.run_for_profile(profile, **options)
         else:
-            self.run_for_profile(name, **options)
+            profile = Profile(name, self.global_config)
+            self.run_for_profile(profile, **options)
 
-    def run_for_profile(self, name, **options):
-        profile = get_profile_path(name)
+    def run_for_profile(self, profile, **options):
+        name = profile.name
 
-        if not os.path.isdir(profile):
+        if not profile.exists():
             self.red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(name))
             return
 
-        abs_profile_path = os.path.abspath(profile)
-        profile_dir = get_profile_directory(name)
-        create_ipython_profile(name, profile_dir)
+        profile.directory = profile.config.get('ipython_path')
+        directory = profile.ipython_create()
+        if directory and not profile.directory:
+            profile.config.update({
+                'ipython_path': directory
+            }).save()
 
-        if not profile_dir:
-            self.check_or_create_config(name, profile)
-        ipython_path, _, _ = get_ipython_path(
-            name, profile_dir)
-        files = [
-            '{0}/ipython_config.py'.format(abs_profile_path),
-            '{0}/startup'.format(abs_profile_path)
-        ]
-        self.save(ipython_path, files, options.get('no_symlink', False))
+        self.save(profile, options.get('no_symlink', False))
 
-    def save(self, ipython_path, files, no_symlinks):
-        if no_symlinks:
-            click.echo(texts.LOG_SAVING_PROFILE.format(ipython_path))
+    def save(self, profile, no_symlink):
+        ipython = profile.path('ipython')
+        files = {
+            profile.path('config'): profile.path('ipython_config'),
+            profile.path('startup'): profile.path('ipython_startup')
+        }
+
+        if no_symlink:
+            click.echo(texts.LOG_SAVING_PROFILE.format(ipython))
         else:
-            click.echo(texts.LOG_SAVING_SYMLINKS.format(ipython_path))
+            click.echo(texts.LOG_SAVING_SYMLINKS.format(ipython))
 
-        for file_path in files:
-            path_to_save = '{0}/{1}'.format(
-                ipython_path, os.path.basename(file_path))
+        for file_path, path_to_save in files.items():
             self.remove(path_to_save)
-            if no_symlinks:
+            if no_symlink:
                 if os.path.isdir(file_path):
                     shutil.copytree(file_path, path_to_save)
                 else:
@@ -75,12 +73,3 @@ class Save(ICommand):
             os.remove(path)
         elif os.path.isdir(path):
             shutil.rmtree(path, ignore_errors=True)
-
-    def check_or_create_config(self, name, profile):
-        profile_config = '{0}/.config'.format(profile)
-        config_data = read_config(profile_config)
-        if 'PROFILE_DIR' not in config_data:
-            config_data['PROFILE_DIR'] = ipython_locate(name)
-            with open(profile_config, 'w') as f:
-                for data, value in config_data.items():
-                    f.write('{0}={1}'.format(data, value))

@@ -4,6 +4,7 @@ from iprofile.cli import Activate
 from iprofile.cli import Create
 from iprofile.cli import Delete
 from iprofile import texts
+from iprofile.models import GlobalConfig
 
 mock_options = {
     'name': 'test'
@@ -26,7 +27,7 @@ def test_run():
 
 
 def test_activate_profile():
-    active_path = '{0}/.active'.format(activate.project_path)
+    config = GlobalConfig()
+    config.read()
     activate.activate_profile('test')
-    with open(active_path, 'r') as active:
-        assert active.read() == 'test'
+    assert config.get('active_profile') == 'test'
