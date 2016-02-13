@@ -7,7 +7,7 @@ import os
 class GlobalConfig(object):
 
     def __init__(self):
-        self.filepath = os.path.join(os.getcwd(), 'iprofiles.yml')
+        self.filepath = os.path.join(os.getcwd(), 'iprofile.yml')
         self._config = {}
 
         if not os.path.isfile(self.filepath):

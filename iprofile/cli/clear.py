@@ -6,7 +6,6 @@ from iprofile.models import ICommand
 from iprofile.models import Profile
 from iprofile.core.utils import list_profiles
 import click
-import os
 import shutil
 
 
@@ -17,10 +16,6 @@ class Clear(ICommand):
 
     def run(self, **options):
         profile = Profile(options.get('name'), self.global_config)
-
-        if not os.path.isdir(self.project_path):
-            self.red(texts.ERROR_NO_PROFILES_TO_CLEAR)
-            return []
 
         if not profile.name:
             if options.get('no_input', False):

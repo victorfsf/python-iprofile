@@ -4,6 +4,7 @@ from iprofile.cli import Create
 from iprofile.cli import Delete
 from iprofile.cli import Add
 import click
+import os
 import shutil
 
 
@@ -17,6 +18,10 @@ mock_options_create = {
 
 mock_options_init = {
     'name': 'test3',
+}
+
+mock_options_clear = {
+    'name': 'test4',
 }
 
 mock_options_2 = {
@@ -37,9 +42,11 @@ def test_delete():
 
 
 def test_delete_no_iprofiles_folder():
-    shutil.move('iprofiles', 'iprofiles2')
+    if os.path.isdir('iprofiles'):
+        shutil.move('iprofiles', 'iprofiles2')
     Delete.run(mock_options_1)
-    shutil.move('iprofiles2', 'iprofiles')
+    if os.path.isdir('iprofiles2'):
+        shutil.move('iprofiles2', 'iprofiles')
 
 
 def test_delete_all_no_input():
@@ -66,6 +73,11 @@ def test_delete_all_confirm_no(monkeypatch):
 
     monkeypatch.setattr(click, 'confirm', mock_confirm)
     Delete.run(mock_options_3)
+
+
+def test_delete_without_path():
+    shutil.rmtree('iprofiles', ignore_errors=True)
+    Delete.run(mock_options_clear)
 
 
 def test_delete_none():

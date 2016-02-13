@@ -14,7 +14,7 @@ def test_run_not_implemented_error():
 
 def test_iprofiles_yml_does_not_exist():
     try:
-        os.remove('iprofiles.yml')
+        os.remove('iprofile.yml')
     except OSError:
         pass
     GlobalConfig()

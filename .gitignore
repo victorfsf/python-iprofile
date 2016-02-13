@@ -63,5 +63,5 @@ target/
 
 # IProfile data
 iprofiles/
-iprofiles.yml
+iprofile.yml
 .todo

@@ -15,6 +15,9 @@ coverage:
 test:
 	@py.test --cov-config .coveragerc --cov=iprofile tests/
 
+test.pdb:
+	@py.test --cov-config .coveragerc --cov=iprofile tests/ --pdb
+
 test.html: test
 	@coverage html
 

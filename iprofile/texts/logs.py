@@ -41,3 +41,4 @@ LOG_QTD_PROFILES = (
 LOG_IPROFILE_INITIALIZED = (
     "Successfully initialized IProfile at '{0}'."
 )
+LOG_IPROFILE_YML = "{1} config file at '{0}/iprofile.yml'."
