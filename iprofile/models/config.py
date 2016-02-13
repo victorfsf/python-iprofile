@@ -6,7 +6,7 @@ import os
 
 class GlobalConfig(object):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         self.filepath = os.path.join(os.getcwd(), 'iprofiles.yml')
         self._config = {}
 
@@ -30,7 +30,7 @@ class GlobalConfig(object):
         return self
 
     def pop(self, key, default=None):
-        return self._config.pop(key, None)
+        return self._config.pop(key, default)
 
     def save(self):
         with open(self.filepath, 'w') as f:

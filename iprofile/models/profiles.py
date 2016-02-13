@@ -11,7 +11,7 @@ import os
 class Profile(object):
     profile_dir = None
 
-    def __init__(self, name, config, *args, **kwargs):
+    def __init__(self, name, config, **kwargs):
         self.name = slugify(name.strip()) if name else None
 
         if not self.name:
