@@ -17,7 +17,6 @@ import os
     help=texts.HELP_PROFILE_DIR,
     type=click.Path()
 )
-@click.option('--autoreload', is_flag=True)
 class Add(ICommand):
 
     def run(self, **options):
@@ -30,7 +29,7 @@ class Add(ICommand):
         if not self.check_directories(profile):
             return
 
-        self.create_profile(profile, options.get('autoreload'))
+        self.create_profile(profile)
 
         if profile.directory:
             profile.config.update({
@@ -55,15 +54,9 @@ class Add(ICommand):
 
         return True
 
-    def create_profile(self, profile, autoreload):
+    def create_profile(self, profile):
         startup = profile.path('startup')
         makedirs(startup)
-        if autoreload:
-            with open(os.path.join(startup, '00_autoreload.ipy'), 'w') as f:
-                f.write('%load_ext autoreload\n%autoreload 2\n')
-            open(os.path.join(startup, '01_imports.py'), 'w').close()
-        else:
-            for item in ['00_config.ipy', '01_imports.py']:
-                open(os.path.join(startup, item), 'w').close()
-
+        for item in ['00_config.ipy', '01_imports.py']:
+            open(os.path.join(startup, item), 'w').close()
         open(profile.path('config'), 'w').close()

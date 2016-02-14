@@ -26,7 +26,7 @@ class Delete(ICommand):
             if deleted == 0:
                 self.red(texts.ERROR_NO_PROFILES_TO_DELETE)
             else:
-                click.echo(texts.LOG_QTD_DELETED.format(
+                click.echo(texts.LOG_QTT_DELETED.format(
                     deleted, 's' if deleted != 1 else ''))
         elif names:
             self.run_for_profile(Profile(names, self.global_config))

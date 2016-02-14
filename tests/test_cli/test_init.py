@@ -2,6 +2,7 @@
 
 from iprofile.cli import Init
 from iprofile.core.utils import makedirs
+from iprofile.core.utils import GLOBAL_SETTINGS_FILE
 import os
 import shutil
 
@@ -17,7 +18,7 @@ def test_run():
 
 def test_no_profile_yml():
     try:
-        os.remove(os.path.join(os.getcwd(), 'iprofile.yml'))
+        os.remove(os.path.join(os.getcwd(), GLOBAL_SETTINGS_FILE))
     except OSError:
         pass
     shutil.rmtree('iprofiles', ignore_errors=True)

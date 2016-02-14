@@ -3,13 +3,14 @@
 from slugify import slugify
 from iprofile.core.utils import get_ipython_name
 from iprofile.core.utils import get_user_home
+from iprofile.core.utils import PROFILE_SETTINGS_FILE
 from iprofile.models import ProfileConfig
-import subprocess
+import IPython
 import os
+import subprocess
 
 
 class Profile(object):
-    profile_dir = None
 
     def __init__(self, name, config, **kwargs):
         self.name = slugify(name.strip()) if name else None
@@ -31,7 +32,7 @@ class Profile(object):
 
         self._path = {
             'profile': profile_path,
-            'settings': os.path.join(profile_path, 'settings.yml'),
+            'settings': os.path.join(profile_path, PROFILE_SETTINGS_FILE),
             'startup': os.path.join(profile_path, 'startup'),
             'config': os.path.join(profile_path, 'ipython_config.py'),
         }
@@ -42,9 +43,8 @@ class Profile(object):
         return self._path.get(value, default)
 
     def exists(self):
-        if os.path.isdir(self.path('profile')):
-            if os.path.isfile(self.path('config')):
-                return True
+        if os.path.isfile(self.path('settings')):
+            return True
         return False
 
     def ipython_exists(self):
@@ -65,15 +65,12 @@ class Profile(object):
         return self.ipython_locate()
 
     def ipython_locate(self):
-        args = 'ipython locate profile {0}'.format(self.ipython_name).split()
-
         if not self.directory:
             self.directory = self.config.get('ipython_path')
 
         try:
-            result = self.directory or subprocess.check_output(
-                args, stderr=subprocess.STDOUT,
-                universal_newlines=True).replace('\n', '')
+            result = self.directory or IPython.paths.locate_profile(
+                self.ipython_name)
 
             if result:
                 abs_ipython_path = os.path.abspath(result)
@@ -85,5 +82,5 @@ class Profile(object):
                         abs_ipython_path, 'ipython_config.py')
                 })
                 return result
-        except subprocess.CalledProcessError:
+        except IOError:
             return

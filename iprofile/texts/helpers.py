@@ -14,6 +14,7 @@ HELP_LIST = "Show a list of all profiles."
 HELP_SAVE = "Save changes to IPython's path."
 HELP_SHELL = "Open IPython with a given profile name (or the active profile)."
 HELP_CONFIG = "Create or change a configuration variable for IProfile."
+HELP_MAGIC = "Load a IPython magic script."
 
 # OPTIONS
 HELP_NO_INPUT = "Take no input from the command."
@@ -23,3 +24,5 @@ HELP_SAVE_ALL = "Save all existing profiles."
 HELP_SHOW_ONLY = "Show only the specified atribute."
 HELP_SETTINGS = "Set an alternative Django settings module."
 HELP_NAME_INIT = "Set the project name."
+HELP_CONFIG_PROFILE = "Set a profile to apply the config."
+HELP_SHELL_NO_PROFILE = "Run the shell without a custom profile."

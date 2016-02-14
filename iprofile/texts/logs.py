@@ -29,16 +29,19 @@ LOG_PROFILE_DEACTIVATED = (
 LOG_ACTIVE_PROFILE = (
     "Active profile: "
 )
-LOG_QTD_DELETED = (
+LOG_QTT_DELETED = (
     "Successfully deleted {0} profile{1}."
 )
-LOG_QTD_CLEARED = (
+LOG_QTT_CLEARED = (
     "Successfully cleared {0} profile{1}."
 )
-LOG_QTD_PROFILES = (
+LOG_QTT_PROFILES = (
     "{0} profile{1} {2} found:"
 )
 LOG_IPROFILE_INITIALIZED = (
     "Successfully initialized IProfile at '{0}'."
 )
-LOG_IPROFILE_YML = "{1} config file at '{0}/iprofile.yml'."
+LOG_IPROFILE_YML = "{1} config file at '{0}/{2}'."
+LOG_IPYTHON_SCRIPT_ADDED = (
+    "Successfully added the script '{0}' to the file:"
+)

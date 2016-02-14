@@ -3,7 +3,7 @@
 from setuptools import setup
 from setuptools import find_packages
 
-version = '0.1.2b5'
+version = '0.2.0'
 
 
 setup(
@@ -26,12 +26,14 @@ setup(
     url='https://github.com/victorfsf/python-iprofile',
     keywords=[
         'ipython',
+        'ipython4',
         'python',
         'python2',
         'python3',
         'shell',
         'profile',
         'iprofile',
+        'django',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

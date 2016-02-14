@@ -55,6 +55,6 @@ class Clear(ICommand):
         if cleared == 0:
             self.red(texts.ERROR_NO_PROFILES_TO_CLEAR)
         else:
-            click.echo(texts.LOG_QTD_CLEARED.format(
+            click.echo(texts.LOG_QTT_CLEARED.format(
                 cleared, 's' if cleared != 1 else ''))
         return names

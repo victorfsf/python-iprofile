@@ -13,6 +13,7 @@ import sys
 @click.argument('name', required=False)
 @click.argument('ipython_options', nargs=-1, required=False)
 @click.option('--settings', required=False, help=texts.HELP_SETTINGS)
+@click.option('--no-profile', is_flag=True, help=texts.HELP_SHELL_NO_PROFILE)
 class Django(ICommand):
 
     def run(self, **options):
