@@ -17,7 +17,7 @@ class GlobalConfig(object):
             self._config = {
                 'project_path': 'iprofiles',
                 'project_name': os.path.basename(os.getcwd()),
-                'ipython_dir': IPython.paths.get_ipython_dir()
+                'ipython_dir': str(IPython.paths.get_ipython_dir())
             }
             self.save()
         else:
