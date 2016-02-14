@@ -23,5 +23,4 @@ Or download from the [PyPI repository](https://pypi.python.org/pypi/python-iprof
 See the wiki for the [guide](https://github.com/victorfsf/python-iprofile/wiki) and [command reference](https://github.com/victorfsf/python-iprofile/wiki/Command-Reference).
 
 #### Django integration
-
-IProfile has a [Django shell command](https://github.com/victorfsf/python-iprofile/wiki#using-the-django-shell)! Also, it comes with a [script to import all your Django project models](https://github.com/victorfsf/python-iprofile/wiki#importing-all-django-models).
+**Installing Django is optional -** you won't need it to work with IProfile, only if you want to use the [Django shell command](https://github.com/victorfsf/python-iprofile/wiki#using-the-django-shell). But if you do use it, IProfile comes with a [script to import all your Django project models](https://github.com/victorfsf/python-iprofile/wiki#importing-all-django-models), which can be very useful.
