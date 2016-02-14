@@ -2,6 +2,7 @@
 
 import yaml
 import os
+import IPython
 
 
 class GlobalConfig(object):
@@ -13,7 +14,8 @@ class GlobalConfig(object):
         if not os.path.isfile(self.filepath):
             self._config = {
                 'project_path': 'iprofiles',
-                'project_name': os.path.basename(os.getcwd())
+                'project_name': os.path.basename(os.getcwd()),
+                'ipython_dir': IPython.paths.get_ipython_dir()
             }
             self.save()
         else:

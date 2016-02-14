@@ -3,7 +3,6 @@
 from slugify import slugify
 import click
 import os
-import subprocess
 
 
 def get_ipython_name(profile_name, config):
@@ -13,14 +12,6 @@ def get_ipython_name(profile_name, config):
         ),
         profile_name
     )
-
-
-def get_ipython_path(profile_name, config):
-    args = 'ipython locate profile {0}'.format(
-        get_ipython_name(profile_name, config)).split()
-    return subprocess.check_output(
-        args, stderr=subprocess.STDOUT,
-        universal_newlines=True).replace('\n', '')
 
 
 def echo_red(message):
