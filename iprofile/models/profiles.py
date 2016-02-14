@@ -3,6 +3,7 @@
 from slugify import slugify
 from iprofile.core.utils import get_ipython_name
 from iprofile.core.utils import get_user_home
+from iprofile.core.utils import PROFILE_SETTINGS_FILE
 from iprofile.models import ProfileConfig
 import IPython
 import os
@@ -31,7 +32,7 @@ class Profile(object):
 
         self._path = {
             'profile': profile_path,
-            'settings': os.path.join(profile_path, 'settings.yml'),
+            'settings': os.path.join(profile_path, PROFILE_SETTINGS_FILE),
             'startup': os.path.join(profile_path, 'startup'),
             'config': os.path.join(profile_path, 'ipython_config.py'),
         }

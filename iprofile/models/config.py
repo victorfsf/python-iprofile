@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from iprofile.core.utils import PROFILE_SETTINGS_FILE
+from iprofile.core.utils import GLOBAL_SETTINGS_FILE
 import yaml
 import os
 import IPython
@@ -8,7 +10,7 @@ import IPython
 class GlobalConfig(object):
 
     def __init__(self):
-        self.filepath = os.path.join(os.getcwd(), 'iprofile.yml')
+        self.filepath = os.path.join(os.getcwd(), GLOBAL_SETTINGS_FILE)
         self._config = {}
 
         if not os.path.isfile(self.filepath):
@@ -58,7 +60,7 @@ class GlobalConfig(object):
 class ProfileConfig(GlobalConfig):
 
     def __init__(self, path, profile):
-        self.filepath = os.path.join(path, profile, 'settings.yml')
+        self.filepath = os.path.join(path, profile, PROFILE_SETTINGS_FILE)
         self._config = {}
 
     def read(self):

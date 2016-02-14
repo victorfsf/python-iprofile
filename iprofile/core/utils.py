@@ -4,6 +4,9 @@ from slugify import slugify
 import click
 import os
 
+PROFILE_SETTINGS_FILE = 'settings.yml'
+GLOBAL_SETTINGS_FILE = 'iprofile.yml'
+
 
 def get_ipython_name(profile_name, config):
     return '{0}_{1}'.format(
@@ -33,7 +36,8 @@ def list_profiles(project_path):
         return [
             x for x in os.listdir(project_path)
             if os.path.isdir('{0}/{1}'.format(project_path, x)) and
-            'settings.yml' in os.listdir('{0}/{1}'.format(project_path, x))
+            PROFILE_SETTINGS_FILE in os.listdir(
+                '{0}/{1}'.format(project_path, x))
         ]
     return []
 
