@@ -22,6 +22,7 @@ Or download from the [PyPI repository](https://pypi.python.org/pypi/python-iprof
 ## Documentation
 
 See the wiki for the [guide](https://github.com/victorfsf/python-iprofile/wiki) and [command reference](https://github.com/victorfsf/python-iprofile/wiki/Command-Reference). 
+
 See the [changelog](https://github.com/victorfsf/python-iprofile/wiki/Changelog) to check out the changes and new features (since v0.2.0).
 
 #### Django integration
