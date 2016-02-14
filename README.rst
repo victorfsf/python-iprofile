@@ -17,3 +17,9 @@ Python IProfile CLI
     :alt: Code Health
 
 Wiki: https://github.com/victorfsf/python-iprofile/wiki/
+
+
+Django integration
+------------------
+
+IProfile has a `Django shell command <https://github.com/victorfsf/python-iprofile/wiki#using-the-django-shell>`_! Also, it comes with a `script to import all your Django project models <https://github.com/victorfsf/python-iprofile/wiki#importing-all-django-models>`_.
