@@ -28,7 +28,9 @@ class GlobalConfig(object):
                 })
 
     def read(self):
-        self._config = yaml.load(open(self.filepath, 'r')) or {}
+        self._config.update(
+            yaml.load(open(self.filepath, 'r')) or {}
+        )
         return self.get_all()
 
     def get(self, value, default=None):
