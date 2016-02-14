@@ -17,10 +17,8 @@ import os
 class Shell(ICommand):
 
     def run(self, **options):
-        name = options.get('name')
         profile = Profile(
-            name.replace('.', '') if name else self.get_active_profile(),
-            self.global_config
+            self.get_active_profile(options.get('name')), self.global_config
         )
 
         ipython_options = list(options.get('ipython_options', []))
@@ -43,5 +41,7 @@ class Shell(ICommand):
             argv=ipython_options + ['--profile-dir', ipython_path]
         )
 
-    def get_active_profile(self):
-        return self.global_config.get('active_profile')
+    def get_active_profile(self, name):
+        if not name or name == '.':
+            return self.global_config.get('active_profile')
+        return name
