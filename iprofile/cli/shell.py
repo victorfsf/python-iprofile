@@ -18,9 +18,11 @@ class Shell(ICommand):
 
     def run(self, **options):
         profile = Profile(
-            options.get('name') or self.get_active_profile() or '',
+            options.get('name').replace('.', '') or
+            self.get_active_profile() or '',
             self.global_config
         )
+
         ipython_options = list(options.get('ipython_options', []))
 
         if not profile.name:
