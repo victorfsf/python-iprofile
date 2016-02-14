@@ -20,6 +20,7 @@ Report issues `here <https://github.com/victorfsf/python-iprofile/issues/new>`_.
 
 Wiki: https://github.com/victorfsf/python-iprofile/wiki/
 
+See the `changelog <https://github.com/victorfsf/python-iprofile/wiki/Changelog>`_ to check out the changes and new features (since v0.2.0).
 
 Django integration
 ------------------
