@@ -27,16 +27,19 @@ class Shell(ICommand):
             IPython.start_ipython(argv=ipython_options)
             return
 
-        ipython_path = profile.path('ipython')
         profile_path = profile.path('profile')
+        ipython_path = profile.path('ipython')
 
         if profile_path and not os.path.isdir(profile_path):
             self.red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(profile.name))
             return
 
-        if not ipython_path:
+        if not (ipython_path and os.path.isdir(ipython_path)):
             Save.run(options)
+            profile.ipython_locate()
+            ipython_path = profile.path('ipython')
             click.echo()
+
         IPython.start_ipython(
             argv=ipython_options + ['--profile-dir', ipython_path]
         )
