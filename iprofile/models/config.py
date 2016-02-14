@@ -16,6 +16,16 @@ class GlobalConfig(object):
                 'project_name': os.path.basename(os.getcwd())
             }
             self.save()
+        else:
+            if not self._config.get('project_path'):
+                self._config.update({
+                    'project_path': 'iprofiles',
+                })
+
+            if not self._config.get('project_name'):
+                self._config.update({
+                    'project_name': os.path.basename(os.getcwd())
+                })
 
     def read(self):
         self._config = yaml.load(open(self.filepath, 'r')) or {}

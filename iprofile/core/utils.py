@@ -8,8 +8,10 @@ import subprocess
 
 def get_ipython_name(profile_name, config):
     return '{0}_{1}'.format(
-        slugify(config.get('project_name')) or
-        os.path.basename(os.getcwd()), profile_name
+        slugify(
+            config.get('project_name') or os.path.basename(os.getcwd())
+        ),
+        profile_name
     )
 
 
