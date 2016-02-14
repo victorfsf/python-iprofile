@@ -18,6 +18,10 @@ mock_options_2 = {
     'no_input': True
 }
 
+mock_options_3 = {
+    'no_profile': True
+}
+
 
 def test_run(monkeypatch):
 
@@ -36,3 +40,4 @@ def test_run(monkeypatch):
 
     Delete.run(mock_options_2)
     Shell.run(mock_options_1)
+    Shell.run(mock_options_3)
