@@ -36,9 +36,10 @@ class List(ICommand):
             if show_only == 'names':
                 click.echo(profile_name)
             elif show_only == 'paths':
-                click.echo(get_ipython_path(profile_name))
+                click.echo(get_ipython_path(profile_name, self.global_config))
             else:
-                ipython_path = get_ipython_path(profile_name)
+                ipython_path = get_ipython_path(
+                    profile_name, self.global_config)
                 click.echo('\nName: {}'.format(profile_name))
                 click.echo('IPython profile path:\t{}'.format(
                     ipython_path

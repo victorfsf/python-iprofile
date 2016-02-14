@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*
 
 from slugify import slugify
-from iprofile.core.utils import PROJECT_NAME
+from iprofile.core.utils import get_ipython_name
 from iprofile.core.utils import get_user_home
 from iprofile.models import ProfileConfig
 import subprocess
@@ -22,7 +22,7 @@ class Profile(object):
             os.path.abspath(get_user_home(directory)) if directory else None
         )
 
-        self.ipython_name = '{0}_{1}'.format(slugify(PROJECT_NAME), self.name)
+        self.ipython_name = get_ipython_name(self.name, config)
         self.config = ProfileConfig(config.get('project_path'), self.name)
         self.config.read()
 

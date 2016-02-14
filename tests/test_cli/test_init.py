@@ -11,7 +11,7 @@ def test_run():
     makedirs('test_init')
     Init.run({'path': 'test_init'})
     shutil.rmtree('test_init', ignore_errors=True)
-    Init.run({'path': 'test_init'})
+    Init.run({'path': 'test_init', 'name': 'test'})
     shutil.rmtree('test_init', ignore_errors=True)
 
 

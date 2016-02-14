@@ -6,16 +6,16 @@ import os
 import subprocess
 
 
-PROJECT_NAME = os.path.basename(os.getcwd())
+def get_ipython_name(profile_name, config):
+    return '{0}_{1}'.format(
+        slugify(config.get('project_name'))
+        or os.path.basename(os.getcwd()), profile_name
+    )
 
 
-def get_ipython_name(profile_name):
-    return '{0}_{1}'.format(slugify(PROJECT_NAME), profile_name)
-
-
-def get_ipython_path(profile_name):
+def get_ipython_path(profile_name, config):
     args = 'ipython locate profile {0}'.format(
-        get_ipython_name(profile_name)).split()
+        get_ipython_name(profile_name, config)).split()
     return subprocess.check_output(
         args, stderr=subprocess.STDOUT,
         universal_newlines=True).replace('\n', '')
