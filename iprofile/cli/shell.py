@@ -17,9 +17,9 @@ import os
 class Shell(ICommand):
 
     def run(self, **options):
+        name = options.get('name')
         profile = Profile(
-            options.get('name').replace('.', '') or
-            self.get_active_profile() or '',
+            name.replace('.', '') if name else self.get_active_profile(),
             self.global_config
         )
 
