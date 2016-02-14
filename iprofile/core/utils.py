@@ -3,22 +3,18 @@
 from slugify import slugify
 import click
 import os
-import subprocess
+
+PROFILE_SETTINGS_FILE = 'settings.yml'
+GLOBAL_SETTINGS_FILE = 'iprofile.yml'
 
 
 def get_ipython_name(profile_name, config):
     return '{0}_{1}'.format(
-        slugify(config.get('project_name')) or
-        os.path.basename(os.getcwd()), profile_name
+        slugify(
+            config.get('project_name') or os.path.basename(os.getcwd())
+        ),
+        profile_name
     )
-
-
-def get_ipython_path(profile_name, config):
-    args = 'ipython locate profile {0}'.format(
-        get_ipython_name(profile_name, config)).split()
-    return subprocess.check_output(
-        args, stderr=subprocess.STDOUT,
-        universal_newlines=True).replace('\n', '')
 
 
 def echo_red(message):
@@ -40,7 +36,8 @@ def list_profiles(project_path):
         return [
             x for x in os.listdir(project_path)
             if os.path.isdir('{0}/{1}'.format(project_path, x)) and
-            'settings.yml' in os.listdir('{0}/{1}'.format(project_path, x))
+            PROFILE_SETTINGS_FILE in os.listdir(
+                '{0}/{1}'.format(project_path, x))
         ]
     return []
 

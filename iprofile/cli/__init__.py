@@ -11,5 +11,6 @@ from .delete import *  # noqa
 from .djshell import *  # noqa
 from .init import *  # noqa
 from .list import *  # noqa
+from .magic import *  # noqa
 from .save import *  # noqa
 from .shell import *  # noqa

@@ -16,6 +16,8 @@ Python IProfile CLI
     :target: https://landscape.io/github/victorfsf/python-iprofile/master
     :alt: Code Health
 
+Report issues `here <https://github.com/victorfsf/python-iprofile/issues/new>`_.
+
 Wiki: https://github.com/victorfsf/python-iprofile/wiki/
 
 

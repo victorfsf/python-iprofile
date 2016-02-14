@@ -8,6 +8,7 @@
 
 *A CLI for handling IPython 4+ profiles startup scripts.*
 
+Report issues [here](https://github.com/victorfsf/python-iprofile/issues/new).
 
 ## Installation
 

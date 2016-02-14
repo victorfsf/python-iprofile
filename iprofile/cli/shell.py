@@ -13,15 +13,19 @@ import os
 @icommand(help=texts.HELP_SHELL, short_help=texts.HELP_SHELL)
 @click.argument('name', required=False)
 @click.argument('ipython_options', nargs=-1, required=False)
-@click.option('--django', required=False, help=texts.HELP_DJANGO)
+@click.option('--no-profile', is_flag=True, help=texts.HELP_SHELL_NO_PROFILE)
 class Shell(ICommand):
 
     def run(self, **options):
+        ipython_options = list(options.get('ipython_options', []))
+
+        if options.get('no_profile'):
+            IPython.start_ipython(argv=ipython_options)
+            return
+
         profile = Profile(
             self.get_active_profile(options.get('name')), self.global_config
         )
-
-        ipython_options = list(options.get('ipython_options', []))
 
         if not profile.name:
             IPython.start_ipython(argv=ipython_options)
@@ -43,8 +47,3 @@ class Shell(ICommand):
         IPython.start_ipython(
             argv=ipython_options + ['--profile-dir', ipython_path]
         )
-
-    def get_active_profile(self, name):
-        if not name or name == '.':
-            return self.global_config.get('active_profile')
-        return name

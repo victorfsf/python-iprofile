@@ -2,6 +2,7 @@
 
 from iprofile import texts
 from iprofile.core.decorators import icommand
+from iprofile.core.utils import GLOBAL_SETTINGS_FILE
 from iprofile.models import ICommand
 from slugify import slugify
 import click
@@ -36,7 +37,8 @@ class Init(ICommand):
             self.global_config.save()
 
             self.green(texts.LOG_IPROFILE_INITIALIZED.format(abspath))
-            click.echo(texts.LOG_IPROFILE_YML.format(os.getcwd(), action))
+            click.echo(texts.LOG_IPROFILE_YML.format(
+                os.getcwd(), action, GLOBAL_SETTINGS_FILE))
 
         except OSError:
             self.red(texts.ERROR_INIT_PATH_EXISTS.format(abspath))

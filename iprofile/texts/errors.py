@@ -3,7 +3,7 @@
 ERROR_PROFILE_EXISTS = "Profile '{0}' already exists in this project!"
 ERROR_PROFILE_DOESNT_EXIST_RUN = (
     "The profile '{0}' does not exist!\nRun 'iprofile create {0}'"
-    " to create and save it."
+    " to create it."
 )
 ERROR_IPYTHON_PROFILE_DOESNT_EXIST = (
     "The IPython profile '{0}' does not exist!"
@@ -38,4 +38,7 @@ ERROR_DJANGO_INVALID_SETTINGS = (
 )
 ERROR_INIT_PATH_EXISTS = (
     "The folder '{0}' already exists in this project!"
+)
+ERROR_IPYTHON_SCRIPT_DOESNT_EXIST = (
+    "Could not find script with name '{0}'."
 )

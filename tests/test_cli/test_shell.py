@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from iprofile.cli import Create
+from iprofile.cli import Activate
 from iprofile.cli import Delete
 from iprofile.cli import Add
 from iprofile.cli import Shell
@@ -16,6 +17,14 @@ mock_options_1 = {
 
 mock_options_2 = {
     'no_input': True
+}
+
+mock_options_3 = {
+    'no_profile': True
+}
+
+mock_options_4 = {
+    'name': None
 }
 
 
@@ -34,5 +43,9 @@ def test_run(monkeypatch):
     Add.run(mock_options_1)
     Shell.run(mock_options_1)
 
+    Activate.run(mock_options_1)
+    Shell.run(mock_options_4)
+
     Delete.run(mock_options_2)
     Shell.run(mock_options_1)
+    Shell.run(mock_options_3)
