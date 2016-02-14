@@ -42,3 +42,6 @@ LOG_IPROFILE_INITIALIZED = (
     "Successfully initialized IProfile at '{0}'."
 )
 LOG_IPROFILE_YML = "{1} config file at '{0}/{2}'."
+LOG_IPYTHON_SCRIPT_ADDED = (
+    "Successfully added the script '{0}' to the file:"
+)

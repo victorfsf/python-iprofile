@@ -47,8 +47,3 @@ class Shell(ICommand):
         IPython.start_ipython(
             argv=ipython_options + ['--profile-dir', ipython_path]
         )
-
-    def get_active_profile(self, name):
-        if not name or name == '.':
-            return self.global_config.get('active_profile')
-        return name

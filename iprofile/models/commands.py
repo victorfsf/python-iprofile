@@ -27,6 +27,11 @@ class ICommand(object):
     def green(self, text):
         return echo_green(text)
 
+    def get_active_profile(self, name):
+        if not name or name == '.':
+            return self.global_config.get('active_profile')
+        return name
+
 
 class Command(click.Command):
 

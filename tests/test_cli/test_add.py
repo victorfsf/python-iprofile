@@ -10,11 +10,6 @@ mock_options = {
     'no_symlink': True
 }
 
-mock_options_1 = {
-    'name': 'test2',
-    'autoreload': True
-}
-
 add = Add.callback(_autorun=False)
 add.run(**mock_options)
 
@@ -25,4 +20,3 @@ def test_run():
     shutil.rmtree(config.get('project_path'))
     Add.run(mock_options)
     assert os.path.isdir(config.get('project_path'))
-    Add.run(mock_options_1)

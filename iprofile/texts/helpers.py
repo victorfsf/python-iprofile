@@ -14,6 +14,7 @@ HELP_LIST = "Show a list of all profiles."
 HELP_SAVE = "Save changes to IPython's path."
 HELP_SHELL = "Open IPython with a given profile name (or the active profile)."
 HELP_CONFIG = "Create or change a configuration variable for IProfile."
+HELP_MAGIC = "Load a IPython magic script."
 
 # OPTIONS
 HELP_NO_INPUT = "Take no input from the command."
