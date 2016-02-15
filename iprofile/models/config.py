@@ -11,13 +11,13 @@ class GlobalConfig(object):
 
     def __init__(self):
         self.filepath = os.path.join(os.getcwd(), GLOBAL_SETTINGS_FILE)
+        self.ipython_dir = IPython.paths.get_ipython_dir()
         self._config = {}
 
         if not os.path.isfile(self.filepath):
             self._config = {
                 'project_path': 'iprofiles',
                 'project_name': os.path.basename(os.getcwd()),
-                'ipython_dir': str(IPython.paths.get_ipython_dir())
             }
             self.save()
         else:

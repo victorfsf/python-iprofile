@@ -16,7 +16,7 @@ class Init(ICommand):
 
     def run(self, **options):
         path = options.get('path') or 'iprofiles'
-        name = slugify(options.get('name', ''))
+        name = slugify(options.get('name') or '')
 
         try:
             abspath = os.path.abspath(os.path.join(os.getcwd(), path))
