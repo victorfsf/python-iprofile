@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 
+# README
+IPROFILE_READ_ME = """
+    IProfile CLI
+    A CLI for handling IPython 4+ profiles startup scripts
+"""
+
 # COMMANDS
 HELP_ACTIVATE = "Set the active profile for IPython."
 HELP_ACTIVE = "Show the active profile."

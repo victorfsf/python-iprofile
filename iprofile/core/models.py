@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from iprofile.core.utils import echo_red
 from iprofile.core.utils import echo_green
-from iprofile.models.config import GlobalConfig
+from iprofile.core.utils import echo_red
+from iprofile.settings.utils import GLOBAL_SETTINGS_FILE
+from iprofile.settings.utils import PROFILE_SETTINGS_FILE
+from iprofile.settings.models import Settings
 import click
 
 
 class ICommand(object):
 
     def __init__(self, _autorun=True, *args, **kwargs):
-        self.global_config = GlobalConfig()
-        self.global_config.read()
-        self.project_path = self.global_config.get('project_path')
+        self.profile = Settings(PROFILE_SETTINGS_FILE)
+        self.settings = Settings(GLOBAL_SETTINGS_FILE)
 
         if _autorun:
             self.run(**kwargs.copy())
@@ -26,11 +27,6 @@ class ICommand(object):
 
     def green(self, text):
         return echo_green(text)
-
-    def get_active_profile(self, name):
-        if not name or name == '.':
-            return self.global_config.get('active_profile')
-        return name
 
 
 class Command(click.Command):

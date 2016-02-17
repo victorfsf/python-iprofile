@@ -29,12 +29,12 @@ setup: clean requirements test.html
 debug:
 	@python -c 'from iprofile.console import main; main()' $(args)
 
-dist.clean:
+clean.build:
 	@rm -rd build/ ||:
 	@rm -rd dist/ ||:
 	@rm -rd *.egg-info ||:
 
-dist: dist.clean
+dist: clean.build
 	@python setup.py sdist
 	@python setup.py bdist_wheel --universal
 
