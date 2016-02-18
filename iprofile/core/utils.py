@@ -27,10 +27,3 @@ def list_profiles(project_path):
             PROFILE_SETTINGS_FILE in os.listdir(os.path.join(project_path, x))
         ]
     return []
-
-
-def makedirs(path):
-    try:
-        os.makedirs(path)
-    except OSError:
-        pass

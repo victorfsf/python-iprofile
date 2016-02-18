@@ -2,21 +2,21 @@
 
 from iprofile.core.utils import echo_green
 from iprofile.core.utils import echo_red
-from iprofile.settings.utils import GLOBAL_SETTINGS_FILE
-from iprofile.settings.utils import PROFILE_SETTINGS_FILE
-from iprofile.settings.models import Settings
+from iprofile.settings.models import GlobalSettings
+from iprofile.settings.models import ProfileSettings
 import click
 
 
 class ICommand(object):
 
     def __init__(self, _autorun=True, *args, **kwargs):
-        self.profile = Settings(PROFILE_SETTINGS_FILE)
-        self.settings = Settings(GLOBAL_SETTINGS_FILE)
+        self.settings = GlobalSettings()
+        self.profile = ProfileSettings(self.settings, kwargs.get('profile'))
 
         if _autorun:
             self.run(**kwargs.copy())
-        kwargs = {}
+        kwargs.clear()
+
         super(ICommand, self).__init__(*args, **kwargs)
 
     def run(self, **options):
