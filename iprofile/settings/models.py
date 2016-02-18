@@ -13,6 +13,13 @@ class SectionDict(object):
     def __getattr__(self, name):
         return getattr(self.__map, name)
 
+    def __getitem__(self, key):
+        return self.__map[key]
+
+    def __setitem__(self, key, value):
+        self.__map[key] = value
+        return self.__map
+
     def get(self, value, default=None):
         result = self.__map.get(value, default)
         if result and isinstance(result, dict):
@@ -21,7 +28,7 @@ class SectionDict(object):
 
     def update(self, data):
         self.__map.update(data)
-        return self.__basedict
+        return self.__map
 
     def pop(self, value, default=None):
         return self.__map.pop(value, default)
