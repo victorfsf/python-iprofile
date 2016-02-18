@@ -2,16 +2,15 @@
 
 from iprofile.core.utils import echo_green
 from iprofile.core.utils import echo_red
-from iprofile.settings.models import GlobalSettings
-from iprofile.settings.models import ProfileSettings
+from iprofile.utils.mixins import OSMixin
+from iprofile.settings.registry import settings
 import click
 
 
-class ICommand(object):
+class ICommand(OSMixin):
 
     def __init__(self, _autorun=True, *args, **kwargs):
-        self.settings = GlobalSettings()
-        self.profile = ProfileSettings(self.settings, kwargs.get('profile'))
+        self.settings = settings
 
         if _autorun:
             self.run(**kwargs.copy())

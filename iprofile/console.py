@@ -2,6 +2,7 @@
 
 from iprofile import texts
 from iprofile.core.config import registry
+from iprofile.settings.models import settings
 import click
 
 
@@ -19,6 +20,6 @@ class IProfile(click.MultiCommand):
     cls=IProfile,
     help=texts.IPROFILE_READ_ME
 )
-@click.version_option(version='0.2.1', prog_name="IProfile")
+@click.version_option(version='0.3.0', prog_name="IProfile")
 def main():
-    pass
+    settings.read()

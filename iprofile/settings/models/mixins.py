@@ -1,69 +1,58 @@
 # -*- coding: utf-8 -*-
 
 from collections import OrderedDict
+from iprofile.utils.mixins import OSMixin
 import os
 import yaml
 
 
-class SectionDict(object):
+class SectionDict(dict):
 
     def __init__(self, yamlmap, basemap, *args, **kwargs):
         self.__basemap = basemap
         self.__yamlmap = yamlmap
-        self.__map = kwargs.pop('map', None)
-
-    def __getattr__(self, name):
-        return getattr(self.__map, name)
-
-    def __getitem__(self, key):
-        return self.__map[key]
-
-    def __setitem__(self, key, value):
-        self.__map[key] = value
-        return self.__yamlmap
-
-    def __repr__(self):
-        return str(self.__map)
+        super(SectionDict, self).__init__(kwargs.pop('map'), *args, **kwargs)
 
     def get(self, value, default=None):
-        result = self.__map.get(value, default)
+        result = super(SectionDict, self).get(value, default)
         if result and isinstance(result, dict):
-            return SectionDict(self.__yamlmap, self.__map, map=result)
+            return SectionDict(self.__yamlmap, self, map=result)
         return result
 
     def update(self, data):
-        self.__map.update(data)
+        super(SectionDict, self).update(data)
         return self.__yamlmap
 
     def pop(self, value, default=None):
-        return self.__map.pop(value, default)
+        return super(SectionDict, self).pop(value, default)
 
     def save(self):
         return self.__yamlmap.save()
 
 
-class YAMLOrderedDict(OrderedDict):
+class YAMLOrderedDict(OrderedDict, OSMixin):
     default = {}
 
-    def __init__(self, filepath, *args, **kwargs):
-        super(YAMLOrderedDict, self).__init__(*args, **kwargs)
-        self.filepath = filepath
+    def __init__(self, path, *args, **kwargs):
         self.default = kwargs.pop('default', self.default)
+        super(YAMLOrderedDict, self).__init__(*args, **kwargs)
+        self.path = path
         self.default_flow_style = kwargs.pop('default_flow_style', False)
         self.indent = kwargs.pop('indent', 4)
-        data = self.read()
-        if data:
-            super(YAMLOrderedDict, self).update(data)
+        self.__loaded = False
 
     def read(self):
+        update = super(YAMLOrderedDict, self).update
         try:
-            return self.load()
+            data = update(self.load())
         except IOError:
-            return self.create()
+            data = update(self.create())
+        self.__loaded = True
+        return data
 
     def create(self):
         self.make_settings_path()
-        with open(self.filepath, 'w') as f:
+        with open(self.path, 'w') as f:
             f.write(self.dump(self.default))
         return self.default
 
@@ -82,7 +71,7 @@ class YAMLOrderedDict(OrderedDict):
 
     def save(self):
         self.make_settings_path()
-        with open(self.filepath, 'w') as f:
+        with open(self.path, 'w') as f:
             f.write(self.dump(dict(self)))
         return self
 
@@ -94,26 +83,20 @@ class YAMLOrderedDict(OrderedDict):
         )
 
     def load(self):
-        return yaml.load(open(self.filepath, 'r'))
-
-    def join(self, *args):
-        return os.path.join(*args)
-
-    def makedirs(self, path):
-        try:
-            os.makedirs(path)
-        except OSError:
-            pass
+        return yaml.load(open(self.path, 'r'))
 
     def make_settings_path(self):
-        return self.makedirs(os.path.dirname(self.filepath))
+        return self.makedirs(os.path.dirname(self.path))
+
+    def exists(self):
+        return True if self.isfile(self.path) and self.__loaded else False
 
 
 class SettingsBase(YAMLOrderedDict):
     base_section = None
 
     def load(self):
-        yaml_dict = yaml.load(open(self.filepath, 'r'))
+        yaml_dict = yaml.load(open(self.path, 'r'))
         if not yaml_dict.get(self.base_section):
             return self.create()
         return yaml_dict
