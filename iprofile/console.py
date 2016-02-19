@@ -20,6 +20,6 @@ class IProfile(click.MultiCommand):
     cls=IProfile,
     help=texts.IPROFILE_READ_ME
 )
-@click.version_option(version='0.3.0', prog_name="IProfile")
+@click.version_option(version='0.3.0', prog_name='IProfile')
 def main():
     settings.read()

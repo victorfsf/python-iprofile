@@ -38,3 +38,10 @@ class OSMixin(object):
             os.remove(path_or_file)
         elif os.path.isdir(path_or_file):
             shutil.rmtree(path_or_file, ignore_errors=True)
+
+    def new_file(self, filename, overwrite=False):
+        if not self.exists(filename) or overwrite:
+            open(filename, 'w').close()
+
+    def dirname(self, path_or_file):
+        return os.path.dirname(path_or_file)

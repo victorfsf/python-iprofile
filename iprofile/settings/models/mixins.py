@@ -37,6 +37,7 @@ class YAMLOrderedDict(OrderedDict, OSMixin):
         self.default = kwargs.pop('default', self.default)
         super(YAMLOrderedDict, self).__init__(*args, **kwargs)
         self.path = path
+        self.dirname = self.dirname(path)
         self.default_flow_style = kwargs.pop('default_flow_style', False)
         self.indent = kwargs.pop('indent', 4)
         self.__loaded = False

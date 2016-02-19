@@ -4,8 +4,8 @@ from iprofile.utils.mixins import OSMixin
 from iprofile.settings.models import ProfileSettings
 from iprofile.settings.registry import settings
 from iprofile.settings.utils import PROFILE_SETTINGS_FILE
-from IPython.core.profileapp import ProfileCreate
 from iprofile.profiles.models.mixins import IProfileDir
+from iprofile.profiles.models.mixins import IProfileCreate
 from IPython.core.profiledir import ProfileDirError
 from slugify import slugify
 
@@ -25,14 +25,15 @@ class Profile(OSMixin):
 
     def load(self):
         self.settings = ProfileSettings(self.settings_file)
+        self.locate()
+        return self.settings
 
     def create(self):
-        profile = ProfileCreate()
+        profile = IProfileCreate()
         profile.parse_command_line([
             '--profile-dir', self.__path
         ])
-        profile.initialize()
-        self.load()
+        profile.initialize(self.load())
 
     def locate(self):
         try:
