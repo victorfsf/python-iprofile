@@ -2,7 +2,7 @@
 
 from iprofile import texts
 from iprofile.core.config import registry
-from iprofile.settings.models import settings
+from iprofile.settings.registry import settings
 import click
 
 
