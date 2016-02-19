@@ -18,13 +18,6 @@ class OSMixin(object):
         except OSError:
             pass
 
-    def exists(self, path_or_file):
-        return (
-            os.path.isfile(path_or_file) or
-            os.path.isdir(path_or_file)
-
-        )
-
     def isfile(self, filename):
         return os.path.isfile(filename)
 
@@ -40,7 +33,7 @@ class OSMixin(object):
             shutil.rmtree(path_or_file, ignore_errors=True)
 
     def new_file(self, filename, overwrite=False):
-        if not self.exists(filename) or overwrite:
+        if not self.isfile(filename) or overwrite:
             open(filename, 'w').close()
 
     def dirname(self, path_or_file):

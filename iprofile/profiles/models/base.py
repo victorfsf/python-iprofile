@@ -25,7 +25,6 @@ class Profile(OSMixin):
 
     def load(self):
         self.settings = ProfileSettings(self.settings_file)
-        self.locate()
         return self.settings
 
     def create(self):
@@ -37,7 +36,9 @@ class Profile(OSMixin):
 
     def locate(self):
         try:
-            return IProfileDir.find_profile_dir(self.__path, self.settings)
+            if self.settings:
+                return IProfileDir.find_profile_dir(self.__path, self.settings)
+            return self.isfile(self.settings_file)
         except ProfileDirError:
             return
 

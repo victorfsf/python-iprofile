@@ -45,7 +45,7 @@ class YAMLOrderedDict(OrderedDict, OSMixin):
     def read(self):
         update = super(YAMLOrderedDict, self).update
         try:
-            data = update(self.load())
+            data = update(self.open())
         except IOError:
             data = update(self.create())
         self.__loaded = True
@@ -83,7 +83,7 @@ class YAMLOrderedDict(OrderedDict, OSMixin):
             indent=self.indent
         )
 
-    def load(self):
+    def open(self):
         return yaml.load(open(self.path, 'r'))
 
     def make_settings_path(self):
@@ -96,7 +96,7 @@ class YAMLOrderedDict(OrderedDict, OSMixin):
 class SettingsBase(YAMLOrderedDict):
     base_section = None
 
-    def load(self):
+    def open(self):
         yaml_dict = yaml.load(open(self.path, 'r'))
         if not yaml_dict.get(self.base_section):
             return self.create()
