@@ -6,25 +6,26 @@ import os
 import yaml
 
 
-class SectionDict(dict):
+class SectionDict(object):
 
     def __init__(self, yamlmap, basemap, *args, **kwargs):
         self.__basemap = basemap
         self.__yamlmap = yamlmap
-        super(SectionDict, self).__init__(kwargs.pop('map'), *args, **kwargs)
+        self.__map = kwargs.pop('map')
+        super(SectionDict, self).__init__(*args, **kwargs)
 
     def get(self, value, default=None):
-        result = super(SectionDict, self).get(value, default)
+        result = self.__map.get(value, default)
         if result and isinstance(result, dict):
-            return SectionDict(self.__yamlmap, self, map=result)
+            return SectionDict(self.__yamlmap, self.__map, map=result)
         return result
 
     def update(self, data):
-        super(SectionDict, self).update(data)
+        self.__map.update(data)
         return self.__yamlmap
 
     def pop(self, value, default=None):
-        return super(SectionDict, self).pop(value, default)
+        return self.__map.pop(value, default)
 
     def save(self):
         return self.__yamlmap.save()
@@ -42,12 +43,15 @@ class YAMLOrderedDict(OrderedDict, OSMixin):
         self.indent = kwargs.pop('indent', 4)
         self.__loaded = False
 
-    def read(self):
+    def read(self, ignore_errors=False):
         update = super(YAMLOrderedDict, self).update
         try:
             data = update(self.open())
         except IOError:
-            data = update(self.create())
+            if ignore_errors:
+                data = update(self.create())
+            else:
+                data = {}
         self.__loaded = True
         return data
 
@@ -98,6 +102,6 @@ class SettingsBase(YAMLOrderedDict):
 
     def open(self):
         yaml_dict = yaml.load(open(self.path, 'r'))
-        if not yaml_dict.get(self.base_section):
+        if not (yaml_dict and yaml_dict.get(self.base_section)):
             return self.create()
         return yaml_dict

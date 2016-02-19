@@ -1,22 +1,34 @@
 # -*- coding: utf-8 -*-
 
+from iprofile import texts
 from iprofile.core.utils import echo_green
 from iprofile.core.utils import echo_red
-from iprofile.utils.mixins import OSMixin
 from iprofile.settings.registry import settings
+from iprofile.utils.mixins import OSMixin
 import click
 
 
 class ICommand(OSMixin):
 
+    settings_check = False
+    settings_error = texts.ERROR_IPROFILE_NOT_INITIALIZED
+
     def __init__(self, _autorun=True, *args, **kwargs):
         self.settings = settings
 
-        if _autorun:
-            self.run(**kwargs.copy())
-        kwargs.clear()
+        if not self.check_settings():
+            self.red(self.settings_error)
+        else:
+            if _autorun:
+                self.run(**kwargs.copy())
 
+        kwargs.clear()
         super(ICommand, self).__init__(*args, **kwargs)
+
+    def check_settings(self):
+        if self.settings_check and not self.settings:
+            return False
+        return True
 
     def run(self, **options):
         raise NotImplementedError

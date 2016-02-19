@@ -3,7 +3,6 @@
 from iprofile import texts
 from iprofile.core.config import registry
 from iprofile.settings.registry import settings
-from iprofile.utils import config_profiledir
 import click
 
 
