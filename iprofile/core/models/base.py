@@ -2,6 +2,8 @@
 
 from iprofile import texts
 from iprofile.core.utils import echo_green
+from iprofile.core.utils import echo_plain_green
+from iprofile.core.utils import echo_plain_red
 from iprofile.core.utils import echo_red
 from iprofile.settings.registry import settings
 from iprofile.utils.mixins import OSMixin
@@ -37,8 +39,14 @@ class ICommand(OSMixin):
     def red(self, text):
         return echo_red(text)
 
+    def pred(self, text):
+        return echo_plain_red(text)
+
     def green(self, text):
         return echo_green(text)
+
+    def pgreen(self, text):
+        return echo_plain_green(text)
 
 
 class Command(click.Command):

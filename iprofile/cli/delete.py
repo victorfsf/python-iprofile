@@ -21,26 +21,26 @@ class Delete(ICommand):
         if not (name and slugify(name)):
             project_path = self.settings.get('profiles').get('path')
             deleted = 0
-
-            if not (no_input or click.confirm(texts.INPUT_CONFIRM_DELETE_ALL)):
+            confirm_text = texts.INPUT_CONFIRM_DELETE_ALL
+            if not (no_input or click.confirm(confirm_text)):
                     return
 
             for profile_name in list_profiles(project_path):
-                if self.delete(profile_name):
+                if self.delete(profile_name, delete_all=True):
                     deleted += 1
             if deleted > 0:
                 click.echo()
-                click.echo(texts.LOG_QTT_DELETED.format(
+                self.green(texts.LOG_QTT_DELETED.format(
                     deleted, 's' if deleted != 1 else ''))
             else:
                 self.red(texts.ERROR_NO_PROFILES_TO_DELETE)
         else:
-            if not (no_input or click.confirm(
-                    texts.INPUT_CONFIRM_DELETE.format(name))):
+            confirm_text = texts.INPUT_CONFIRM_DELETE.format(name)
+            if not (no_input or click.confirm(confirm_text)):
                 return
             self.delete(name)
 
-    def delete(self, name):
+    def delete(self, name, delete_all=False):
         profile = Profile(name)
 
         if not profile.exists():
@@ -48,5 +48,10 @@ class Delete(ICommand):
             return
 
         profile.delete()
-        self.green(texts.LOG_DELETE_PROFILE.format(name))
+        delete_text = texts.LOG_DELETE_PROFILE.format(name)
+        if delete_all:
+            self.pgreen(delete_text)
+        else:
+            self.green(delete_text)
+
         return True

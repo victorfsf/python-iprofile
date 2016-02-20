@@ -29,4 +29,3 @@ class Create(ICommand):
 
         profile.create()
         self.green(texts.LOG_NEW_PROFILE.format(name))
-        click.echo(texts.LOG_PROFILE_PATH.format(profile.dirname))

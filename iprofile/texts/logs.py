@@ -29,7 +29,7 @@ LOG_QTT_CLEARED = (
     "Successfully cleared {0} profile{1}."
 )
 LOG_QTT_PROFILES = (
-    "{0} profile{1} {2} found:"
+    "{} profile{} {} found:"
 )
 LOG_IPROFILE_YML = "{1} config file at '{0}/{2}'."
 LOG_IPYTHON_SCRIPT_ADDED = (
@@ -39,7 +39,6 @@ LOG_IPYTHON_SCRIPT_ADDED = (
 LOG_IPROFILE_INITIALIZED = (
     "Successfully initialized IProfile at '{}'."
 )
-LOG_PROFILE_PATH = "Profile path: '{}/'"
 LOG_NEW_PROFILE = "Created a new Profile '{}'!"
 LOG_DELETE_PROFILE = (
     "Profile '{}' successfully deleted!"
