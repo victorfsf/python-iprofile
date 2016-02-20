@@ -6,6 +6,7 @@ from iprofile.profiles.models.mixins import IProfileDir
 from iprofile.profiles.models.mixins import IProfileCreate
 from IPython.core.profiledir import ProfileDirError
 from slugify import slugify
+import IPython
 
 
 class Profile(OSMixin):
@@ -55,3 +56,8 @@ class Profile(OSMixin):
 
         if hasattr(self, '_iprofiledir'):
             delattr(self, '_iprofiledir')
+
+    def shell(self, options):
+        IPython.start_ipython(
+            argv=options + ['--profile-dir', self.dirname]
+        )
