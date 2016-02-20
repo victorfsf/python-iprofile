@@ -25,3 +25,4 @@ class Init(ICommand):
             self.settings.get('profiles').update({
                 'path': str(path)
             }).save()
+        self.green(texts.LOG_IPROFILE_INITIALIZED.format(path or 'iprofiles'))

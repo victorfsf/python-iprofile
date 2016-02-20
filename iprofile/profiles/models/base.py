@@ -18,32 +18,38 @@ class Profile(OSMixin):
         if not settings.exists():
             raise Exception
         self.name = slugify(name)
-        self.__path = self.absjoin(settings.get('profiles').get('path'), name)
-        self.settings_file = self.join(self.__path, PROFILE_SETTINGS_FILE)
-        if self.exists():
-            self.load()
+        self.dirname = self.absjoin(settings.get('profiles').get('path'), name)
+        self.settings_file = self.join(self.dirname, PROFILE_SETTINGS_FILE)
+        self.load()
 
     def load(self):
-        self.settings = ProfileSettings(self.settings_file)
+        if not self.isdir(self.dirname):
+            return
+        if not self.settings:
+            self.settings = ProfileSettings(self.settings_file)
         return self.settings
 
     def create(self):
         profile = IProfileCreate()
         profile.parse_command_line([
-            '--profile-dir', self.__path
+            '--profile-dir', self.dirname
         ])
+        self.makedirs(self.dirname)
         profile.initialize(self.load())
 
     def locate(self):
-        try:
-            if self.settings:
-                if not hasattr(self, '_iprofiledir'):
-                    self._iprofiledir = IProfileDir.find_profile_dir(
-                        self.__path, self.settings)
-                return self._iprofiledir
-            return self.__path if self.isfile(self.settings_file) else None
-        except ProfileDirError:
+
+        if not self.load():
+            self.delete()
             return
+
+        if not hasattr(self, '_iprofiledir'):
+            try:
+                self._iprofiledir = IProfileDir.find_profile_dir(
+                    self.settings)
+            except ProfileDirError:
+                return
+        return self._iprofiledir
 
     def exists(self):
         return True if self.locate() else False
@@ -60,7 +66,7 @@ class Profile(OSMixin):
         }).save()
 
     def delete(self):
-        self.remove(self.__path)
+        self.remove(self.dirname)
         self.settings = None
 
         active = settings.get('profiles').get('active')

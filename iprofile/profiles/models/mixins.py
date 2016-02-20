@@ -24,10 +24,10 @@ class IProfileDir(ProfileDir, IPythonProfileMixin):
     settings_file = u''
 
     @classmethod
-    def find_profile_dir(cls, path, settings, *args, **kwargs):
+    def find_profile_dir(cls, settings, *args, **kwargs):
         profile_dir = super(IProfileDir, cls).find_profile_dir(
-            path, *args, **kwargs)
-        profile_dir.settings_file = path
+            settings.dirname, *args, **kwargs)
+        profile_dir.settings_file = settings.path
         profile_dir.settings = settings
         profile_dir.check_settings_file()
         profile_dir.check_startup_files()
