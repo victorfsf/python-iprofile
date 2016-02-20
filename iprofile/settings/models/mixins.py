@@ -45,6 +45,7 @@ class SectionDict(object):
 
 
 class YAMLOrderedDict(OrderedDict, OSMixin):
+    base_section = 'settings'
     default = {}
 
     def __init__(self, path, *args, **kwargs):
@@ -71,7 +72,7 @@ class YAMLOrderedDict(OrderedDict, OSMixin):
     def create(self):
         self.make_settings_path()
         with open(self.path, 'w') as f:
-            f.write(self.dump(self.default))
+            f.write(self.dump({self.base_section: self.default}))
         return self.default
 
     def update(self, data):
@@ -90,7 +91,7 @@ class YAMLOrderedDict(OrderedDict, OSMixin):
     def save(self):
         self.make_settings_path()
         with open(self.path, 'w') as f:
-            f.write(self.dump(dict(self)))
+            f.write(self.dump({self.base_section: dict(self)}))
         return self
 
     def dump(self, data):
@@ -101,20 +102,13 @@ class YAMLOrderedDict(OrderedDict, OSMixin):
         )
 
     def open(self):
-        return yaml.load(open(self.path, 'r'))
+        yaml_dict = yaml.load(open(self.path, 'r'))
+        if not (yaml_dict and yaml_dict.get(self.base_section)):
+            return self.create()
+        return yaml_dict.get(self.base_section)
 
     def make_settings_path(self):
         return self.makedirs(os.path.dirname(self.path))
 
     def exists(self):
         return True if self.isfile(self.path) and self.__loaded else False
-
-
-class SettingsBase(YAMLOrderedDict):
-    base_section = None
-
-    def open(self):
-        yaml_dict = yaml.load(open(self.path, 'r'))
-        if not (yaml_dict and yaml_dict.get(self.base_section)):
-            return self.create()
-        return yaml_dict

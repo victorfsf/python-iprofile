@@ -12,14 +12,14 @@ import click
 class List(ICommand):
 
     def run(self, **options):
-        profiles_path = self.settings.get('profiles').get('path')
+        profiles_path = self.settings.get('path')
         profiles_list = list_profiles(profiles_path)
 
         if not profiles_list:
             self.red(texts.ERROR_NO_PROFILES_TO_LIST)
             return
 
-        active = self.settings.get('profiles').get('active')
+        active = self.settings.get('active')
         qtt_profiles = len(profiles_list)
         qtt_text = texts.LOG_QTT_PROFILES.format(
             qtt_profiles,

@@ -22,7 +22,7 @@ class Init(ICommand):
 
         self.settings.read(ignore_errors=True)
         if path:
-            self.settings.get('profiles').update({
+            self.settings.update({
                 'path': str(path)
             }).save()
         self.green(texts.LOG_IPROFILE_INITIALIZED.format(path or 'iprofiles'))

@@ -17,7 +17,7 @@ class Profile(OSMixin):
             raise Exception
         self.name = slugify(name)
         self.dirname = self.absjoin(
-            settings.get('profiles').get('path'), name
+            settings.get('path'), name
         )
 
     def create(self):
@@ -37,19 +37,19 @@ class Profile(OSMixin):
 
     def activate(self):
         if self.exists():
-            settings.get('profiles').update({
+            settings.update({
                 'active': self.name
             }).save()
 
     def deactivate(self):
-        settings.get('profiles').update({
+        settings.update({
             'active': None
         }).save()
 
     def delete(self):
         self.remove(self.dirname)
 
-        active = settings.get('profiles').get('active')
+        active = settings.get('active')
         if self.name == active:
             self.deactivate()
 

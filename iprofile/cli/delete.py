@@ -19,7 +19,7 @@ class Delete(ICommand):
         no_input = options.get('no_input')
 
         if not (name and slugify(name)):
-            project_path = self.settings.get('profiles').get('path')
+            project_path = self.settings.get('path')
             deleted = 0
             confirm_text = texts.INPUT_CONFIRM_DELETE_ALL
             if not (no_input or click.confirm(confirm_text)):
