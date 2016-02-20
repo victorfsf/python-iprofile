@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 
-from iprofile.settings.models.base import GlobalSettings
-settings = GlobalSettings()
+from iprofile.settings.models.base import Settings
+settings = Settings()
