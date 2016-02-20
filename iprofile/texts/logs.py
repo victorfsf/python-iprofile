@@ -24,18 +24,17 @@ LOG_PROFILE_DEACTIVATED = (
 LOG_ACTIVE_PROFILE = (
     "Active profile: "
 )
-
 LOG_QTT_CLEARED = (
     "Successfully cleared {0} profile{1}."
-)
-LOG_QTT_PROFILES = (
-    "{} profile{} {} found:"
 )
 LOG_IPROFILE_YML = "{1} config file at '{0}/{2}'."
 LOG_IPYTHON_SCRIPT_ADDED = (
     "Successfully added the script '{0}' to the file:"
 )
 
+LOG_QTT_PROFILES = (
+    "{} profile{} {} found:"
+)
 LOG_IPROFILE_INITIALIZED = (
     "Successfully initialized IProfile at '{}'."
 )

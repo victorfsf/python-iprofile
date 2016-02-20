@@ -14,11 +14,24 @@ class SectionDict(object):
         self.__map = kwargs.pop('map')
         super(SectionDict, self).__init__(*args, **kwargs)
 
+    def __repr__(self):
+        return str(self.__map)
+
     def get(self, value, default=None):
-        result = self.__map.get(value, default)
-        if result and isinstance(result, dict):
-            return SectionDict(self.__yamlmap, self.__map, map=result)
-        return result
+        if '.' not in value:
+            result = self.__map.get(value, default)
+            if result and isinstance(result, dict):
+                return SectionDict(self.__yamlmap, self.__map, map=result)
+            return result
+        paths = value.split('.')
+        data = self.get(paths[0], default)
+        if isinstance(data, SectionDict):
+            return SectionDict(
+                self.__yamlmap, self.__map, map=data).get(
+                    '.'.join(paths[1:]), default)
+        if len(paths) > 1:
+            return
+        return data
 
     def update(self, data):
         self.__map.update(data)

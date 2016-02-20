@@ -3,7 +3,7 @@
 from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
-from iprofile.core.utils import list_profiles
+from iprofile.profiles.utils import list_profiles
 from iprofile.profiles.models import Profile
 from slugify import slugify
 import click
@@ -23,7 +23,7 @@ class Delete(ICommand):
             deleted = 0
             confirm_text = texts.INPUT_CONFIRM_DELETE_ALL
             if not (no_input or click.confirm(confirm_text)):
-                    return
+                return
 
             for profile_name in list_profiles(project_path):
                 if self.delete(profile_name, delete_all=True):

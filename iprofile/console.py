@@ -24,4 +24,4 @@ class IProfile(click.MultiCommand):
 )
 @click.version_option(version='0.3.0', prog_name='IProfile')
 def main():
-    settings.read()
+    settings.read(ignore_errors=False)

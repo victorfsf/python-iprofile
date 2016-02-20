@@ -32,4 +32,6 @@ ERROR_IPROFILE_NOT_INITIALIZED = (
 ERROR_INIT_SETTINGS_EXIST = (
     "IProfile is already initialized."
 )
-ERROR_PROFILE_INVALID_NAME = "Invalid name for profile: '{}'"
+ERROR_PROFILE_INVALID_NAME = "Invalid name for profile: '{}'."
+ERROR_INVALID_CONFIG = "Invalid settings variable: '{}'."
+ERROR_INVALID_VALUE_CONFIG = "Invalid value for settings variable '{}': '{}'."

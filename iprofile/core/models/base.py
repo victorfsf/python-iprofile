@@ -12,7 +12,7 @@ import click
 
 class ICommand(OSMixin):
 
-    settings_check = False
+    settings_check = True
     settings_error = texts.ERROR_IPROFILE_NOT_INITIALIZED
 
     def __init__(self, _autorun=True, *args, **kwargs):

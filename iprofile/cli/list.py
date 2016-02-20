@@ -3,7 +3,7 @@
 from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
-from iprofile.core.utils import list_profiles
+from iprofile.profiles.utils import list_profiles
 import click
 
 

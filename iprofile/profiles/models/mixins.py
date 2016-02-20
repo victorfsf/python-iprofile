@@ -11,7 +11,7 @@ class IPythonProfileMixin(OSMixin):
         files = ['00_config.ipy', '01_scripts.py', ]
         for filename in files:
             self.new_file(
-                self.join(self.settings.dirname, 'startup', filename)
+                self.join(self.path, 'startup', filename)
             )
 
 
@@ -20,33 +20,29 @@ class IProfileDir(ProfileDir, IPythonProfileMixin):
     empty_def = lambda self: None
     ProfileDir.check_security_dir = empty_def
     ProfileDir.check_pid_dir = empty_def
-    settings = None
-    settings_file = u''
+    ProfileDir.check_log_dir = empty_def
+    path = None
 
     @classmethod
-    def find_profile_dir(cls, settings, *args, **kwargs):
+    def find_profile_dir(cls, path, *args, **kwargs):
         profile_dir = super(IProfileDir, cls).find_profile_dir(
-            settings.dirname, *args, **kwargs)
-        profile_dir.settings_file = settings.path
-        profile_dir.settings = settings
-        profile_dir.check_settings_file()
+            path, *args, **kwargs)
+        profile_dir.path = path
         profile_dir.check_startup_files()
         return profile_dir
 
-    def check_settings_file(self):
-        if self.settings and not self.settings.exists():
-            self.settings.read()
-
     def check_dirs(self):
         super(IProfileDir, self).check_dirs()
-        if self.settings:
-            self.check_settings_file()
+        if self.path:
             self.check_startup_files()
 
 
 class IProfileCreate(ProfileCreate, IPythonProfileMixin):
 
-    def initialize(self, settings):
-        self.settings = settings
+    def initialize(self, path):
+        self.parse_command_line([
+            '--profile-dir', path
+        ])
+        self.path = path
         super(IProfileCreate, self).initialize()
         self.check_startup_files()
