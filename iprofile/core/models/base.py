@@ -26,8 +26,9 @@ class ICommand(OSMixin):
         super(ICommand, self).__init__(*args, **kwargs)
 
     def check_settings(self):
-        if self.settings_check and not self.settings:
-            return False
+        if self.settings_check:
+            if not (self.settings or self.settings.exists()):
+                return False
         return True
 
     def run(self, **options):

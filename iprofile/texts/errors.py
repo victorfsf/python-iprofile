@@ -25,8 +25,8 @@ ERROR_DJANGO_INVALID_SETTINGS = "Could not find settings module '{0}'."
 ERROR_INIT_PATH_EXISTS = "The folder '{0}' already exists in this project!"
 ERROR_IPYTHON_SCRIPT_DOESNT_EXIST = "Could not find script with name '{0}'."
 ERROR_IPROFILE_NOT_INITIALIZED = (
-    "IProfile was not initialized in this project yet."
+    "IProfile was not initialized.\nRun 'iprofile init --help' for help."
 )
 ERROR_INIT_SETTINGS_EXIST = (
-    "IProfile is already initialized!"
+    "IProfile is already initialized."
 )

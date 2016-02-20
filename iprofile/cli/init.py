@@ -7,13 +7,13 @@ import click
 
 
 @icommand(help=texts.HELP_INIT, short_help=texts.HELP_INIT)
-@click.argument('path', required=False)
+@click.option('--path', required=False, help=texts.HELP_INIT_PATH)
 class Init(ICommand):
 
     settings_error = texts.ERROR_INIT_SETTINGS_EXIST
 
     def check_settings(self):
-        if self.settings:
+        if self.settings and self.settings.exists():
             return False
         return True
 

@@ -26,4 +26,4 @@ class ProfileSettings(SettingsBase):
 
     def __init__(self, path, *args, **kwargs):
         super(ProfileSettings, self).__init__(path, *args, **kwargs)
-        self.read()
+        self.read(ignore_errors=True)

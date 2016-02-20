@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) IPython Development Team.
-# Distributed under the terms of the Modified BSD License.
 
 from IPython.core.profiledir import ProfileDir
 from IPython.core.profileapp import ProfileCreate
@@ -22,7 +20,7 @@ class IProfileDir(ProfileDir, IPythonProfileMixin):
     empty_def = lambda self: None
     ProfileDir.check_security_dir = empty_def
     ProfileDir.check_pid_dir = empty_def
-
+    settings = None
     settings_file = u''
 
     @classmethod
@@ -31,6 +29,8 @@ class IProfileDir(ProfileDir, IPythonProfileMixin):
             path, *args, **kwargs)
         profile_dir.settings_file = path
         profile_dir.settings = settings
+        profile_dir.check_settings_file()
+        profile_dir.check_startup_files()
         return profile_dir
 
     def check_settings_file(self):
@@ -39,8 +39,9 @@ class IProfileDir(ProfileDir, IPythonProfileMixin):
 
     def check_dirs(self):
         super(IProfileDir, self).check_dirs()
-        self.check_settings_file()
-        self.check_startup_files()
+        if self.settings:
+            self.check_settings_file()
+            self.check_startup_files()
 
 
 class IProfileCreate(ProfileCreate, IPythonProfileMixin):

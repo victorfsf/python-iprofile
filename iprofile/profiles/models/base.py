@@ -37,10 +37,35 @@ class Profile(OSMixin):
     def locate(self):
         try:
             if self.settings:
-                return IProfileDir.find_profile_dir(self.__path, self.settings)
-            return self.isfile(self.settings_file)
+                if not hasattr(self, '_iprofiledir'):
+                    self._iprofiledir = IProfileDir.find_profile_dir(
+                        self.__path, self.settings)
+                return self._iprofiledir
+            return self.__path if self.isfile(self.settings_file) else None
         except ProfileDirError:
             return
 
     def exists(self):
         return True if self.locate() else False
+
+    def activate(self):
+        if self.exists():
+            settings.get('profiles').update({
+                'active': self.name
+            }).save()
+
+    def deactivate(self):
+        settings.get('profiles').update({
+            'active': None
+        }).save()
+
+    def delete(self):
+        self.remove(self.__path)
+        self.settings = None
+
+        active = settings.get('profiles').get('active')
+        if self.name == active:
+            self.deactivate()
+
+        if hasattr(self, '_iprofiledir'):
+            delattr(self, '_iprofiledir')
