@@ -25,7 +25,7 @@ class Django(ICommand):
             self.settings.get('django')
         )
 
-        if not settings:
+        if not settings or not isinstance(settings, basestring):
             self.red(texts.ERROR_DJANGO_WITHOUT_SETTINGS)
             return
 
@@ -37,9 +37,9 @@ class Django(ICommand):
         sys.path.append(os.getcwd())
         try:
             django.setup()
-        except ImportError:
+        except:
             self.red(texts.ERROR_DJANGO_INVALID_SETTINGS.format(settings))
-            traceback.format_exc()
+            traceback.print_exc()
             return
 
         Shell.run(options)

@@ -2,6 +2,7 @@
 
 from .activate import *  # noqa
 from .active import *  # noqa
+from .config import *  # noqa
 from .create import *  # noqa
 from .deactivate import *  # noqa
 from .delete import *  # noqa

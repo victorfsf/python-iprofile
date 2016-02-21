@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ERROR_PROFILE_DOESNT_EXIST_RUN = (
-    "The profile '{}' does not exist!\nRun 'iprofile create {}'"
+    "The profile '{0}' does not exist!\nRun 'iprofile create {0}'"
     " to create it."
 )
 ERROR_IPYTHON_PROFILE_DOESNT_EXIST = (
@@ -12,7 +12,7 @@ ERROR_NO_ACTIVE_PROFILE = "There are no active profiles on this project."
 ERROR_NO_PROFILES_TO_LIST = "There are no profiles to list."
 ERROR_DJANGO_WITHOUT_SETTINGS = (
     "Could not find settings variable 'django'.\n"
-    "Run 'iprofile django . --settings [SETTINGS MODULE]' to set it."
+    "Run 'iprofile config django [SETTINGS MODULE]' to set it."
 )
 ERROR_DJANGO_INVALID_SETTINGS = "Could not find settings module '{}'."
 ERROR_PROFILE_EXISTS = "Profile '{}' already exists in this project!"
