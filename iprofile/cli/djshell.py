@@ -8,6 +8,7 @@ import click
 import os
 import sys
 import traceback
+import six
 
 
 @icommand(help=texts.HELP_DJANGO, short_help=texts.HELP_DJANGO)
@@ -24,7 +25,7 @@ class Django(ICommand):
             self.settings.get('django')
         )
 
-        if not (settings and isinstance(settings, (str, unicode))):
+        if not (settings and isinstance(settings, six.string_types)):
             self.red(texts.ERROR_DJANGO_WITHOUT_SETTINGS)
             return
 

@@ -40,7 +40,7 @@ class IProfileDir(ProfileDir, IPythonProfileMixin):
 
 class IProfileCreate(ProfileCreate, IPythonProfileMixin):
 
-    def initialize(self):
+    def initialize(self, argv=None):
         sys.argv = sys.argv[:3]
         self.parse_command_line([
             '--profile-dir', self.path

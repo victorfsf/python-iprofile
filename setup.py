@@ -17,6 +17,7 @@ setup(
         'ipython>=4.0.0',
         'python-slugify==1.2.0',
         'PyYAML==3.11',
+        'six==1.10.0',
     ],
     zip_safe=False,
     version=version,
