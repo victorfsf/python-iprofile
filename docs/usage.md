@@ -36,7 +36,7 @@ $ pip install python-iprofile
 
 # Usage
 
-Bellow you'll find instructions on how to properly use the CLI. If you need a more organized way to learn about the commands, check the [Command Reference](/victorfsf/python-iprofile/wiki/command-Reference) page. Also, check out the [Scripts](https://github.com/victorfsf/python-iprofile/wiki/Scripts/) page for some pre-made scripts, the [Configuration](https://github.com/victorfsf/python-iprofile/wiki/Configuration) page to understand how the configuration files work and the [Changelog](https://github.com/victorfsf/python-iprofile/wiki/Changelog) page for some changes and new features.
+Bellow you'll find instructions on how to properly use the CLI. If you need a more organized way to learn about the commands, check the [Command Reference](https://github.com/victorfsf/python-iprofile/blob/master/docs/commands.md) page. Also, check out the [Scripts](https://github.com/victorfsf/python-iprofile/blob/master/docs/scripts.md) page for some pre-made scripts, the [Configuration](https://github.com/victorfsf/python-iprofile/blob/master/docs/configuration.md) page to understand how the configuration files work and the [Changelog](https://github.com/victorfsf/python-iprofile/wiki/Changelog) page for some changes and new features.
 
 ## Running IProfile
 
