@@ -3,6 +3,7 @@
 from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
+from iprofile.core.utils import get_user_home
 import click
 
 
@@ -23,7 +24,7 @@ class Init(ICommand):
         self.settings.read(ignore_errors=True)
         if path:
             self.settings.update({
-                'path': str(path)
+                'path': str(get_user_home(path))
             }).save()
         self.green(
             texts.LOG_IPROFILE_INITIALIZED.format(

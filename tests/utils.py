@@ -6,8 +6,7 @@ import os
 import shutil
 
 
-def mocks():
-    IProfileCreate.exit = lambda x, y: None
+IProfileCreate.exit = lambda x, y: None
 
 
 def set_up():
@@ -24,6 +23,3 @@ def tear_down():
         os.remove('iprofile.yml')
     except OSError:
         pass
-
-
-mocks()
