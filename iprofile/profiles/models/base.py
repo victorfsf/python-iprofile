@@ -14,8 +14,6 @@ class Profile(OSMixin):
 
     def __init__(self, name):
         settings.read()
-        if not settings.exists():
-            raise Exception
         self.name = slugify(name)
         self.dirname = self.absjoin(
             settings.get('path'), name

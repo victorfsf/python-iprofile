@@ -26,6 +26,11 @@ mock_options_3 = {
     'profile': 'test',
 }
 
+mock_options_4 = {
+    'profile': 'test',
+    'active': True
+}
+
 
 def mock(monkeypatch):
 
@@ -40,6 +45,15 @@ def test_delete():
     Create.run(mock_options)
     Delete.run(mock_options)
     assert not os.path.isdir(os.path.join(settings.get('path'), 'test'))
+    tear_down()
+
+
+def test_delete_active():
+    set_up()
+    Create.run(mock_options_4)
+    assert settings.get('active') == 'test'
+    Delete.run(mock_options_2)
+    assert settings.get('active') is None
     tear_down()
 
 
