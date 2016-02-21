@@ -29,10 +29,6 @@ class Django(ICommand):
             self.red(texts.ERROR_DJANGO_WITHOUT_SETTINGS)
             return
 
-        self.settings.update({
-            'django': settings
-        }).save()
-
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings)
         sys.path.append(os.getcwd())
         try:
