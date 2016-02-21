@@ -34,7 +34,6 @@ class SectionDict(object):
                     '.'.join(paths[1:]), default)
         if len(paths) > 1:
             return
-        return data
 
     def update(self, data):
         self.__map.update(data)

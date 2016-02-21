@@ -12,13 +12,13 @@ IProfileCreate.exit = lambda x, y: None
 def set_up():
     settings.read(ignore_errors=True)
     try:
-        os.makedirs(settings.get('path'))
+        os.makedirs(settings.get('path', 'iprofiles'))
     except OSError:
         pass
 
 
 def tear_down():
-    shutil.rmtree(settings.get('path'), ignore_errors=True)
+    shutil.rmtree(settings.get('path', 'iprofiles'), ignore_errors=True)
     try:
         os.remove('iprofile.yml')
     except OSError:
