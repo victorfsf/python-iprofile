@@ -12,7 +12,7 @@ import IPython
 class Profile(OSMixin):
     settings = None
 
-    def __init__(self, name, *args, **kwargs):
+    def __init__(self, name):
         settings.read()
         if not settings.exists():
             raise Exception
@@ -23,7 +23,8 @@ class Profile(OSMixin):
 
     def create(self):
         profile = IProfileCreate()
-        profile.initialize(self.dirname)
+        profile.path = self.dirname
+        profile.initialize()
 
     def locate(self):
         try:

@@ -40,11 +40,10 @@ class IProfileDir(ProfileDir, IPythonProfileMixin):
 
 class IProfileCreate(ProfileCreate, IPythonProfileMixin):
 
-    def initialize(self, path):
+    def initialize(self):
         sys.argv = sys.argv[:3]
         self.parse_command_line([
-            '--profile-dir', path
+            '--profile-dir', self.path
         ])
-        self.path = path
         super(IProfileCreate, self).initialize()
         self.check_startup_files()
