@@ -8,11 +8,11 @@ IPROFILE_READ_ME = """
 """
 
 # COMMANDS
-HELP_ACTIVATE = "Set the active profile for IPython."
+HELP_ACTIVATE = "Set the active profile."
 HELP_ACTIVE = "Show the active profile."
 HELP_CONFIG = "Create or change a settings variable for IProfile."
 HELP_CREATE = "Create a new profile."
-HELP_DEACTIVATE = "Deactivate the active profile for IPython."
+HELP_DEACTIVATE = "Deactivate the active profile."
 HELP_DELETE = "Completely delete the profile and its files."
 HELP_DJANGO = "Open a Django shell using IProfile."
 HELP_INIT = "Initialize IProfile."

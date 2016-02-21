@@ -7,7 +7,7 @@ mixin = OSMixin()
 
 
 def test_osmixin_isdir():
-    assert os.path.isdir('test') == mixin.isdir('test')
+    assert os.path.isdir('tests') == mixin.isdir('tests')
 
 
 def test_osmixin_remove():
@@ -15,3 +15,5 @@ def test_osmixin_remove():
     os.symlink('test.txt', 'testlink.txt')
     mixin.remove('testlink.txt')
     mixin.remove('test.txt')
+    assert not mixin.isfile('test.txt')
+    assert not mixin.isfile('testlink.txt')
