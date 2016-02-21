@@ -10,6 +10,7 @@ import click
 
 @icommand(help=texts.HELP_CREATE, short_help=texts.HELP_CREATE)
 @click.argument('profile')
+@click.option('--active', is_flag=True, help=texts.HELP_CREATE_ACTIVE)
 class Create(ICommand):
 
     def run(self, **options):
@@ -29,3 +30,7 @@ class Create(ICommand):
 
         profile.create()
         self.green(texts.LOG_NEW_PROFILE.format(name))
+
+        if options.get('active'):
+            profile.activate()
+            self.green(texts.LOG_PROFILE_ACTIVATED.format(name))

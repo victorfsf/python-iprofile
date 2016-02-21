@@ -16,7 +16,7 @@ mock_options_1 = {
 }
 
 
-def test_run():
+def test_active():
     set_up()
     Create.run(mock_options)
     Activate.run(mock_options)

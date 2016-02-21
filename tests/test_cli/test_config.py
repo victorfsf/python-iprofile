@@ -22,7 +22,7 @@ mock_options_2 = {
 }
 
 
-def test_run():
+def test_config():
     set_up()
     Config.run(mock_options)
     assert settings.get('test_name') == 'test_value'

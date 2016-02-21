@@ -14,13 +14,25 @@ mock_options_1 = {
     'profile': '.'
 }
 
+mock_options_2 = {
+    'profile': 'test',
+    'active': True
+}
 
-def test_run():
+
+def test_create():
     set_up()
     Create.run(mock_options)
     path = os.path.join(settings.get('path'), 'test')
     assert os.path.isdir(path)
     assert os.path.isfile(os.path.join(path, 'ipython_config.py'))
+    tear_down()
+
+
+def test_create_active():
+    set_up()
+    Create.run(mock_options_2)
+    assert settings.get('active') == 'test'
     tear_down()
 
 

@@ -3,6 +3,7 @@
 from IPython.core.profiledir import ProfileDir
 from IPython.core.profileapp import ProfileCreate
 from iprofile.utils.mixins import OSMixin
+import sys
 
 
 class IPythonProfileMixin(OSMixin):
@@ -40,6 +41,7 @@ class IProfileDir(ProfileDir, IPythonProfileMixin):
 class IProfileCreate(ProfileCreate, IPythonProfileMixin):
 
     def initialize(self, path):
+        sys.argv = sys.argv[:3]
         self.parse_command_line([
             '--profile-dir', path
         ])
