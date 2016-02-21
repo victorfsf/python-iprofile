@@ -14,7 +14,7 @@ setup(
     },
     install_requires=[
         'click==6.2',
-        'ipython>=4',
+        'ipython>=4.0.0',
         'python-slugify==1.2.0',
         'PyYAML==3.11',
     ],
