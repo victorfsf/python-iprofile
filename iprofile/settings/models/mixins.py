@@ -14,6 +14,9 @@ class SectionDict(object):
         self.__map = kwargs.pop('map')
         super(SectionDict, self).__init__(*args, **kwargs)
 
+    def __iter__(self):
+        return iter(self.__map)
+
     def __repr__(self):
         return str(self.__map)
 

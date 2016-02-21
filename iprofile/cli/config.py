@@ -17,7 +17,7 @@ class Config(ICommand):
         name = options.get('name').strip()
         value = str(options.get('value').strip())
 
-        if re.match(r'^{.*}$', value) or re.match(r'^[.*]$', value):
+        if re.match(r'^\{.*\}$', value) or re.match(r'^\[.*\]$', value):
             value = ast.literal_eval(value)
 
         self.settings.update({
