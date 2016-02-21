@@ -13,15 +13,10 @@ import IPython
 @icommand(help=texts.HELP_SHELL, short_help=texts.HELP_SHELL)
 @click.argument('profile', required=False)
 @click.argument('ipython_options', nargs=-1, required=False)
-@click.option('--default', is_flag=True, help=texts.HELP_SHELL_DEFAULT)
 class Shell(ICommand):
 
     def run(self, **options):
         ipython_options = list(options.get('ipython_options', []))
-
-        if options.get('default'):
-            IPython.start_ipython(argv=ipython_options)
-            return
 
         name = options.get('profile')
         if not (name and slugify(name)):

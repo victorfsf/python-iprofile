@@ -23,4 +23,4 @@ def echo_plain_green(message):
 def get_user_home(directory):
     if directory and directory.startswith('~'):
         directory = directory.replace('~', os.path.expanduser('~'), 1)
-    return directory
+    return os.path.abspath(directory)

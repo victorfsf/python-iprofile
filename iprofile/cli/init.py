@@ -24,8 +24,9 @@ class Init(ICommand):
         self.settings.read(ignore_errors=True)
         if path:
             self.settings.update({
-                'path': str(get_user_home(path))
+                'path': str(path)
             }).save()
+            self.makedirs(get_user_home(path))
         self.green(
             texts.LOG_IPROFILE_INITIALIZED.format(
                 path or 'iprofiles'
