@@ -2,28 +2,30 @@
 
 from iprofile import texts
 from iprofile.core.decorators import icommand
-from iprofile.models import ICommand
-from iprofile.models import Profile
+from iprofile.core.models import ICommand
+from iprofile.profiles.models import Profile
+from slugify import slugify
 import click
-import os
 
 
 @icommand(help=texts.HELP_ACTIVATE, short_help=texts.HELP_ACTIVATE)
-@click.argument('name')
+@click.argument('profile')
 class Activate(ICommand):
 
     def run(self, **options):
-        profile = Profile(options.get('name'), self.global_config)
-        name = profile.name
+        name = slugify(options.get('profile'))
 
-        if not os.path.isdir(profile.path('profile')):
-            self.red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(name))
+        if not name:
+            self.red(texts.ERROR_PROFILE_INVALID_NAME.format(
+                options.get('profile')
+            ))
             return
 
-        self.activate_profile(name)
-        self.green(texts.LOG_PROFILE_ACTIVATED.format(name))
+        profile = Profile(name)
 
-    def activate_profile(self, profile_name):
-        self.global_config.update({
-            'active_profile': profile_name
-        }).save()
+        if not profile.exists():
+            self.red(texts.ERROR_PROFILE_DOESNT_EXIST.format(name))
+            return
+
+        profile.activate()
+        self.green(texts.LOG_PROFILE_ACTIVATED.format(name))

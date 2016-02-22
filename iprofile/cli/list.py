@@ -2,47 +2,36 @@
 
 from iprofile import texts
 from iprofile.core.decorators import icommand
-from iprofile.models import ICommand
-from iprofile.models import Profile
-from iprofile.core.utils import list_profiles
+from iprofile.core.models import ICommand
+from iprofile.profiles.utils import list_profiles
 import click
-import os
 
 
 @icommand(help=texts.HELP_LIST, short_help=texts.HELP_LIST)
-@click.option(
-    '--show-only',
-    type=click.Choice(['names', 'paths']),
-    help=texts.HELP_SHOW_ONLY
-)
+@click.option('--names-only', is_flag=True, help=texts.HELP_NAMES_ONLY)
 class List(ICommand):
 
     def run(self, **options):
-        profiles = list_profiles(self.project_path)
-        qtd_profiles = len(profiles)
-        if qtd_profiles == 0:
+        profiles_path = self.settings.get('path')
+        profiles_list = list_profiles(profiles_path)
+
+        if not profiles_list:
             self.red(texts.ERROR_NO_PROFILES_TO_LIST)
             return
 
-        show_only = options.get('show_only', None)
-        if not show_only:
-            self.green(texts.LOG_QTT_PROFILES.format(
-                qtd_profiles,
-                's' if qtd_profiles != 1 else '',
-                'were' if qtd_profiles != 1 else 'was'
-            ))
+        active = self.settings.get('active')
+        qtt_profiles = len(profiles_list)
+        qtt_text = texts.LOG_QTT_PROFILES.format(
+            qtt_profiles,
+            's' if qtt_profiles > 1 else '',
+            'were' if qtt_profiles > 1 else 'was'
+        )
 
-        for profile_name in profiles:
-            profile = Profile(profile_name, self.global_config)
-            if show_only == 'names':
-                click.echo(profile.name)
-            elif show_only == 'paths':
-                click.echo(profile.ipython_locate())
+        if not options.get('names_only'):
+            self.green(qtt_text)
+
+        for profile in profiles_list:
+            if active == profile:
+                self.pgreen(profile)
             else:
-                click.echo('\nName: {}'.format(profile_name))
-                click.echo('IPython profile path:\t{}'.format(
-                    profile.ipython_locate()
-                ))
-                click.echo('Project profile path:\t{}'.format(
-                    os.path.join(self.project_path, profile_name)
-                ))
+                click.echo(profile)

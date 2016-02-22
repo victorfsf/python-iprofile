@@ -1,41 +1,54 @@
 # -*- coding: utf-8 -*-
 
-from iprofile.cli import Create
-from iprofile.cli import Delete
 from iprofile.cli import List
-import os
-import shutil
+from iprofile.cli import Create
+from tests.utils import set_up
+from tests.utils import tear_down
 
 mock_options = {
-    'name': 'test'
+    'profile': 'test',
 }
 
 mock_options_1 = {
-    'no_input': True
+    'profile': 'test1',
 }
 
 mock_options_2 = {
-    'show_only': 'names'
+    'profile': 'test2',
 }
 
 mock_options_3 = {
-    'show_only': 'paths'
+    'profile': 'test3',
+    'active': True
 }
 
 
-def test_run():
+def test_list():
+    set_up()
     Create.run(mock_options)
-    Create.run(mock_options)
+    Create.run(mock_options_1)
+    Create.run(mock_options_2)
     List.run({})
-    List.run(mock_options_2)
-    List.run(mock_options_3)
-    Delete.run(mock_options_1)
-    List.run({})
+    tear_down()
 
 
-def test_no_iprofiles_folder():
-    if os.path.isdir('iprofiles'):
-        shutil.move('iprofiles', 'iprofiles2')
+def test_list_names_only():
+    set_up()
+    Create.run(mock_options)
+    Create.run(mock_options_1)
+    Create.run(mock_options_2)
     List.run({})
-    if os.path.isdir('iprofiles2'):
-        shutil.move('iprofiles2', 'iprofiles')
+    tear_down()
+
+
+def test_list_no_profiles():
+    set_up()
+    List.run({})
+    tear_down()
+
+
+def test_list_active_profile():
+    set_up()
+    Create.run(mock_options_3)
+    List.run({})
+    tear_down()
