@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 
 from iprofile import texts
-from iprofile.models import ICommand
 from iprofile.core.decorators import icommand
+from iprofile.cli.active import CheckActiveMixin
+from iprofile.core.models import ICommand
 
 
 @icommand(help=texts.HELP_DEACTIVATE, short_help=texts.HELP_DEACTIVATE)
-class Deactivate(ICommand):
+class Deactivate(CheckActiveMixin, ICommand):
 
     def run(self, **options):
-        name = self.global_config.pop('active_profile')
-
-        if not name:
-            self.red(texts.ERROR_NO_ACTIVE_PROFILE)
-            return
-
-        self.global_config.save()
-        self.green(texts.LOG_PROFILE_DEACTIVATED.format(name))
+        profile = self.check_active()
+        if profile:
+            profile.deactivate()
+            self.green(texts.LOG_PROFILE_DEACTIVATED.format(profile.name))

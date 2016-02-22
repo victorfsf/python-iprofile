@@ -1,27 +1,21 @@
 # -*- coding: utf-8 -*-
 
-from iprofile.cli import Create
 from iprofile.cli import Delete
-from iprofile.cli import Add
-import click
+from iprofile.cli import Create
+from tests.utils import settings
+from tests.utils import set_up
+from tests.utils import tear_down
 import os
-import shutil
+import click
 
+mock_options = {
+    'profile': 'test',
+    'no_input': True,
+}
 
 mock_options_1 = {
-    'name': 'test',
-}
-
-mock_options_create = {
-    'name': 'test2',
-}
-
-mock_options_init = {
-    'name': 'test3',
-}
-
-mock_options_clear = {
-    'name': 'test4',
+    'profile': 'test2',
+    'no_input': True,
 }
 
 mock_options_2 = {
@@ -29,56 +23,72 @@ mock_options_2 = {
 }
 
 mock_options_3 = {
-    'name': None
+    'profile': 'test',
+}
+
+mock_options_4 = {
+    'profile': 'test',
+    'active': True
 }
 
 
-def test_delete():
-    Create.run(mock_options_1)
-    Delete.run(mock_options_1)
-
-    Add.run(mock_options_init)
-    Delete.run(mock_options_init)
-
-
-def test_delete_no_iprofiles_folder():
-    if os.path.isdir('iprofiles'):
-        shutil.move('iprofiles', 'iprofiles2')
-    Delete.run(mock_options_1)
-    if os.path.isdir('iprofiles2'):
-        shutil.move('iprofiles2', 'iprofiles')
-
-
-def test_delete_all_no_input():
-    Create.run(mock_options_1)
-    Create.run(mock_options_create)
-    Delete.run(mock_options_2)
-
-
-def test_delete_all_confirm_yes(monkeypatch):
-
-    def mock_confirm(*args, **kwargs):
-        return True
-
-    monkeypatch.setattr(click, 'confirm', mock_confirm)
-    Create.run(mock_options_1)
-    Create.run(mock_options_create)
-    Delete.run(mock_options_3)
-
-
-def test_delete_all_confirm_no(monkeypatch):
+def mock(monkeypatch):
 
     def mock_confirm(*args, **kwargs):
         return False
 
     monkeypatch.setattr(click, 'confirm', mock_confirm)
-    Delete.run(mock_options_3)
 
 
-def test_delete_without_path():
-    shutil.rmtree('iprofiles', ignore_errors=True)
-    Delete.run(mock_options_clear)
+def test_delete():
+    set_up()
+    Create.run(mock_options)
+    Delete.run(mock_options)
+    assert not os.path.isdir(os.path.join(settings.get('path'), 'test'))
+    tear_down()
+
+
+def test_delete_active():
+    set_up()
+    Create.run(mock_options_4)
+    assert settings.get('active') == 'test'
+    Delete.run(mock_options_2)
+    assert settings.get('active') is None
+    tear_down()
+
+
+def test_delete_all():
+    set_up()
+    Create.run(mock_options)
+    Create.run(mock_options_1)
+    Delete.run(mock_options_2)
+    assert not os.path.isdir(os.path.join(settings.get('path'), 'test'))
+    assert not os.path.isdir(os.path.join(settings.get('path'), 'test2'))
+    tear_down()
 
 
 def test_delete_none():
+    set_up()
     Delete.run(mock_options_2)
+    tear_down()
+
+
+def test_invalid_profile():
+    set_up()
+    Delete.run(mock_options)
+    tear_down()
+
+
+def test_delete_confirm_false(monkeypatch):
+    mock(monkeypatch)
+    set_up()
+    Create.run(mock_options)
+    Delete.run(mock_options_3)
+    tear_down()
+
+
+def test_delete_none_confirm_false(monkeypatch):
+    mock(monkeypatch)
+    set_up()
+    Delete.run({})
+    tear_down()

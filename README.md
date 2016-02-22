@@ -6,7 +6,7 @@
 [![Code Health](https://landscape.io/github/victorfsf/python-iprofile/master/landscape.svg?style=flat)](https://landscape.io/github/victorfsf/python-iprofile/master)
 
 
-*A CLI for handling IPython 4+ profiles startup scripts.*
+*A CLI for handling [IPython](https://ipython.readthedocs.org/en/stable/) 4+ profiles startup scripts.*
 
 Report issues [here](https://github.com/victorfsf/python-iprofile/issues/new).
 
@@ -21,7 +21,7 @@ Or download from the [PyPI repository](https://pypi.python.org/pypi/python-iprof
 
 ## Documentation
 
-See the wiki for the [guide](https://github.com/victorfsf/python-iprofile/blob/master/docs/usage.md) and [command reference](https://github.com/victorfsf/python-iprofile/blob/master/docs/commands.md). 
+See the wiki for the [guide](https://github.com/victorfsf/python-iprofile/wiki) and [command reference](https://github.com/victorfsf/python-iprofile/wiki/Command-Reference).
 
 See the [changelog](https://github.com/victorfsf/python-iprofile/wiki/Changelog) to check out the changes and new features (since v0.2.0).
 

@@ -1,25 +1,32 @@
 # -*- coding: utf-8 -*-
 
 from iprofile.cli import Init
-from iprofile.core.utils import makedirs
-from iprofile.core.utils import GLOBAL_SETTINGS_FILE
+from tests.utils import set_up
+from tests.utils import settings
+from tests.utils import tear_down
 import os
-import shutil
+
+mock_options = {
+    'path': 'test',
+}
+
+mock_options_1 = {
+    'path': None,
+}
 
 
-def test_run():
-    Init.run({'path': None})
-    makedirs('test_init')
-    Init.run({'path': 'test_init'})
-    shutil.rmtree('test_init', ignore_errors=True)
-    Init.run({'path': 'test_init', 'name': 'test'})
-    shutil.rmtree('test_init', ignore_errors=True)
+def test_init():
+    Init.run(mock_options)
+    assert os.path.isdir(settings.get('path'))
+    tear_down()
 
 
-def test_no_profile_yml():
-    try:
-        os.remove(os.path.join(os.getcwd(), GLOBAL_SETTINGS_FILE))
-    except OSError:
-        pass
-    shutil.rmtree('iprofiles', ignore_errors=True)
-    Init.run({'path': None})
+def test_init_settings_exist():
+    set_up()
+    Init.run(mock_options)
+    tear_down()
+
+
+def test_init_default_path():
+    Init.run(mock_options_1)
+    tear_down()

@@ -1,51 +1,58 @@
 # -*- coding: utf-8 -*-
 
 from iprofile.cli import Create
-from iprofile.cli import Activate
-from iprofile.cli import Delete
-from iprofile.cli import Add
 from iprofile.cli import Shell
+from tests.utils import set_up
+from tests.utils import tear_down
 import IPython
 
+mock_options_create = {
+    'profile': 'test',
+    'active': True
+}
+
 mock_options = {
-    'name': 'test'
+    'profile': 'test',
 }
 
 mock_options_1 = {
-    'name': 'testshell'
-}
-
-mock_options_2 = {
-    'no_input': True
-}
-
-mock_options_3 = {
-    'no_profile': True
-}
-
-mock_options_4 = {
-    'name': None
+    'profile': None,
 }
 
 
-def test_run(monkeypatch):
+def mock(monkeypatch):
 
     def mock_start_ipython(*args, **kwargs):
-        return None
+        return
 
     monkeypatch.setattr(IPython, 'start_ipython', mock_start_ipython)
-    Shell.run({})
-    Create.run(mock_options)
+
+
+def test_shell(monkeypatch):
+    mock(monkeypatch)
+    set_up()
+    Create.run(mock_options_create)
     Shell.run(mock_options)
-    Delete.run(mock_options)
+    tear_down()
+
+
+def test_shell_active(monkeypatch):
+    mock(monkeypatch)
+    set_up()
+    Create.run(mock_options_create)
+    Shell.run(mock_options_1)
+    tear_down()
+
+
+def test_shell_no_profile(monkeypatch):
+    mock(monkeypatch)
+    set_up()
+    Shell.run(mock_options_1)
+    tear_down()
+
+
+def test_shell_invalid_profile(monkeypatch):
+    mock(monkeypatch)
+    set_up()
     Shell.run(mock_options)
-
-    Add.run(mock_options_1)
-    Shell.run(mock_options_1)
-
-    Activate.run(mock_options_1)
-    Shell.run(mock_options_4)
-
-    Delete.run(mock_options_2)
-    Shell.run(mock_options_1)
-    Shell.run(mock_options_3)
+    tear_down()

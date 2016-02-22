@@ -1,29 +1,39 @@
 # -*- coding: utf-8 -*-
 
-from iprofile.cli import Active
 from iprofile.cli import Activate
-from iprofile.cli import Deactivate
+from iprofile.cli import Active
 from iprofile.cli import Create
-from iprofile.cli import Delete
+from tests.utils import set_up
+from tests.utils import settings
+from tests.utils import tear_down
 
 mock_options = {
-    'name': 'test'
+    'profile': 'test'
 }
 
-active = Active.callback(_autorun=False)
-result = active.run(**mock_options)
-Delete.run(mock_options)
-Create.run(mock_options)
-Activate.run(mock_options)
-
-def test_name_is_none():
-    Deactivate.run({})
-    Active.run({})
+mock_options_1 = {
+    'profile': '.'
+}
 
 
-def test_name_is_not_none():
+def test_active():
+    set_up()
     Create.run(mock_options)
     Activate.run(mock_options)
     Active.run({})
-    Deactivate.run(mock_options)
-    Delete.run(mock_options)
+    tear_down()
+
+
+def test_no_active_profile():
+    set_up()
+    Active.run({})
+    tear_down()
+
+
+def test_invalid_profile():
+    set_up()
+    settings.update({
+        'active': 'test'
+    }).save()
+    Active.run({})
+    tear_down()
