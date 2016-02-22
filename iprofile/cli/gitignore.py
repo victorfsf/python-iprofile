@@ -19,13 +19,13 @@ class GitIgnore(ICommand):
 
     def run(self, **options):
         path = self.settings.get('path')
-        self.makedirs(path)
         gitignore = self.absjoin(path, '.gitignore')
 
         if self.isfile(gitignore):
             self.red(texts.ERROR_GITIGNORE)
             return
 
+        self.makedirs(path)
         with open(gitignore, 'w') as f:
             f.write('\n'.join(self.content))
 
