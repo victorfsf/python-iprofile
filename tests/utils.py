@@ -10,6 +10,8 @@ IProfileCreate.exit = lambda x, y: None
 
 
 def set_up():
+    if os.path.isfile('iprofile.yml'):
+        os.remove('iprofile.yml')
     settings.read(ignore_errors=True)
     try:
         os.makedirs(settings.get('path', 'iprofiles'))
