@@ -18,6 +18,7 @@ HELP_DJANGO = "Open a Django shell using IProfile."
 HELP_INIT = "Initialize IProfile."
 HELP_LIST = "Show a list of all profiles."
 HELP_SHELL = "Open IPython with a given profile name (or the active profile)."
+HELP_GITIGNORE = "Add a default .gitignore file inside your iprofiles path."
 
 # OPTIONS
 HELP_INIT_PATH = "Set the iprofile folder path/name."

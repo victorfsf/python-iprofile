@@ -22,3 +22,6 @@ LOG_PROFILE_DEACTIVATED = (
 LOG_ACTIVE_PROFILE = (
     "Active profile: "
 )
+LOG_GITIGNORE = (
+    "Added a .gitignore file at:"
+)
