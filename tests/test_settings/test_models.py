@@ -19,7 +19,7 @@ def test_sectiondict_get_paths():
 
 
 def test_sectiondict_update():
-    yamlmap = {'test': None}
+    yamlmap = {'test': 'test_yaml'}
     sdict = SectionDict(yamlmap, {}, map={'test': 'test'})
     assert sdict.update({'test': 'test1'}) == yamlmap
 

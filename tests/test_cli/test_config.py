@@ -29,7 +29,7 @@ def test_config():
     tear_down()
 
 
-def test_run_list_or_dict():
+def test_config_list_or_dict():
     set_up()
 
     Config.run(mock_options_1)
