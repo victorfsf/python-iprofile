@@ -3,7 +3,7 @@
 from setuptools import setup
 from setuptools import find_packages
 
-version = '0.2.1'
+version = '0.3.0'
 
 
 setup(
@@ -14,9 +14,10 @@ setup(
     },
     install_requires=[
         'click==6.2',
-        'ipython>=4',
+        'ipython>=4.0.0',
         'python-slugify==1.2.0',
         'PyYAML==3.11',
+        'six==1.10.0',
     ],
     zip_safe=False,
     version=version,

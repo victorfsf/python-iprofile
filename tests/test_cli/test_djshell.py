@@ -1,43 +1,67 @@
 # -*- coding: utf-8 -*-
 
+from iprofile.cli import Create
 from iprofile.cli import Django
-from iprofile.cli import Config
+from tests.utils import set_up
+from tests.utils import tear_down
 import django
 import IPython
 
+mock_options_create = {
+    'profile': 'test',
+    'active': True
+}
+
 mock_options = {
-    'name': None
+    'profile': 'test',
 }
 
 mock_options_1 = {
-    'name': 'django_settings_module',
-    'value': 'test_module'
+    'profile': 'test',
+    'settings': 'test.settings'
 }
 
 
-def test_run(monkeypatch):
+def mock(monkeypatch):
 
-    def mock_setup(*args, **kwargs):
+    def mock_return_none(*args, **kwargs):
         return
 
-    def mock_start_ipython(*args, **kwargs):
+    monkeypatch.setattr(IPython, 'start_ipython', mock_return_none)
+    monkeypatch.setattr(django, 'setup', mock_return_none)
+
+
+def mock_raises(monkeypatch):
+
+    def mock_return_none(*args, **kwargs):
         return
 
-    monkeypatch.setattr(django, 'setup', mock_setup)
-    monkeypatch.setattr(IPython, 'start_ipython', mock_start_ipython)
+    def mock_setup_error(*args, **kwargs):
+        raise Exception
+
+    monkeypatch.setattr(IPython, 'start_ipython', mock_return_none)
+    monkeypatch.setattr(django, 'setup', mock_setup_error)
+
+
+def test_django(monkeypatch):
+    mock(monkeypatch)
+    set_up()
+    Create.run(mock_options_create)
     Django.run(mock_options)
-    Config.run(mock_options_1)
-    Django.run(mock_options)
+    tear_down()
 
 
-def test_run_import_error(monkeypatch):
-    def mock_setup(*args, **kwargs):
-        raise ImportError
+def test_django_settings(monkeypatch):
+    mock(monkeypatch)
+    set_up()
+    Create.run(mock_options_create)
+    Django.run(mock_options_1)
+    tear_down()
 
-    def mock_start_ipython(*args, **kwargs):
-        return
 
-    monkeypatch.setattr(django, 'setup', mock_setup)
-    monkeypatch.setattr(IPython, 'start_ipython', mock_start_ipython)
-    Config.run(mock_options_1)
-    Django.run(mock_options)
+def test_django_invalid_settings(monkeypatch):
+    mock_raises(monkeypatch)
+    set_up()
+    Create.run(mock_options_create)
+    Django.run(mock_options_1)
+    tear_down()

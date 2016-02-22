@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from iprofile.core.config import registry
-from iprofile.models import Command
+from iprofile.core.models import Command
 import click
 
 

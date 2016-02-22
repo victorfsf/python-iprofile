@@ -3,8 +3,6 @@
 from iprofile import console
 from iprofile.core.config import registry
 from iprofile.cli import *  # noqa
-import pytest
-import sys
 
 
 def test_iprofile_class():
@@ -15,6 +13,3 @@ def test_iprofile_class():
 
 def test_main():
     console.main.callback()
-    with pytest.raises(SystemExit):
-        sys.argv = []
-        console.main()

@@ -2,43 +2,33 @@
 
 from iprofile import texts
 from iprofile.core.decorators import icommand
-from iprofile.core.utils import GLOBAL_SETTINGS_FILE
-from iprofile.models import ICommand
-from slugify import slugify
+from iprofile.core.models import ICommand
+from iprofile.core.utils import get_user_home
 import click
-import os
 
 
 @icommand(help=texts.HELP_INIT, short_help=texts.HELP_INIT)
-@click.argument('path', required=False)
-@click.option('--name', required=False, help=texts.HELP_NAME_INIT)
+@click.option('--path', required=False, help=texts.HELP_INIT_PATH)
 class Init(ICommand):
 
+    settings_error = texts.ERROR_INIT_SETTINGS_EXIST
+
+    def check_settings(self):
+        if self.settings and self.settings.exists():
+            return False
+        return True
+
     def run(self, **options):
-        path = options.get('path') or 'iprofiles'
-        name = slugify(options.get('name') or '')
+        path = options.get('path')
 
-        try:
-            abspath = os.path.abspath(os.path.join(os.getcwd(), path))
-            os.makedirs(abspath)
-
-            if self.project_path != path:
-                action = 'Changed'
-            else:
-                action = 'Created'
-
-            self.global_config.update({
-                'project_path': '{0}/'.format(path),
-            })
-            if name:
-                self.global_config.update({
-                    'project_name': name
-                })
-            self.global_config.save()
-
-            self.green(texts.LOG_IPROFILE_INITIALIZED.format(abspath))
-            click.echo(texts.LOG_IPROFILE_YML.format(
-                os.getcwd(), action, GLOBAL_SETTINGS_FILE))
-
-        except OSError:
-            self.red(texts.ERROR_INIT_PATH_EXISTS.format(abspath))
+        self.settings.read(ignore_errors=True)
+        if path:
+            self.settings.update({
+                'path': str(path)
+            }).save()
+            self.makedirs(get_user_home(path))
+        self.green(
+            texts.LOG_IPROFILE_INITIALIZED.format(
+                path or 'iprofiles'
+            )
+        )
