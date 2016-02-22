@@ -1,14 +1,14 @@
 # Sumary
 
 - [Configuration Files](#configuration-files)
-    - [File: iprofile.yml](#file-iprofile-yml)
-    - [File: settings.yml](#file-settings-yml)
+    - [File: iprofile.yml](#file-iprofileyml)
+    - [File: settings.yml](#file-settingsyml)
 
 # Configuration Files
 
 Below are the two types of configuration files. The `iprofile.yml` file is the global configuration, while each profile has its on `settings.yml` file.
 
-## File: [iprofile.yml](#file-iprofile-yml)
+## File: [iprofile.yml](#file-iprofileyml)
 
 You can set new variables values to this file by running:
 
@@ -21,7 +21,7 @@ Obviously, they'll only serve a purpose if IProfile needs then.
 #### Default:
 
 ```yaml
-# Sets the project name.
+# Sets the project name. 
 # This name will be used to create the IPython profile folder.
 # Example: "profile_my_project_folder_my-profile"
 project_name: my_project_folder
@@ -40,7 +40,7 @@ django_settings_module: my_project.settings
 active_profile: my-profile
 ```
 
-## File: [settings.yml](#file-settings-yml)
+## File: [settings.yml](#file-settingsyml)
 
 You can set new variables values to this file by running:
 
