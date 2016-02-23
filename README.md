@@ -26,5 +26,4 @@ See the wiki for the [guide](https://github.com/victorfsf/python-iprofile/wiki) 
 See the [changelog](https://github.com/victorfsf/python-iprofile/wiki/Changelog) to check out the changes and new features (since v0.2.0).
 
 #### Django integration
-**Installing Django is optional -** you won't need it to work with IProfile, only if you want to use the [Django shell command](
-See the wiki for the [guide](https://github.com/victorfsf/python-iprofile/wiki#using-the-django-shell). But if you do use it, IProfile comes with a [script to import all your Django project models](https://github.com/victorfsf/python-iprofile/wiki/Scripts#importing-all-django-models), which can be very useful.
+**Installing Django is optional -** you won't need it to work with IProfile, only if you want to use the [Django shell command](https://github.com/victorfsf/python-iprofile/wiki#using-the-django-shell). But if you do use it, IProfile comes with a [script to import all your Django project models](https://github.com/victorfsf/python-iprofile/wiki/Scripts#importing-all-django-models), which can be very useful.
