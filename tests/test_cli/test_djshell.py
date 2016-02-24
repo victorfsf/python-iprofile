@@ -43,6 +43,33 @@ def mock_raises(monkeypatch):
     monkeypatch.setattr(django, 'setup', mock_setup_error)
 
 
+def mock_django(monkeypatch):
+    try:
+        import __builtin__ as builtin
+    except ImportError:
+        import builtin
+
+    def mock_return_none(*args, **kwargs):
+        return
+
+    orig_import = __import__
+
+    def mock_django_import(name, *args):
+        if name == 'django':
+            raise ImportError
+        return orig_import(name, *args)
+
+    monkeypatch.setattr(IPython, 'start_ipython', mock_return_none)
+    monkeypatch.setattr(builtin, '__import__', mock_django_import)
+
+
+def test_import_django(monkeypatch):
+    mock_django(monkeypatch)
+    set_up()
+    Django.run(mock_options)
+    tear_down()
+
+
 def test_django(monkeypatch):
     mock(monkeypatch)
     set_up()
