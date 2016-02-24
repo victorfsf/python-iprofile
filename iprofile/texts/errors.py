@@ -27,3 +27,6 @@ ERROR_PROFILE_INVALID_NAME = "Invalid name for profile: '{}'."
 ERROR_INVALID_CONFIG = "Invalid settings variable: '{}'."
 ERROR_INVALID_VALUE_CONFIG = "Invalid value for settings variable '{}': '{}'."
 ERROR_GITIGNORE = "IProfile's .gitignore file already exists!"
+ERROR_DJANGO_NOT_INSTALLED = (
+    "You can use a Django shell if Django is not installed!"
+)

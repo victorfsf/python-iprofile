@@ -18,7 +18,11 @@ import six
 class Django(ICommand):
 
     def run(self, **options):
-        import django
+        try:
+            import django
+        except ImportError:
+            self.red(texts.ERROR_DJANGO_NOT_INSTALLED)
+            return
 
         settings = (
             options.get('settings') or
