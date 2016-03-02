@@ -15,7 +15,7 @@ def load(__builtin__, profile_path, folder=None):
                 path = '{}/{}/**/*.py'.format(startup, folder)
             else:
                 path = '{}/**/*.py'.format(startup)
-            files = [x for x in glob(path)]
+            files = glob(path)
     elif os.path.isfile(profile_path):
         files = [profile_path]
     if files:
@@ -23,7 +23,7 @@ def load(__builtin__, profile_path, folder=None):
         for startup_file in files:
             module = imp.load_source('imported_module', startup_file)
             valid_items = (
-                (x, y) for x, y in module.__dict__.items()[1:]
+                (x, y) for x, y in module.__dict__.items()
                 if y and not x.startswith('__')
             )
             for name, mod in valid_items:

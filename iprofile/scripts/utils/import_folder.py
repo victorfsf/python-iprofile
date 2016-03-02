@@ -18,13 +18,11 @@ def load(__builtin__, folder):
         from glob2 import glob
         import imp
 
-        files = [
-            x for x in glob('{}/**/*.py'.format(folder))
-        ]
+        files = glob('{}/**/*.py'.format(folder))
         for startup_file in files:
             module = imp.load_source('imported_module', startup_file)
             valid_items = (
-                (x, y) for x, y in module.__dict__.items()[1:]
+                (x, y) for x, y in module.__dict__.items()
                 if y and not x.startswith('__')
             )
             for name, mod in valid_items:
