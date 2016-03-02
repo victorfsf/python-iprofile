@@ -15,9 +15,21 @@ class Profile(OSMixin):
     def __init__(self, name):
         settings.read()
         self.name = slugify(name)
+        self.find_project(name)
+
+    def find_project(self, name):
         self.dirname = self.absjoin(
             settings.get('path'), name
         )
+        if not self.isdir(self.dirname):
+            pathlist = settings.get('pathlist')
+            if isinstance(pathlist, list):
+                for path in pathlist:
+                    if path and self.isdir(path):
+                        abspath = self.absuser(path)
+                        dirname = self.join(abspath, name)
+                        if self.isdir(dirname):
+                            self.dirname = dirname
 
     def create(self):
         profile = IProfileCreate()

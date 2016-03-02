@@ -3,6 +3,7 @@
 from iprofile.cli import Create
 from iprofile.cli import Shell
 from tests.utils import set_up
+from tests.utils import settings
 from tests.utils import tear_down
 import IPython
 
@@ -31,7 +32,13 @@ def mock(monkeypatch):
 def test_shell(monkeypatch):
     mock(monkeypatch)
     set_up()
-    Create.run(mock_options_create)
+    settings.update({
+        'path': 'pathlist_test'
+    }).save()
+    Create.run(mock_options)
+    settings.update({
+        'path': 'iprofiles'
+    }).save()
     Shell.run(mock_options)
     tear_down()
 
@@ -52,6 +59,13 @@ def test_shell_no_profile(monkeypatch):
 
 
 def test_shell_invalid_profile(monkeypatch):
+    mock(monkeypatch)
+    set_up()
+    Shell.run(mock_options)
+    tear_down()
+
+
+def test_shell_other_project_profile(monkeypatch):
     mock(monkeypatch)
     set_up()
     Shell.run(mock_options)

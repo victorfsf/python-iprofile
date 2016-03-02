@@ -4,7 +4,6 @@ from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
 from iprofile.profiles.models import Profile
-from iprofile.profiles.utils import list_profiles
 from slugify import slugify
 import click
 import IPython
@@ -21,7 +20,7 @@ class Shell(ICommand):
         name = options.get('profile')
         if not (name and slugify(name)):
             active = self.settings.get('active')
-            profiles_list = list_profiles(self.settings.get('path'))
+            profiles_list = self.list_profiles(self.settings.get('path'))
             if active and active in profiles_list:
                 profile = Profile(active)
             else:
