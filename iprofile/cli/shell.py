@@ -37,4 +37,8 @@ class Shell(ICommand):
             self.red(texts.ERROR_PROFILE_DOESNT_EXIST_RUN.format(profile.name))
             return
 
+        self.settings.update({
+            'lastshell': profile.name
+        }).save()
+
         profile.shell(ipython_options)

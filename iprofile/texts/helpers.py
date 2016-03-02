@@ -22,6 +22,7 @@ HELP_GITIGNORE = "Add a default .gitignore file inside your iprofiles path."
 
 # OPTIONS
 HELP_INIT_PATH = "Set the iprofile folder path/name."
+HELP_INIT_ACTIVE = "Set the active profile."
 HELP_NAMES_ONLY = "Show only the profiles names."
 HELP_NO_INPUT = "Take no input from the command."
 HELP_SETTINGS = "Set the Django settings module."

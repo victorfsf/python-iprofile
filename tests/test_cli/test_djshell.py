@@ -47,7 +47,10 @@ def mock_django(monkeypatch):
     try:
         import __builtin__ as builtin
     except ImportError:
-        import builtin
+        try:
+            import builtin
+        except ImportError:
+            import builtins as builtin
 
     def mock_return_none(*args, **kwargs):
         return
