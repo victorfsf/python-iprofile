@@ -8,3 +8,4 @@ python-slugify==1.2.0
 PyYAML==3.11
 six==1.10.0
 twine==1.6.5
+glob2==0.4.1
