@@ -10,7 +10,7 @@ def load(__builtin__, folder):
     log_header = '[IProfile Script] import_folder:'
     folder = os.path.join(
         settings.get('path'),
-        settings.get('lastshell'),
+        settings.get('last'),
         'startup',
         folder
     )

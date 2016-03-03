@@ -14,7 +14,7 @@ def set_up():
         os.remove('iprofile.yml')
     settings.read(ignore_errors=True)
     settings.update({
-        'pathlist': ['pathlist_test']
+        'append': {'test': 'append_test'}
     }).save()
     try:
         os.makedirs(settings.get('path', 'iprofiles'))
@@ -24,7 +24,7 @@ def set_up():
 
 def tear_down():
     shutil.rmtree(settings.get('path', 'iprofiles'), ignore_errors=True)
-    shutil.rmtree('pathlist_test', ignore_errors=True)
+    shutil.rmtree('append_test', ignore_errors=True)
     try:
         os.remove('iprofile.yml')
     except OSError:

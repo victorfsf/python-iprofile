@@ -37,7 +37,7 @@ class Shell(ICommand):
             return
 
         self.settings.update({
-            'lastshell': profile.name
+            'last': profile.name
         }).save()
 
         profile.shell(ipython_options)

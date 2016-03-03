@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from iprofile.utils.mixins import OSMixin
-from iprofile.settings.registry import settings
-from iprofile.profiles.models.mixins import IProfileDir
+from iprofile import texts
 from iprofile.profiles.models.mixins import IProfileCreate
+from iprofile.profiles.models.mixins import IProfileDir
+from iprofile.settings.registry import settings
+from iprofile.utils.mixins import OSMixin
+from iprofile.core.utils import echo_plain_green
 from IPython.core.profiledir import ProfileDirError
 from slugify import slugify
 import IPython
@@ -23,14 +25,19 @@ class Profile(OSMixin):
         )
         if self.isdir(self.dirname):
             return
-        pathlist = settings.get('pathlist')
-        if isinstance(pathlist, list):
-            for path in pathlist:
-                if path and self.isdir(path):
-                    abspath = self.absuser(path)
+        append = settings.get('append')
+        if isinstance(append, dict):
+            for project, path in append.items():
+                if not path:
+                    return
+                abspath = self.absuser(path)
+                if self.isdir(abspath):
                     dirname = self.join(abspath, name)
                     if self.isdir(dirname):
                         self.dirname = dirname
+                        echo_plain_green(
+                            texts.LOG_PROFILE_PROJECT_FOUND.format(project))
+                        break
 
     def create(self):
         profile = IProfileCreate()

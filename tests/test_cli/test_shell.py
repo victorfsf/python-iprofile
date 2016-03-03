@@ -33,7 +33,7 @@ def test_shell(monkeypatch):
     mock(monkeypatch)
     set_up()
     settings.update({
-        'path': 'pathlist_test'
+        'path': 'append_test'
     }).save()
     Create.run(mock_options)
     settings.update({
@@ -54,7 +54,24 @@ def test_shell_active(monkeypatch):
 def test_shell_no_profile(monkeypatch):
     mock(monkeypatch)
     set_up()
+    settings.update({
+        'append': {
+            'test': None
+        }
+    }).save()
     Shell.run(mock_options_1)
+    tear_down()
+
+
+def test_shell_profile_none(monkeypatch):
+    mock(monkeypatch)
+    set_up()
+    settings.update({
+        'append': {
+            'test': None
+        }
+    }).save()
+    Shell.run(mock_options)
     tear_down()
 
 

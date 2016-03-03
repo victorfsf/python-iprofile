@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from iprofile.cli import Config
-from iprofile.settings.models import SectionDict
 from tests.utils import set_up
 from tests.utils import settings
 from tests.utils import tear_down
@@ -38,7 +37,7 @@ def test_config_list_or_dict():
     assert settings.get('test_name')[0] == 'test_value'
 
     Config.run(mock_options_2)
-    assert isinstance(settings.get('test_name'), SectionDict)
+    assert isinstance(settings.get('test_name'), dict)
     assert 'test_value' in settings.get('test_name')
     assert settings.get('test_name').get('test_value') == 0
 

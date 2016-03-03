@@ -30,7 +30,7 @@ class List(ICommand):
             self.green(qtt_text)
 
         for profile in profiles_list:
-            if active == profile:
+            if active == profile.split(' ')[0]:
                 self.pgreen(profile)
             else:
                 click.echo(profile)

@@ -31,13 +31,15 @@ class ICommand(OSMixin):
 
     def list_profiles(self, profiles_path):
         profiles_list = list_profiles(profiles_path)
-        pathlist = self.settings.get('pathlist')
-        if isinstance(pathlist, list):
-            for path in pathlist:
+        append = self.settings.get('append')
+        if isinstance(append, dict):
+            for project, path in append.items():
+                if not path:
+                    return
                 abspath = self.absuser(path)
                 if (isinstance(abspath, six.string_types) and
                         self.isdir(abspath)):
-                    profiles_list += list_profiles(abspath)
+                    profiles_list += list_profiles(abspath, project=project)
         return profiles_list
 
     def check_settings(self):

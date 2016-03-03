@@ -33,7 +33,7 @@ def test_icommand_pred():
 def test_icommand_list_profiles():
     set_up()
     settings.update({
-        'path': 'pathlist_test'
+        'path': 'append_test'
     }).save()
     Create.run(mock_options)
     settings.update({
