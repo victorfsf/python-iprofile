@@ -4,6 +4,7 @@ from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
 from iprofile.profiles.models import Profile
+from iprofile.profiles.utils import list_profiles
 from slugify import slugify
 import click
 import IPython
@@ -12,21 +13,23 @@ import IPython
 @icommand(help=texts.HELP_SHELL, short_help=texts.HELP_SHELL)
 @click.argument('profile', required=False)
 @click.argument('ipython_options', nargs=-1, required=False)
+@click.option('-p', '--project', required=False, help=texts.HELP_SHELL_PROJECT)
 class Shell(ICommand):
 
     def run(self, **options):
         ipython_options = list(options.get('ipython_options', []))
-
+        project = options.get('project')
         name = options.get('profile')
+
         if not (name and slugify(name)):
             active = self.settings.get('active')
             profiles_list = self.list_profiles(self.settings.get('path'))
             if active and active in profiles_list:
-                profile = Profile(active)
+                profile = Profile(active, project=project)
             else:
                 profile = None
         else:
-            profile = Profile(name)
+            profile = Profile(name, project=project)
 
         if not profile:
             IPython.start_ipython(argv=ipython_options)

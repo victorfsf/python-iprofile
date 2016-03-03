@@ -14,18 +14,24 @@ import IPython
 class Profile(OSMixin):
     settings = None
 
-    def __init__(self, name):
+    def __init__(self, name, **kwargs):
         settings.read()
         self.name = slugify(name)
-        self.find_project(name)
+        self.find_project(name, kwargs.pop('project', None))
 
-    def find_project(self, name):
+    def find_project(self, name, project=None):
+        append = settings.get('append')
+        if project and append.get(project):
+            self.dirname = self.join(
+                self.absuser(append.get(project)), name
+            )
+            echo_plain_green(texts.LOG_PROFILE_PROJECT_FOUND.format(project))
+            return
         self.dirname = self.absjoin(
             settings.get('path'), name
         )
         if self.isdir(self.dirname):
             return
-        append = settings.get('append')
         if isinstance(append, dict):
             for project, path in append.items():
                 if not path:

@@ -27,3 +27,6 @@ HELP_NAMES_ONLY = "Show only the profiles names."
 HELP_NO_INPUT = "Take no input from the command."
 HELP_SETTINGS = "Set the Django settings module."
 HELP_CREATE_ACTIVE = "Activate the new profile."
+HELP_SHELL_PROJECT = (
+    "Set where IProfile will search for the given profile name."
+)

@@ -20,6 +20,11 @@ mock_options_1 = {
     'profile': None,
 }
 
+mock_options_2 = {
+    'profile': 'test',
+    'project': 'test'
+}
+
 
 def mock(monkeypatch):
 
@@ -40,6 +45,7 @@ def test_shell(monkeypatch):
         'path': 'iprofiles'
     }).save()
     Shell.run(mock_options)
+    Shell.run(mock_options_2)
     tear_down()
 
 
@@ -71,7 +77,7 @@ def test_shell_profile_none(monkeypatch):
             'test': None
         }
     }).save()
-    Shell.run(mock_options)
+    Shell.run(mock_options_2)
     tear_down()
 
 
