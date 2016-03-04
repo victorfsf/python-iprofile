@@ -2,7 +2,9 @@
 
 from iprofile.cli import List
 from iprofile.cli import Create
+from iprofile.cli import Activate
 from tests.utils import set_up
+from tests.utils import settings
 from tests.utils import tear_down
 
 mock_options = {
@@ -22,12 +24,32 @@ mock_options_3 = {
     'active': True
 }
 
+mock_options_4 = {
+    'profile': 'test',
+    'project': 'append_test'
+}
+
+mock_options_5 = {
+    'profile': 'test',
+    'project': 'test'
+}
+
 
 def test_list():
     set_up()
     Create.run(mock_options)
     Create.run(mock_options_1)
     Create.run(mock_options_2)
+    settings.update({
+        'path': 'append_test'
+    }).save()
+    Create.run(mock_options)
+    settings.update({
+        'path': 'iprofiles'
+    }).save()
+    Activate.run(mock_options_4)
+    List.run({})
+    Activate.run(mock_options_5)
     List.run({})
     tear_down()
 

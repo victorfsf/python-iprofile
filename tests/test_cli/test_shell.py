@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from iprofile.cli import Activate
 from iprofile.cli import Create
 from iprofile.cli import Shell
 from tests.utils import set_up
@@ -53,6 +54,15 @@ def test_shell_active(monkeypatch):
     mock(monkeypatch)
     set_up()
     Create.run(mock_options_create)
+    Shell.run(mock_options_1)
+    settings.update({
+        'path': 'append_test'
+    }).save()
+    Create.run(mock_options_create)
+    settings.update({
+        'path': 'iprofiles'
+    }).save()
+    Activate.run(mock_options_2)
     Shell.run(mock_options_1)
     tear_down()
 

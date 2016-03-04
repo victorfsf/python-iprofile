@@ -15,11 +15,25 @@ mock_options_1 = {
     'profile': '.'
 }
 
+mock_options_2 = {
+    'profile': 'test',
+    'project': 'test'
+}
+
 
 def test_active():
     set_up()
     Create.run(mock_options)
+    settings.update({
+        'path': 'append_test'
+    }).save()
+    Create.run(mock_options)
+    settings.update({
+        'path': 'iprofiles'
+    }).save()
     Activate.run(mock_options)
+    Active.run({})
+    Activate.run(mock_options_2)
     Active.run({})
     tear_down()
 

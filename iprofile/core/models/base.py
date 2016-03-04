@@ -29,7 +29,7 @@ class ICommand(OSMixin):
         kwargs.clear()
         super(ICommand, self).__init__(*args, **kwargs)
 
-    def list_profiles(self, profiles_path):
+    def list_profiles(self, profiles_path, show_project=True):
         profiles_list = list_profiles(profiles_path)
         append = self.settings.get('append')
         if isinstance(append, dict):
@@ -39,7 +39,8 @@ class ICommand(OSMixin):
                 abspath = self.absuser(path)
                 if (isinstance(abspath, six.string_types) and
                         self.isdir(abspath)):
-                    profiles_list += list_profiles(abspath, project=project)
+                    profiles_list += list_profiles(
+                        abspath, project=project, show_project=show_project)
         return profiles_list
 
     def check_settings(self):

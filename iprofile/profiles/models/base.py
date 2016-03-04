@@ -20,6 +20,7 @@ class Profile(OSMixin):
         self.find_project(name, kwargs.pop('project', None))
 
     def find_project(self, name, project=None):
+        self.project = project
         append = settings.get('append')
         if project and append.get(project):
             self.dirname = self.join(
@@ -35,11 +36,12 @@ class Profile(OSMixin):
         if isinstance(append, dict):
             for project, path in append.items():
                 if not path:
-                    return
+                    continue
                 abspath = self.absuser(path)
                 if self.isdir(abspath):
                     dirname = self.join(abspath, name)
                     if self.isdir(dirname):
+                        self.project = project
                         self.dirname = dirname
                         echo_plain_green(
                             texts.LOG_PROFILE_PROJECT_FOUND.format(project))
@@ -64,7 +66,8 @@ class Profile(OSMixin):
     def activate(self):
         if self.exists():
             settings.update({
-                'active': self.name
+                'active': '{}:{}'.format(self.name, self.project)
+                if self.project else self.name
             }).save()
 
     def deactivate(self):
