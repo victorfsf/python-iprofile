@@ -6,46 +6,6 @@ import os
 import yaml
 
 
-class SectionDict(object):
-
-    def __init__(self, yamlmap, basemap, *args, **kwargs):
-        self.__basemap = basemap
-        self.__yamlmap = yamlmap
-        self.__map = kwargs.pop('map')
-        super(SectionDict, self).__init__(*args, **kwargs)
-
-    def __iter__(self):
-        return iter(self.__map)
-
-    def __repr__(self):
-        return str(self.__map)
-
-    def get(self, value, default=None):
-        if '.' not in value:
-            result = self.__map.get(value, default)
-            if result and isinstance(result, dict):
-                return SectionDict(self.__yamlmap, self.__map, map=result)
-            return result
-        paths = value.split('.')
-        data = self.get(paths[0], default)
-        if isinstance(data, SectionDict):
-            return SectionDict(
-                self.__yamlmap, self.__map, map=data).get(
-                    '.'.join(paths[1:]), default)
-        if len(paths) > 1:
-            return
-
-    def update(self, data):
-        self.__map.update(data)
-        return self.__yamlmap
-
-    def pop(self, value, default=None):
-        return self.__map.pop(value, default)
-
-    def save(self):
-        return self.__yamlmap.save()
-
-
 class YAMLOrderedDict(OrderedDict, OSMixin):
     base_section = 'settings'
     default = {}
@@ -81,12 +41,6 @@ class YAMLOrderedDict(OrderedDict, OSMixin):
         super(YAMLOrderedDict, self).update(data)
         return self
 
-    def get(self, value, default=None):
-        result = super(YAMLOrderedDict, self).get(value, default)
-        if result and isinstance(result, dict):
-            return SectionDict(self, self, map=result)
-        return result
-
     def pop(self, value, default=None):
         return super(YAMLOrderedDict, self).pop(value, default)
 
@@ -114,3 +68,10 @@ class YAMLOrderedDict(OrderedDict, OSMixin):
 
     def exists(self):
         return True if self.isfile(self.path) and self.__loaded else False
+
+    def get(self, key, default=None):
+        get_def = 'get_{}'.format(key)
+        value = super(YAMLOrderedDict, self).get(key, default)
+        if hasattr(self, get_def):
+            return getattr(self, get_def)(value)
+        return value

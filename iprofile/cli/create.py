@@ -12,10 +12,14 @@ import click
 @icommand(help=texts.HELP_CREATE, short_help=texts.HELP_CREATE)
 @click.argument('profile')
 @click.option('--active', is_flag=True, help=texts.HELP_CREATE_ACTIVE)
+@click.option('-p', '--project', required=False, help=texts.HELP_PROJECT_OPT)
+@click.option('--no-ignore', is_flag=True, help=texts.HELP_NO_IGNORE)
 class Create(ICommand):
 
     def run(self, **options):
         name = slugify(options.get('profile'))
+        project = options.get('project')
+        no_ignore = options.get('no_ignore')
 
         if not name:
             self.red(texts.ERROR_PROFILE_INVALID_NAME.format(
@@ -23,7 +27,7 @@ class Create(ICommand):
             ))
             return
 
-        profile = Profile(name)
+        profile = Profile(name, project=project, ignore_project=no_ignore)
 
         if profile.exists():
             self.red(texts.ERROR_PROFILE_EXISTS.format(name))

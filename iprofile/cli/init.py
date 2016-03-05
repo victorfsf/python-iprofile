@@ -6,7 +6,6 @@ from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
 from iprofile.core.utils import get_user_home
 from iprofile.profiles.models import Profile
-from iprofile.profiles.utils import list_profiles
 import click
 
 
@@ -50,6 +49,6 @@ class Init(ICommand):
             if profile:
                 Activate.run({'profile': profile})
             else:
-                profiles = list_profiles(path)
+                profiles = self.list_profiles(path)
                 if len(profiles) == 1:
                     Activate.run({'profile': profiles[0]})
