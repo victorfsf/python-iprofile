@@ -4,7 +4,7 @@
 def load(__builtin__, profile_path, folder=None):
     import os
     profile_path = os.path.abspath(os.path.expanduser(profile_path))
-    log_header = '[IProfile Script] import_profile:'
+    log_header = '[IProfile] Importing profile:'
     files = None
 
     if os.path.isdir(profile_path):

@@ -12,6 +12,9 @@ class OSMixin(object):
     def absjoin(self, *args):
         return os.path.abspath(self.join(*args))
 
+    def absuser(self, *args):
+        return os.path.abspath(os.path.expanduser(*args))
+
     def makedirs(self, path):
         try:
             os.makedirs(path)

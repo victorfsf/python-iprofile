@@ -12,11 +12,16 @@ class CheckActiveMixin(object):
 
     def check_active(self):
         name = self.settings.get('active')
+        project = None
+
         if not name or not slugify(name):
             self.red(texts.ERROR_NO_ACTIVE_PROFILE)
             return
 
-        profile = Profile(name)
+        if ':' in name:
+            name, project = name.split(':')
+
+        profile = Profile(name, project=project)
         if not profile.exists():
             self.settings.update({
                 'active': None

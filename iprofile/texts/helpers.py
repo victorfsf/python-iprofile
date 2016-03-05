@@ -19,6 +19,8 @@ HELP_INIT = "Initialize IProfile."
 HELP_LIST = "Show a list of all profiles."
 HELP_SHELL = "Open IPython with a given profile name (or the active profile)."
 HELP_GITIGNORE = "Add a default .gitignore file inside your iprofiles path."
+HELP_APPEND = "Append a IProfile project path to your settings."
+HELP_POP = "Remove a IProfile project path from your settings."
 
 # OPTIONS
 HELP_INIT_PATH = "Set the iprofile folder path/name."
@@ -27,3 +29,11 @@ HELP_NAMES_ONLY = "Show only the profiles names."
 HELP_NO_INPUT = "Take no input from the command."
 HELP_SETTINGS = "Set the Django settings module."
 HELP_CREATE_ACTIVE = "Activate the new profile."
+HELP_APPEND_FORCE = "Forcefully append a project path."
+HELP_NO_IGNORE = (
+    "Don't create the profile if there's already one "
+    "with the same name in any project."
+)
+HELP_PROJECT_OPT = (
+    "Set where IProfile will search for the given profile name."
+)

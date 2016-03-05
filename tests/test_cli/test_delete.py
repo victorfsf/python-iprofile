@@ -43,6 +43,13 @@ def mock(monkeypatch):
 def test_delete():
     set_up()
     Create.run(mock_options)
+    settings.update({
+        'path': 'append_test'
+    }).save()
+    Create.run(mock_options)
+    settings.update({
+        'path': 'iprofiles'
+    }).save()
     Delete.run(mock_options)
     assert not os.path.isdir(os.path.join(settings.get('path'), 'test'))
     tear_down()
@@ -60,6 +67,13 @@ def test_delete_active():
 def test_delete_all():
     set_up()
     Create.run(mock_options)
+    settings.update({
+        'path': 'append_test'
+    }).save()
+    Create.run(mock_options)
+    settings.update({
+        'path': 'iprofiles'
+    }).save()
     Create.run(mock_options_1)
     Delete.run(mock_options_2)
     assert not os.path.isdir(os.path.join(settings.get('path'), 'test'))
