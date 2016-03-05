@@ -4,7 +4,6 @@ from iprofile import texts
 from iprofile.core.decorators import icommand
 from iprofile.core.models import ICommand
 from iprofile.profiles.models import Profile
-from iprofile.profiles.utils import list_profiles
 from slugify import slugify
 import click
 
@@ -33,7 +32,7 @@ class Create(ICommand):
             self.red(texts.ERROR_PROFILE_EXISTS.format(name))
             return
 
-        all_profiles = list_profiles(self.settings.get('path'))
+        all_profiles = self.list_profiles(self.settings.get('path'))
         profile.create()
         self.green(texts.LOG_NEW_PROFILE.format(name))
 

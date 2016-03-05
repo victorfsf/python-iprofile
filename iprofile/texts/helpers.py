@@ -20,6 +20,7 @@ HELP_LIST = "Show a list of all profiles."
 HELP_SHELL = "Open IPython with a given profile name (or the active profile)."
 HELP_GITIGNORE = "Add a default .gitignore file inside your iprofiles path."
 HELP_APPEND = "Append a IProfile project path to your settings."
+HELP_POP = "Remove a IProfile project path from your settings."
 
 # OPTIONS
 HELP_INIT_PATH = "Set the iprofile folder path/name."

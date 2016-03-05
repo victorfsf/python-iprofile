@@ -11,4 +11,5 @@ from .djshell import *  # noqa
 from .gitignore import *  # noqa
 from .init import *  # noqa
 from .list import *  # noqa
+from .pop import *  # noqa
 from .shell import *  # noqa

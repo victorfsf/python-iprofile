@@ -30,7 +30,7 @@ class List(ICommand):
             self.green(qtt_text)
 
         for profile in profiles_list:
-            if ':' in active and ':' in profile:
+            if active and profile and ':' in active and ':' in profile:
                 name, project = profile.split(':')
                 active_name, active_project = active.split(':')
                 if active_name == name and active_project == project:

@@ -33,3 +33,4 @@ ERROR_DJANGO_NOT_INSTALLED = (
 )
 ERROR_NO_SUCH_DIRECTORY = "No such directory: '{}'."
 ERROR_APPEND_PROJECT_EXISTS = "Project name already exists: '{}'."
+ERROR_POP_PROJECT_DOESNT_EXIST = "Project not found: '{}'."
