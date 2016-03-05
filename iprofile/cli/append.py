@@ -16,11 +16,7 @@ class Append(ICommand):
     def run(self, **options):
         slug, name = slugify(options.get('name')), options.get('name')
         path = self.absuser(options.get('path'))
-
-        if not isinstance(self.settings.get('append'), dict):
-            append = {}
-        else:
-            append = self.settings.get('append')
+        append = self.settings.get('append')
 
         if not slug:
             self.red(texts.ERROR_PROJECT_INVALID_NAME.format(name))

@@ -13,3 +13,9 @@ class Settings(YAMLOrderedDict):
     def __init__(self, *args, **kwargs):
         super(Settings, self).__init__(
             SETTINGS_FILE, *args, **kwargs)
+
+    def get_path(self, value):
+        return self.absuser(value)
+
+    def get_append(self, value):
+        return value if isinstance(value, dict) else {}

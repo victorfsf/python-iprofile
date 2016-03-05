@@ -33,19 +33,18 @@ class Profile(OSMixin):
         )
         if self.isdir(self.dirname):
             return
-        if isinstance(append, dict):
-            for project, path in append.items():
-                if not path:
-                    continue
-                abspath = self.absuser(path)
-                if self.isdir(abspath):
-                    dirname = self.join(abspath, name)
-                    if self.isdir(dirname):
-                        self.project = project
-                        self.dirname = dirname
-                        echo_plain_green(
-                            texts.LOG_PROFILE_PROJECT_FOUND.format(project))
-                        break
+        for project, path in append.items():
+            if not path:
+                continue
+            abspath = self.absuser(path)
+            if self.isdir(abspath):
+                dirname = self.join(abspath, name)
+                if self.isdir(dirname):
+                    self.project = project
+                    self.dirname = dirname
+                    echo_plain_green(
+                        texts.LOG_PROFILE_PROJECT_FOUND.format(project))
+                    break
 
     def create(self):
         profile = IProfileCreate()

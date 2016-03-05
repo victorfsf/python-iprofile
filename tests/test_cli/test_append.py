@@ -28,8 +28,6 @@ shutil.rmtree('test_append', ignore_errors=True)
 def test_append():
     set_up()
     os.mkdir('test_append')
-    settings['append'] = None
-    Append.run(mock_options)
     settings['append'] = {}
     Append.run(mock_options)
     shutil.rmtree('test_append', ignore_errors=True)

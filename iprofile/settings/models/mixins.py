@@ -68,3 +68,10 @@ class YAMLOrderedDict(OrderedDict, OSMixin):
 
     def exists(self):
         return True if self.isfile(self.path) and self.__loaded else False
+
+    def get(self, key, default=None):
+        get_def = 'get_{}'.format(key)
+        value = super(YAMLOrderedDict, self).get(key, default)
+        if hasattr(self, get_def):
+            return getattr(self, get_def)(value)
+        return value

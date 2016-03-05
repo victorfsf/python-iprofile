@@ -3,12 +3,13 @@
 from tests.utils import set_up
 from tests.utils import settings
 from tests.utils import tear_down
+import os
 
 
 def test_yamlordereddict_pop():
     set_up()
     path = settings.get('path')
-    assert settings.pop('path') == path
+    assert os.path.abspath(os.path.expanduser(settings.pop('path'))) == path
     tear_down()
 
 
