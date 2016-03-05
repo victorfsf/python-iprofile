@@ -12,7 +12,7 @@ import IPython
 @icommand(help=texts.HELP_SHELL, short_help=texts.HELP_SHELL)
 @click.argument('profile', required=False)
 @click.argument('ipython_options', nargs=-1, required=False)
-@click.option('-p', '--project', required=False, help=texts.HELP_SHELL_PROJECT)
+@click.option('-p', '--project', required=False, help=texts.HELP_PROJECT_OPT)
 class Shell(ICommand):
 
     def run(self, **options):

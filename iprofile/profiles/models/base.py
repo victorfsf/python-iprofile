@@ -17,9 +17,13 @@ class Profile(OSMixin):
     def __init__(self, name, **kwargs):
         settings.read()
         self.name = slugify(name)
-        self.find_project(name, kwargs.pop('project', None))
+        self.find_project(
+            name,
+            kwargs.pop('project', None),
+            kwargs.pop('ignore_project', True)
+        )
 
-    def find_project(self, name, project=None):
+    def find_project(self, name, project=None, ignore_project=True):
         self.project = project
         append = settings.get('append')
         if project and append.get(project):
@@ -31,7 +35,7 @@ class Profile(OSMixin):
         self.dirname = self.absjoin(
             settings.get('path'), name
         )
-        if self.isdir(self.dirname):
+        if not ignore_project or self.isdir(self.dirname):
             return
         for project, path in append.items():
             if not path:

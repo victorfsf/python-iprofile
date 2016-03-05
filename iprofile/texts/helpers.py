@@ -29,6 +29,10 @@ HELP_NO_INPUT = "Take no input from the command."
 HELP_SETTINGS = "Set the Django settings module."
 HELP_CREATE_ACTIVE = "Activate the new profile."
 HELP_APPEND_FORCE = "Forcefully append a project path."
-HELP_SHELL_PROJECT = (
+HELP_NO_IGNORE = (
+    "Don't create the profile if there's already one "
+    "with the same name in any project."
+)
+HELP_PROJECT_OPT = (
     "Set where IProfile will search for the given profile name."
 )

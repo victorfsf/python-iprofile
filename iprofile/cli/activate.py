@@ -10,7 +10,7 @@ import click
 
 @icommand(help=texts.HELP_ACTIVATE, short_help=texts.HELP_ACTIVATE)
 @click.argument('profile')
-@click.option('-p', '--project', required=False, help=texts.HELP_SHELL_PROJECT)
+@click.option('-p', '--project', required=False, help=texts.HELP_PROJECT_OPT)
 class Activate(ICommand):
 
     def run(self, **options):
