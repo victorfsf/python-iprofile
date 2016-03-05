@@ -25,4 +25,5 @@ LOG_ACTIVE_PROFILE = (
 LOG_GITIGNORE = (
     "Added a .gitignore file at:"
 )
-LOG_PROFILE_PROJECT_FOUND = 'Loading from IProfile project: "{}".'
+LOG_PROFILE_PROJECT_FOUND = "Loading from IProfile project: '{}'."
+LOG_APPEND_PROJECT = "Successfully appended the project '{}' from '{}'."

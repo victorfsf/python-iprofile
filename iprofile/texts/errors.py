@@ -24,9 +24,12 @@ ERROR_INIT_SETTINGS_EXIST = (
     "IProfile is already initialized."
 )
 ERROR_PROFILE_INVALID_NAME = "Invalid name for profile: '{}'."
+ERROR_PROJECT_INVALID_NAME = "Invalid name for project: '{}'."
 ERROR_INVALID_CONFIG = "Invalid settings variable: '{}'."
 ERROR_INVALID_VALUE_CONFIG = "Invalid value for settings variable '{}': '{}'."
 ERROR_GITIGNORE = "IProfile's .gitignore file already exists!"
 ERROR_DJANGO_NOT_INSTALLED = (
     "You can use a Django shell if Django is not installed!"
 )
+ERROR_NO_SUCH_DIRECTORY = "No such directory: '{}'."
+ERROR_APPEND_PROJECT_EXISTS = "Project name already exists: '{}'."
