@@ -20,14 +20,12 @@ class Delete(ICommand):
         project = options.get('project')
 
         if not (name and slugify(name)):
-            project_path = self.settings.get('path')
             deleted = 0
             confirm_text = texts.INPUT_CONFIRM_DELETE_ALL
             if not (no_input or click.confirm(confirm_text)):
                 return
-            show_project = True if not project else False
-            for profile_name in self.list_profiles(
-                    project_path, show_project=show_project):
+            project_path = project or self.settings.get('path')
+            for profile_name in self.list_profiles(project_path):
                 if ':' in profile_name:
                     profile_name, project = profile_name.split(':')
                 if self.delete(profile_name, project=project, delete_all=True):
