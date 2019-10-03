@@ -17,7 +17,7 @@ setup(
         'glob2==0.4.1',
         'ipython>=4.0.0',
         'python-slugify==1.2.0',
-        'PyYAML==3.11',
+        'PyYAML==5.1',
         'six==1.10.0',
     ],
     zip_safe=False,
